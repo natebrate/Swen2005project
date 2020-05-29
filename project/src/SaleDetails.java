@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 /*
@@ -20,6 +21,10 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
+    private void idFieldActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -37,6 +42,9 @@ public class SaleDetails extends JFrame {
         dateLabel = new JLabel();
         saleTitleLabel = new JLabel();
         dayLabel = new JLabel();
+        clearBtn = new JButton();
+        idField = new JTextField();
+        returnBtn = new JButton();
 
         //======== this ========
         setTitle("Sales Details");
@@ -86,7 +94,15 @@ public class SaleDetails extends JFrame {
                 new String[] {
                     "Date", "P_ID", "Quantity"
                 }
-            ));
+            ) {
+                Class<?>[] columnTypes = new Class<?>[] {
+                    Date.class, Integer.class, Integer.class
+                };
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+                    return columnTypes[columnIndex];
+                }
+            });
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);
@@ -115,17 +131,17 @@ public class SaleDetails extends JFrame {
         //---- displayButton ----
         displayButton.setText("Display Report");
         contentPane.add(displayButton);
-        displayButton.setBounds(new Rectangle(new Point(5, 110), displayButton.getPreferredSize()));
+        displayButton.setBounds(new Rectangle(new Point(130, 105), displayButton.getPreferredSize()));
 
         //---- printButton ----
         printButton.setText("Print Report");
         contentPane.add(printButton);
-        printButton.setBounds(5, 145, 110, printButton.getPreferredSize().height);
+        printButton.setBounds(130, 145, 110, printButton.getPreferredSize().height);
 
         //---- saveButton ----
         saveButton.setText("Save Report");
         contentPane.add(saveButton);
-        saveButton.setBounds(5, 185, 110, saveButton.getPreferredSize().height);
+        saveButton.setBounds(130, 185, 110, saveButton.getPreferredSize().height);
 
         //---- dateLabel ----
         dateLabel.setText("DATE:");
@@ -142,20 +158,23 @@ public class SaleDetails extends JFrame {
         contentPane.add(dayLabel);
         dayLabel.setBounds(50, 45, 100, dayLabel.getPreferredSize().height);
 
-        {
-            // compute preferred size
-            Dimension preferredSize = new Dimension();
-            for(int i = 0; i < contentPane.getComponentCount(); i++) {
-                Rectangle bounds = contentPane.getComponent(i).getBounds();
-                preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-            }
-            Insets insets = contentPane.getInsets();
-            preferredSize.width += insets.right;
-            preferredSize.height += insets.bottom;
-            contentPane.setMinimumSize(preferredSize);
-            contentPane.setPreferredSize(preferredSize);
-        }
+        //---- clearBtn ----
+        clearBtn.setText("Clear Records");
+        contentPane.add(clearBtn);
+        clearBtn.setBounds(130, 225, 110, clearBtn.getPreferredSize().height);
+
+        //---- idField ----
+        idField.setText("ID");
+        idField.addActionListener(e -> idFieldActionPerformed(e));
+        contentPane.add(idField);
+        idField.setBounds(15, 225, 95, idField.getPreferredSize().height);
+
+        //---- returnBtn ----
+        returnBtn.setText("Return to Menu");
+        contentPane.add(returnBtn);
+        returnBtn.setBounds(15, 265, 220, returnBtn.getPreferredSize().height);
+
+        contentPane.setPreferredSize(new Dimension(720, 485));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -177,5 +196,8 @@ public class SaleDetails extends JFrame {
     private JLabel dateLabel;
     private JLabel saleTitleLabel;
     private JLabel dayLabel;
+    private JButton clearBtn;
+    private JTextField idField;
+    private JButton returnBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

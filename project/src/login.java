@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import info.clearthought.layout.*;
 /*
  * Created by JFormDesigner on Fri May 29 12:37:06 BOT 2020
  */
@@ -55,12 +56,12 @@ public class login extends JFrame {
         //---- userLabel ----
         userLabel.setText("USER:");
         contentPane.add(userLabel);
-        userLabel.setBounds(5, 155, 90, userLabel.getPreferredSize().height);
+        userLabel.setBounds(40, 155, 55, userLabel.getPreferredSize().height);
 
         //---- passLabel ----
         passLabel.setText("PASSWORD:");
         contentPane.add(passLabel);
-        passLabel.setBounds(0, 195, 100, passLabel.getPreferredSize().height);
+        passLabel.setBounds(10, 195, 100, passLabel.getPreferredSize().height);
 
         //---- userField ----
         userField.setText("Username");
@@ -71,9 +72,9 @@ public class login extends JFrame {
             }
         });
         contentPane.add(userField);
-        userField.setBounds(105, 150, 220, userField.getPreferredSize().height);
+        userField.setBounds(145, 145, 220, userField.getPreferredSize().height);
         contentPane.add(passwordField1);
-        passwordField1.setBounds(105, 190, 220, passwordField1.getPreferredSize().height);
+        passwordField1.setBounds(145, 190, 220, passwordField1.getPreferredSize().height);
 
         //---- button1 ----
         button1.setText("LOGIN");
@@ -86,20 +87,7 @@ public class login extends JFrame {
         contentPane.add(loginLabel);
         loginLabel.setBounds(new Rectangle(new Point(235, 40), loginLabel.getPreferredSize()));
 
-        {
-            // compute preferred size
-            Dimension preferredSize = new Dimension();
-            for(int i = 0; i < contentPane.getComponentCount(); i++) {
-                Rectangle bounds = contentPane.getComponent(i).getBounds();
-                preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-            }
-            Insets insets = contentPane.getInsets();
-            preferredSize.width += insets.right;
-            preferredSize.height += insets.bottom;
-            contentPane.setMinimumSize(preferredSize);
-            contentPane.setPreferredSize(preferredSize);
-        }
+        contentPane.setPreferredSize(new Dimension(505, 405));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
