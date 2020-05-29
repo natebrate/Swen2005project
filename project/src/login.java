@@ -23,10 +23,18 @@ public class login extends JFrame {
         {
             noPasswordCheck();
         }
+        else
+        {
+            attemptLogin();
+        }
     }
 
     private void userFieldFocusGained(FocusEvent e) {
-        // TODO add your code here
+        if (userField.getText().equals("Username"))
+        {
+            userField.setText("");
+        }
+
     }
 
     private void initComponents() {
@@ -125,6 +133,16 @@ public class login extends JFrame {
         {
             JOptionPane.showMessageDialog(null, "Please enter a password!", "Please enter a password", JOptionPane.WARNING_MESSAGE);
             requestFocus();
+        }
+    }
+    private void attemptLogin()
+    {
+        String [] user;
+        DAO dao = new DAO();
+        if(dao.openConnection())
+        {
+            user = dao.userLogin(userField.getText(), String.valueOf(passwordField1.getPassword()));
+            dao.closeConnection();
         }
     }
 
