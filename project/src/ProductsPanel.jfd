@@ -5,6 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "this"
+			"title": "Product Details"
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "searchField"
 				"text": "Search"
@@ -14,7 +15,7 @@ new FormModel {
 				"width": 550
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
+				name: "searchBtn"
 				"text": "Search"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 565
@@ -235,7 +236,7 @@ new FormModel {
 				"width": 437
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "allLabel"
+				name: "allBtn"
 				"text": "Display All"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 70
@@ -279,7 +280,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
-				"text": "Modify Entrees to Table"
+				"text": "Modify Entrees to Table: Save, Delete and Update"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
 				"y": 140
@@ -318,28 +319,28 @@ new FormModel {
 				"y": 395
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label2"
+				name: "IDLabel"
 				"text": "Product ID:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 35
 				"y": 175
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label3"
+				name: "nameLabel"
 				"text": "Product Name:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 15
 				"y": 215
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label4"
+				name: "quantityLabel"
 				"text": "Product Quantity:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 5
 				"y": 260
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label5"
+				name: "priceLabel"
 				"text": "Product Price:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 25

@@ -37,10 +37,10 @@ public class ProductsPanel extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         searchField = new JTextField();
-        button1 = new JButton();
+        searchBtn = new JButton();
         productPane = new JScrollPane();
         productTable = new JTable();
-        allLabel = new JButton();
+        allBtn = new JButton();
         IDField = new JTextField();
         nameField = new JTextField();
         quantityField = new JTextField();
@@ -50,12 +50,13 @@ public class ProductsPanel extends JFrame {
         updateBtn = new JButton();
         deleteBtn = new JButton();
         clearBtn = new JButton();
-        label2 = new JLabel();
-        label3 = new JLabel();
-        label4 = new JLabel();
-        label5 = new JLabel();
+        IDLabel = new JLabel();
+        nameLabel = new JLabel();
+        quantityLabel = new JLabel();
+        priceLabel = new JLabel();
 
         //======== this ========
+        setTitle("Product Details");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -64,10 +65,10 @@ public class ProductsPanel extends JFrame {
         contentPane.add(searchField);
         searchField.setBounds(10, 5, 550, searchField.getPreferredSize().height);
 
-        //---- button1 ----
-        button1.setText("Search");
-        contentPane.add(button1);
-        button1.setBounds(565, 5, 190, button1.getPreferredSize().height);
+        //---- searchBtn ----
+        searchBtn.setText("Search");
+        contentPane.add(searchBtn);
+        searchBtn.setBounds(565, 5, 190, searchBtn.getPreferredSize().height);
 
         //======== productPane ========
         {
@@ -124,10 +125,10 @@ public class ProductsPanel extends JFrame {
         contentPane.add(productPane);
         productPane.setBounds(320, 40, 437, productPane.getPreferredSize().height);
 
-        //---- allLabel ----
-        allLabel.setText("Display All");
-        contentPane.add(allLabel);
-        allLabel.setBounds(70, 435, 165, allLabel.getPreferredSize().height);
+        //---- allBtn ----
+        allBtn.setText("Display All");
+        contentPane.add(allBtn);
+        allBtn.setBounds(70, 435, 165, allBtn.getPreferredSize().height);
 
         //---- IDField ----
         IDField.setText("P_ID");
@@ -153,7 +154,7 @@ public class ProductsPanel extends JFrame {
         priceField.setBounds(105, 300, 190, priceField.getPreferredSize().height);
 
         //---- label1 ----
-        label1.setText("Modify Entrees to Table");
+        label1.setText("Modify Entrees to Table: Save, Delete and Update");
         contentPane.add(label1);
         label1.setBounds(10, 140, 295, label1.getPreferredSize().height);
 
@@ -181,25 +182,25 @@ public class ProductsPanel extends JFrame {
         contentPane.add(clearBtn);
         clearBtn.setBounds(new Rectangle(new Point(155, 395), clearBtn.getPreferredSize()));
 
-        //---- label2 ----
-        label2.setText("Product ID:");
-        contentPane.add(label2);
-        label2.setBounds(new Rectangle(new Point(35, 175), label2.getPreferredSize()));
+        //---- IDLabel ----
+        IDLabel.setText("Product ID:");
+        contentPane.add(IDLabel);
+        IDLabel.setBounds(new Rectangle(new Point(35, 175), IDLabel.getPreferredSize()));
 
-        //---- label3 ----
-        label3.setText("Product Name:");
-        contentPane.add(label3);
-        label3.setBounds(new Rectangle(new Point(15, 215), label3.getPreferredSize()));
+        //---- nameLabel ----
+        nameLabel.setText("Product Name:");
+        contentPane.add(nameLabel);
+        nameLabel.setBounds(new Rectangle(new Point(15, 215), nameLabel.getPreferredSize()));
 
-        //---- label4 ----
-        label4.setText("Product Quantity:");
-        contentPane.add(label4);
-        label4.setBounds(new Rectangle(new Point(5, 260), label4.getPreferredSize()));
+        //---- quantityLabel ----
+        quantityLabel.setText("Product Quantity:");
+        contentPane.add(quantityLabel);
+        quantityLabel.setBounds(new Rectangle(new Point(5, 260), quantityLabel.getPreferredSize()));
 
-        //---- label5 ----
-        label5.setText("Product Price:");
-        contentPane.add(label5);
-        label5.setBounds(new Rectangle(new Point(25, 310), label5.getPreferredSize()));
+        //---- priceLabel ----
+        priceLabel.setText("Product Price:");
+        contentPane.add(priceLabel);
+        priceLabel.setBounds(new Rectangle(new Point(25, 310), priceLabel.getPreferredSize()));
 
         {
             // compute preferred size
@@ -223,10 +224,10 @@ public class ProductsPanel extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
     private JTextField searchField;
-    private JButton button1;
+    private JButton searchBtn;
     private JScrollPane productPane;
     private JTable productTable;
-    private JButton allLabel;
+    private JButton allBtn;
     private JTextField IDField;
     private JTextField nameField;
     private JTextField quantityField;
@@ -236,9 +237,9 @@ public class ProductsPanel extends JFrame {
     private JButton updateBtn;
     private JButton deleteBtn;
     private JButton clearBtn;
-    private JLabel label2;
-    private JLabel label3;
-    private JLabel label4;
-    private JLabel label5;
+    private JLabel IDLabel;
+    private JLabel nameLabel;
+    private JLabel quantityLabel;
+    private JLabel priceLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
