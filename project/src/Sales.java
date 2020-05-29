@@ -9,4 +9,7 @@ public class Sales {
     private JLabel quantityLabel;
     private JPanel amountLabel;
     private JButton reportButton;
+
+
+
 }
