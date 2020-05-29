@@ -5,6 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "this"
+			"title": "Login "
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userLabel"
 				"text": "USER:"
