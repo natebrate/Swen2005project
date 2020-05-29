@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 /*
@@ -93,7 +94,15 @@ public class SaleDetails extends JFrame {
                 new String[] {
                     "Date", "P_ID", "Quantity"
                 }
-            ));
+            ) {
+                Class<?>[] columnTypes = new Class<?>[] {
+                    Date.class, Integer.class, Integer.class
+                };
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+                    return columnTypes[columnIndex];
+                }
+            });
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);

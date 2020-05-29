@@ -138,9 +138,9 @@ new FormModel {
 						add( "P_ID" )
 						add( "Quantity" )
 					}, new java.util.Vector {
-						add( null )
-						add( null )
-						add( null )
+						add( class java.util.Date )
+						add( class java.lang.Integer )
+						add( class java.lang.Integer )
 					}, new java.util.Vector {
 						add( null )
 						add( null )
