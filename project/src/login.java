@@ -26,6 +26,8 @@ public class login extends JFrame {
         }
     }
 
+
+
     private void userFieldFocusGained(FocusEvent e) {
         // TODO add your code here
     }
