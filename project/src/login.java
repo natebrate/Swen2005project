@@ -16,7 +16,8 @@ public class login extends JFrame {
     }
 
     private void button1ActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        noUsernameCheck();
+        noPasswordCheck();
     }
 
     private void initComponents() {
@@ -92,4 +93,22 @@ public class login extends JFrame {
     private JButton button1;
     private JLabel loginLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+
+
+    // METHODS
+    private void noUsernameCheck()
+    {
+        if (userField.getText().isBlank())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a username!", "Enter a Username", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    private void noPasswordCheck()
+    {
+        if (String.valueOf(passwordField1.getPassword()).isBlank())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a password!", "Please enter a password", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
 }
