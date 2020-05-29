@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Fri May 29 12:37:06 BOT 2020
@@ -14,6 +15,10 @@ public class login extends JFrame {
         initComponents();
     }
 
+    private void button1ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -22,7 +27,6 @@ public class login extends JFrame {
         textField1 = new JTextField();
         passwordField1 = new JPasswordField();
         button1 = new JButton();
-        button2 = new JButton();
         label2 = new JLabel();
 
         //======== this ========
@@ -50,14 +54,10 @@ public class login extends JFrame {
         passwordField1.setBounds(105, 190, 220, passwordField1.getPreferredSize().height);
 
         //---- button1 ----
-        button1.setText("ENTER");
+        button1.setText("LOGIN");
+        button1.addActionListener(e -> button1ActionPerformed(e));
         contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(350, 300), button1.getPreferredSize()));
-
-        //---- button2 ----
-        button2.setText("CANCEL");
-        contentPane.add(button2);
-        button2.setBounds(new Rectangle(new Point(270, 300), button2.getPreferredSize()));
+        button1.setBounds(new Rectangle(new Point(225, 300), button1.getPreferredSize()));
 
         //---- label2 ----
         label2.setText("LOGIN");
@@ -90,7 +90,6 @@ public class login extends JFrame {
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JButton button1;
-    private JButton button2;
     private JLabel label2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
