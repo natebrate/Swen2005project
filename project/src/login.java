@@ -25,6 +25,10 @@ public class login extends JFrame {
         }
     }
 
+    private void userFieldFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -52,11 +56,14 @@ public class login extends JFrame {
 
         //---- userField ----
         userField.setText("Username");
+        userField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                userFieldFocusGained(e);
+            }
+        });
         contentPane.add(userField);
-        userField.setBounds(105, 150, 215, userField.getPreferredSize().height);
-
-        //---- passwordField1 ----
-        passwordField1.setText("Password");
+        userField.setBounds(105, 150, 220, userField.getPreferredSize().height);
         contentPane.add(passwordField1);
         passwordField1.setBounds(105, 190, 220, passwordField1.getPreferredSize().height);
 
