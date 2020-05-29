@@ -31,6 +31,7 @@ public class login extends JFrame {
         loginLabel = new JLabel();
 
         //======== this ========
+        setTitle("Login ");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 

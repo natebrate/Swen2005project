@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.*;
 /*
  * Created by JFormDesigner on Fri May 29 12:44:19 BOT 2020
  */
@@ -26,10 +27,19 @@ public class SaleDetails extends JFrame {
         searchField = new JTextField();
         salesPane = new JScrollPane();
         salesTable = new JTable();
-        label1 = new JLabel();
+        quantityLabel = new JLabel();
         amountLabels = new JLabel();
+        totalSoldLabel = new JLabel();
+        soldLabel = new JLabel();
+        displayButton = new JButton();
+        printButton = new JButton();
+        saveButton = new JButton();
+        dateLabel = new JLabel();
+        saleTitleLabel = new JLabel();
+        dayLabel = new JLabel();
 
         //======== this ========
+        setTitle("Sales Details");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -49,20 +59,88 @@ public class SaleDetails extends JFrame {
 
             //---- salesTable ----
             salesTable.setAutoCreateRowSorter(true);
+            salesTable.setModel(new DefaultTableModel(
+                new Object[][] {
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                    {null, null, null},
+                },
+                new String[] {
+                    "Date", "P_ID", "Quantity"
+                }
+            ));
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);
-        salesPane.setBounds(255, 40, 445, 355);
+        salesPane.setBounds(255, 65, 445, 325);
 
-        //---- label1 ----
-        label1.setText("Total Quantity Sold:");
-        contentPane.add(label1);
-        label1.setBounds(new Rectangle(new Point(255, 400), label1.getPreferredSize()));
+        //---- quantityLabel ----
+        quantityLabel.setText("Amount Items Sold:");
+        contentPane.add(quantityLabel);
+        quantityLabel.setBounds(new Rectangle(new Point(255, 400), quantityLabel.getPreferredSize()));
 
         //---- amountLabels ----
         amountLabels.setText("Quantity");
         contentPane.add(amountLabels);
         amountLabels.setBounds(new Rectangle(new Point(365, 400), amountLabels.getPreferredSize()));
+
+        //---- totalSoldLabel ----
+        totalSoldLabel.setText("Total Sold:");
+        contentPane.add(totalSoldLabel);
+        totalSoldLabel.setBounds(300, 425, 60, totalSoldLabel.getPreferredSize().height);
+
+        //---- soldLabel ----
+        soldLabel.setText("$00000000.00");
+        contentPane.add(soldLabel);
+        soldLabel.setBounds(new Rectangle(new Point(365, 425), soldLabel.getPreferredSize()));
+
+        //---- displayButton ----
+        displayButton.setText("Display Report");
+        contentPane.add(displayButton);
+        displayButton.setBounds(new Rectangle(new Point(5, 110), displayButton.getPreferredSize()));
+
+        //---- printButton ----
+        printButton.setText("Print Report");
+        contentPane.add(printButton);
+        printButton.setBounds(5, 145, 110, printButton.getPreferredSize().height);
+
+        //---- saveButton ----
+        saveButton.setText("Save Report");
+        contentPane.add(saveButton);
+        saveButton.setBounds(5, 185, 110, saveButton.getPreferredSize().height);
+
+        //---- dateLabel ----
+        dateLabel.setText("DATE:");
+        contentPane.add(dateLabel);
+        dateLabel.setBounds(15, 45, 35, dateLabel.getPreferredSize().height);
+
+        //---- saleTitleLabel ----
+        saleTitleLabel.setText("Sales Details:");
+        contentPane.add(saleTitleLabel);
+        saleTitleLabel.setBounds(255, 40, 115, saleTitleLabel.getPreferredSize().height);
+
+        //---- dayLabel ----
+        dayLabel.setText("MM/DD/YYYY");
+        contentPane.add(dayLabel);
+        dayLabel.setBounds(50, 45, 100, dayLabel.getPreferredSize().height);
 
         {
             // compute preferred size
@@ -89,7 +167,15 @@ public class SaleDetails extends JFrame {
     private JTextField searchField;
     private JScrollPane salesPane;
     private JTable salesTable;
-    private JLabel label1;
+    private JLabel quantityLabel;
     private JLabel amountLabels;
+    private JLabel totalSoldLabel;
+    private JLabel soldLabel;
+    private JButton displayButton;
+    private JButton printButton;
+    private JButton saveButton;
+    private JLabel dateLabel;
+    private JLabel saleTitleLabel;
+    private JLabel dayLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
