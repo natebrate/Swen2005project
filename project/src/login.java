@@ -8,7 +8,7 @@ import javax.swing.*;
 
 
 /**
- * @author unknown
+ * @author Zachary AIRD, Nathan BRAITHWAITE, Clem FRANCIS, Samuel LOWE
  */
 public class login extends JFrame {
     public login() {
