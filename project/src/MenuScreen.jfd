@@ -3,7 +3,9 @@ JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.4" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
 			name: "this"
 			"title": "Menu"
 			add( new FormComponent( "javax.swing.JLabel" ) {
