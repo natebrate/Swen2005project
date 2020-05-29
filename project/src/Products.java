@@ -18,6 +18,7 @@ public class Products {
     private JButton allButton;
     private JTextField IDTextField;
     private JTable jTable;
+    private JLabel statementLabel;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
