@@ -54,6 +54,7 @@ public class ProductsPanel extends JFrame {
         nameLabel = new JLabel();
         quantityLabel = new JLabel();
         priceLabel = new JLabel();
+        returnBtn = new JButton();
 
         //======== this ========
         setTitle("Product Details");
@@ -202,6 +203,11 @@ public class ProductsPanel extends JFrame {
         contentPane.add(priceLabel);
         priceLabel.setBounds(new Rectangle(new Point(25, 310), priceLabel.getPreferredSize()));
 
+        //---- returnBtn ----
+        returnBtn.setText("Return to Menu");
+        contentPane.add(returnBtn);
+        returnBtn.setBounds(15, 45, 290, returnBtn.getPreferredSize().height);
+
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -241,5 +247,6 @@ public class ProductsPanel extends JFrame {
     private JLabel nameLabel;
     private JLabel quantityLabel;
     private JLabel priceLabel;
+    private JButton returnBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

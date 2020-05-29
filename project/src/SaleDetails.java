@@ -43,6 +43,7 @@ public class SaleDetails extends JFrame {
         dayLabel = new JLabel();
         clearBtn = new JButton();
         idField = new JTextField();
+        returnBtn = new JButton();
 
         //======== this ========
         setTitle("Sales Details");
@@ -159,6 +160,11 @@ public class SaleDetails extends JFrame {
         contentPane.add(idField);
         idField.setBounds(15, 225, 95, idField.getPreferredSize().height);
 
+        //---- returnBtn ----
+        returnBtn.setText("Return to Menu");
+        contentPane.add(returnBtn);
+        returnBtn.setBounds(15, 265, 220, returnBtn.getPreferredSize().height);
+
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -196,5 +202,6 @@ public class SaleDetails extends JFrame {
     private JLabel dayLabel;
     private JButton clearBtn;
     private JTextField idField;
+    private JButton returnBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

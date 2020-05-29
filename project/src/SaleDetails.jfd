@@ -250,6 +250,14 @@ new FormModel {
 				"y": 225
 				"width": 95
 			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "returnBtn"
+				"text": "Return to Menu"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 15
+				"y": 265
+				"width": 220
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 720, 485 )
