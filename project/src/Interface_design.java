@@ -7,4 +7,7 @@ public class Interface_design {
     private JButton enterButton;
     private JButton cancelButton;
     private JPanel loginPanel;
+    private JLabel passLabel;
+    private JLabel userLabel;
+    private JLabel loginLabel;
 }
