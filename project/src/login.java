@@ -11,13 +11,18 @@ import javax.swing.*;
  * @author Zachary AIRD, Nathan BRAITHWAITE, Clem FRANCIS, Samuel LOWE
  */
 public class login extends JFrame {
+    static JFrame frame = null;
     public login() {
         initComponents();
     }
 
     private void button1ActionPerformed(ActionEvent e) {
-        noUsernameCheck();
-        noPasswordCheck();
+        // If there is no username, DO NOT run no password check. This is because each no---Check has an AddFocus. Also
+        // because we do not wish to bombard the user with popups
+        if(!noUsernameCheck())
+        {
+            noPasswordCheck();
+        }
     }
 
     private void initComponents() {
@@ -97,19 +102,33 @@ public class login extends JFrame {
 
 
     // METHODS
-    private void noUsernameCheck()
+    private boolean noUsernameCheck()
     {
         if (userField.getText().isBlank())
         {
             JOptionPane.showMessageDialog(null, "Please enter a username!", "Enter a Username", JOptionPane.WARNING_MESSAGE);
+            userField.requestFocus();
+            return true;
         }
+        return false;
     }
     private void noPasswordCheck()
     {
         if (String.valueOf(passwordField1.getPassword()).isBlank())
         {
             JOptionPane.showMessageDialog(null, "Please enter a password!", "Please enter a password", JOptionPane.WARNING_MESSAGE);
+            requestFocus();
         }
+    }
+
+    public static void main(String[] args) {
+         frame = new JFrame("Login");
+        frame.setContentPane(new login().rootPane);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
     }
 
 }
