@@ -22,31 +22,31 @@ public class login extends JFrame {
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
-        label1 = new JLabel();
+        userLabel = new JLabel();
         passLabel = new JLabel();
-        textField1 = new JTextField();
+        userField = new JTextField();
         passwordField1 = new JPasswordField();
         button1 = new JButton();
-        label2 = new JLabel();
+        loginLabel = new JLabel();
 
         //======== this ========
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
-        //---- label1 ----
-        label1.setText("USER:");
-        contentPane.add(label1);
-        label1.setBounds(5, 155, 90, label1.getPreferredSize().height);
+        //---- userLabel ----
+        userLabel.setText("USER:");
+        contentPane.add(userLabel);
+        userLabel.setBounds(5, 155, 90, userLabel.getPreferredSize().height);
 
         //---- passLabel ----
         passLabel.setText("PASSWORD:");
         contentPane.add(passLabel);
         passLabel.setBounds(0, 195, 100, passLabel.getPreferredSize().height);
 
-        //---- textField1 ----
-        textField1.setText("Username");
-        contentPane.add(textField1);
-        textField1.setBounds(105, 150, 215, textField1.getPreferredSize().height);
+        //---- userField ----
+        userField.setText("Username");
+        contentPane.add(userField);
+        userField.setBounds(105, 150, 215, userField.getPreferredSize().height);
 
         //---- passwordField1 ----
         passwordField1.setText("Password");
@@ -59,10 +59,10 @@ public class login extends JFrame {
         contentPane.add(button1);
         button1.setBounds(new Rectangle(new Point(225, 300), button1.getPreferredSize()));
 
-        //---- label2 ----
-        label2.setText("LOGIN");
-        contentPane.add(label2);
-        label2.setBounds(new Rectangle(new Point(235, 40), label2.getPreferredSize()));
+        //---- loginLabel ----
+        loginLabel.setText("LOGIN");
+        contentPane.add(loginLabel);
+        loginLabel.setBounds(new Rectangle(new Point(235, 40), loginLabel.getPreferredSize()));
 
         {
             // compute preferred size
@@ -85,11 +85,11 @@ public class login extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JLabel label1;
+    private JLabel userLabel;
     private JLabel passLabel;
-    private JTextField textField1;
+    private JTextField userField;
     private JPasswordField passwordField1;
     private JButton button1;
-    private JLabel label2;
+    private JLabel loginLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
