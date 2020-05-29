@@ -28,6 +28,12 @@ public class SaleDetails extends JFrame {
         salesTable = new JTable();
         label1 = new JLabel();
         amountLabels = new JLabel();
+        totalSoldLabel = new JLabel();
+        soldLabel = new JLabel();
+        displayButton = new JButton();
+        printButton = new JButton();
+        saveButton = new JButton();
+        dateLabel = new JLabel();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -64,6 +70,36 @@ public class SaleDetails extends JFrame {
         contentPane.add(amountLabels);
         amountLabels.setBounds(new Rectangle(new Point(365, 400), amountLabels.getPreferredSize()));
 
+        //---- totalSoldLabel ----
+        totalSoldLabel.setText("Total Sold:");
+        contentPane.add(totalSoldLabel);
+        totalSoldLabel.setBounds(new Rectangle(new Point(255, 425), totalSoldLabel.getPreferredSize()));
+
+        //---- soldLabel ----
+        soldLabel.setText("$00000000.00");
+        contentPane.add(soldLabel);
+        soldLabel.setBounds(new Rectangle(new Point(365, 425), soldLabel.getPreferredSize()));
+
+        //---- displayButton ----
+        displayButton.setText("Display Report");
+        contentPane.add(displayButton);
+        displayButton.setBounds(new Rectangle(new Point(5, 110), displayButton.getPreferredSize()));
+
+        //---- printButton ----
+        printButton.setText("Print Report");
+        contentPane.add(printButton);
+        printButton.setBounds(5, 145, 110, printButton.getPreferredSize().height);
+
+        //---- saveButton ----
+        saveButton.setText("Save Report");
+        contentPane.add(saveButton);
+        saveButton.setBounds(5, 185, 110, saveButton.getPreferredSize().height);
+
+        //---- dateLabel ----
+        dateLabel.setText("DATE");
+        contentPane.add(dateLabel);
+        dateLabel.setBounds(10, 45, 235, dateLabel.getPreferredSize().height);
+
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -91,5 +127,11 @@ public class SaleDetails extends JFrame {
     private JTable salesTable;
     private JLabel label1;
     private JLabel amountLabels;
+    private JLabel totalSoldLabel;
+    private JLabel soldLabel;
+    private JButton displayButton;
+    private JButton printButton;
+    private JButton saveButton;
+    private JLabel dateLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
