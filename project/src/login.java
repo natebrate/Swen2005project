@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import info.clearthought.layout.*;
 /*
  * Created by JFormDesigner on Fri May 29 12:37:06 BOT 2020
  */
