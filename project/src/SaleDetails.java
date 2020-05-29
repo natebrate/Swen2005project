@@ -20,6 +20,10 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
+    private void idFieldActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -37,6 +41,8 @@ public class SaleDetails extends JFrame {
         dateLabel = new JLabel();
         saleTitleLabel = new JLabel();
         dayLabel = new JLabel();
+        clearBtn = new JButton();
+        idField = new JTextField();
 
         //======== this ========
         setTitle("Sales Details");
@@ -115,17 +121,17 @@ public class SaleDetails extends JFrame {
         //---- displayButton ----
         displayButton.setText("Display Report");
         contentPane.add(displayButton);
-        displayButton.setBounds(new Rectangle(new Point(5, 110), displayButton.getPreferredSize()));
+        displayButton.setBounds(new Rectangle(new Point(130, 105), displayButton.getPreferredSize()));
 
         //---- printButton ----
         printButton.setText("Print Report");
         contentPane.add(printButton);
-        printButton.setBounds(5, 145, 110, printButton.getPreferredSize().height);
+        printButton.setBounds(130, 145, 110, printButton.getPreferredSize().height);
 
         //---- saveButton ----
         saveButton.setText("Save Report");
         contentPane.add(saveButton);
-        saveButton.setBounds(5, 185, 110, saveButton.getPreferredSize().height);
+        saveButton.setBounds(130, 185, 110, saveButton.getPreferredSize().height);
 
         //---- dateLabel ----
         dateLabel.setText("DATE:");
@@ -141,6 +147,17 @@ public class SaleDetails extends JFrame {
         dayLabel.setText("MM/DD/YYYY");
         contentPane.add(dayLabel);
         dayLabel.setBounds(50, 45, 100, dayLabel.getPreferredSize().height);
+
+        //---- clearBtn ----
+        clearBtn.setText("Clear Records");
+        contentPane.add(clearBtn);
+        clearBtn.setBounds(130, 225, 110, clearBtn.getPreferredSize().height);
+
+        //---- idField ----
+        idField.setText("ID");
+        idField.addActionListener(e -> idFieldActionPerformed(e));
+        contentPane.add(idField);
+        idField.setBounds(15, 225, 95, idField.getPreferredSize().height);
 
         {
             // compute preferred size
@@ -177,5 +194,7 @@ public class SaleDetails extends JFrame {
     private JLabel dateLabel;
     private JLabel saleTitleLabel;
     private JLabel dayLabel;
+    private JButton clearBtn;
+    private JTextField idField;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

@@ -10,17 +10,17 @@ new FormModel {
 				name: "userLabel"
 				"text": "USER:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 5
+				"x": 40
 				"y": 155
-				"width": 90
+				"width": 35
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "passLabel"
 				"text": "PASSWORD:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 0
+				"x": 10
 				"y": 195
-				"width": 100
+				"width": 70
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "userField"

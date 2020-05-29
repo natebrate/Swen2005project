@@ -47,12 +47,12 @@ public class login extends JFrame {
         //---- userLabel ----
         userLabel.setText("USER:");
         contentPane.add(userLabel);
-        userLabel.setBounds(5, 155, 90, userLabel.getPreferredSize().height);
+        userLabel.setBounds(40, 155, 35, userLabel.getPreferredSize().height);
 
         //---- passLabel ----
         passLabel.setText("PASSWORD:");
         contentPane.add(passLabel);
-        passLabel.setBounds(0, 195, 100, passLabel.getPreferredSize().height);
+        passLabel.setBounds(10, 195, 70, passLabel.getPreferredSize().height);
 
         //---- userField ----
         userField.setText("Username");
