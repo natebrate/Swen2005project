@@ -22,7 +22,7 @@ public class login extends JFrame {
         // because we do not wish to bombard the user with popups
         if(noUsernameCheck())
             if(noPasswordCheck())
-            //attemptLogin();
+            attemptLogin();
     }
 
 
@@ -136,9 +136,13 @@ public class login extends JFrame {
         if(dao.openConnection())
         {
             user = dao.userLogin(userField.getText(), String.valueOf(passwordField1.getPassword()));
-            System.out.println(user.getFullName());
-            frame.setVisible(false);
-            new MenuScreen(user);
+            if (user != null) {
+                frame.setVisible(false);
+                new MenuScreen(user);
+            }
+            else {
+                userField.requestFocus();
+            }
 
         }
         else
