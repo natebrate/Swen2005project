@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.sql.*;
+import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.text.SimpleDateFormat;
@@ -14,17 +16,20 @@ import java.util.Date;
  * @author unknown
  */
 public class SaleDetails extends javax.swing.JFrame {
-
     public int P_ID, quantity_sold;
 
     /**
      * Creates new form SaleDetails
      */
-    Vector <Salesdetails> vec = new Vector <Salesdetails> ();
+    Vector <details> vec = new Vector <details> ();
+
     public SaleDetails() {
 
         initComponents();
         int P_ID, quantity_sold;
+    }
+
+    public SaleDetails(String text, int quantity_sold) {
     }
 
 
@@ -72,6 +77,12 @@ public class SaleDetails extends javax.swing.JFrame {
             public void focusLost(FocusEvent e) {
                 checkRecord cd = new checkRecord();
                 cd.start();
+            }
+        });
+
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
             }
         });
 
@@ -202,18 +213,16 @@ public class SaleDetails extends javax.swing.JFrame {
 
     }
 
-    private void searchButtonActionPerformed(ActionEvent e) {
+    private void searchButtonActionPerformed(ActionEvent evt) {
         // TODO add your code here
-        if(searchButton.getText().isEmpty())
+        if(searchField.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Please enter an invoice number");
-            searchButton.requestFocus();
+            searchField.requestFocus();
             return;
         }
 
-
-        SaleDetails g = new SaleDetails(Integer.parseInt(P_ID.getText()), Integer.parseInt(quantity.getText()));
-        vec.addElement(g);
+        SaleDetails g = new SaleDetails(searchField.getText(), quantity_sold);
 
         SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
@@ -228,7 +237,7 @@ public class SaleDetails extends javax.swing.JFrame {
             rowData[2] = vec.elementAt(i).getQuantity_sold();
             model.addRow(rowData);
         }
-        searchButton.requestFocus();
+        searchField.requestFocus();
     }
 
     private void prodcodeActionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,26 +256,32 @@ public class SaleDetails extends javax.swing.JFrame {
         public void run() {
             try {
                 DAO salesDAO = new DAO();
-                if (salesDAO.openConnection()) {
+                if (salesDAO.openConnection())
+                {
                     saleDetailsCON thefind = null;
+
                     thefind = salesDAO.findsalesRecord(Integer.parseInt(searchField.getText()));
-                    if (thefind != null) {
+
+                    if (thefind != null)
+                    {
+
+                        searchField.setText(Integer.toString(thefind.getInvoice()));
+                        P_ID = thefind.getP_ID();
+                        quantity_sold = thefind.getQuantity_sold();
                     }
-                    searchField.setText(thefind.getInvoice());
-                    P_ID = thefind.getP_ID();
-                    quantity_sold = thefind.getQuantity_sold();
+
                 }
             } catch (Exception e) {
-                System.out.println("Error in Check data method call. Exception!");
+                System.out.println("Error in Check method call. Exception!");
             }
         }
     }
 
-    static class Salesdetails
+    public class details
     {
         int invoice, P_ID, quantity_sold, sub_total;
 
-        public Salesdetails(int invoice, int P_ID, int quantity_sold, int sub_total)
+        public details(int invoice, int P_ID, int quantity_sold, int sub_total)
         {
             this.invoice = invoice;
             this.P_ID = P_ID;
