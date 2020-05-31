@@ -19,7 +19,7 @@ public class saleDetailsCON {
             this.sub_total = sub_total;
         }
 
-        public int getInvoice()
+        public String getInvoice()
         {
             return invoice;
         }
