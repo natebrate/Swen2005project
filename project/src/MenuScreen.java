@@ -30,8 +30,8 @@ public class MenuScreen extends JFrame {
         saleDetialsBtn = new JButton();
         prodDetailsBtn = new JButton();
         userLabel = new JLabel();
-        fField = new JTextField();
-        lField = new JTextField();
+        fnameLabel = new JLabel();
+        lnameLabel = new JLabel();
 
         //======== this ========
         setTitle("Menu");
@@ -60,15 +60,15 @@ public class MenuScreen extends JFrame {
         contentPane.add(userLabel);
         userLabel.setBounds(new Rectangle(new Point(420, 10), userLabel.getPreferredSize()));
 
-        //---- fField ----
-        fField.setText("Fname");
-        contentPane.add(fField);
-        fField.setBounds(350, 30, 124, fField.getPreferredSize().height);
+        //---- fnameLabel ----
+        fnameLabel.setText("first name");
+        contentPane.add(fnameLabel);
+        fnameLabel.setBounds(370, 30, 95, fnameLabel.getPreferredSize().height);
 
-        //---- lField ----
-        lField.setText("Lname");
-        contentPane.add(lField);
-        lField.setBounds(350, 65, 125, lField.getPreferredSize().height);
+        //---- lnameLabel ----
+        lnameLabel.setText("last name");
+        contentPane.add(lnameLabel);
+        lnameLabel.setBounds(370, 55, 95, lnameLabel.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(480, 430));
         pack();
@@ -82,7 +82,7 @@ public class MenuScreen extends JFrame {
     private JButton saleDetialsBtn;
     private JButton prodDetailsBtn;
     private JLabel userLabel;
-    private JTextField fField;
-    private JTextField lField;
+    private JLabel fnameLabel;
+    private JLabel lnameLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

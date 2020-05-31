@@ -14,11 +14,17 @@ import javax.swing.table.*;
  */
 public class SaleDetails extends JFrame {
     public SaleDetails() {
+
+
         initComponents();
     }
 
+
+
     private void searchButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
+
+
     }
 
     private void idFieldActionPerformed(ActionEvent e) {
@@ -178,6 +184,36 @@ public class SaleDetails extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+
+    static class Salesdetails extends Thread {
+
+        int invoice, P_ID, quantity_sold, sub_total;
+
+        public Salesdetails(int invoice, int P_ID, int quantity_sold, int sub_total)
+        {
+            this.invoice = invoice;
+            this.P_ID = P_ID;
+            this.quantity_sold = quantity_sold;
+            this.sub_total = sub_total;
+        }
+        public int getInvoice()
+        {
+            return this.invoice;
+        }
+        public int getP_ID()
+        {
+            return this.P_ID;
+        }
+        public int getSub_total()
+        {
+            return this.sub_total;
+        }
+        public int getQuantity_sold()
+        {
+            return this.quantity_sold;
+        }
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
