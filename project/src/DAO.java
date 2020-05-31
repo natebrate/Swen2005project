@@ -29,8 +29,8 @@ public class DAO {
             System.out.println(ex.getMessage());
         }
     }
-    public String [] userLogin(String username, String password) {
-        //the mysql insert statement
+    public User userLogin(String username, String password) {
+        User theOne = null;
         String query = "select * from users where user_name=? and user_password=?";
         try {
             //create the mysql insert prepared statement
@@ -39,8 +39,7 @@ public class DAO {
             myPreStmt.setString(2, password);
             ResultSet rs = myPreStmt.executeQuery();
             if (rs.next()) {
-                String[] user = {String.valueOf(rs.getInt("user_ID")), rs.getString("first_name"),
-                rs.getString("last_name")};
+                theOne = new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(5), rs.getBoolean(6));
             }
             else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username Or Password",

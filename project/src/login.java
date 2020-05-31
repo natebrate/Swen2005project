@@ -12,6 +12,7 @@ import javax.swing.*;
  */
 public class login extends JFrame {
     static JFrame frame = null;
+    static User user;
     public login() {
         initComponents();
     }
@@ -126,7 +127,6 @@ public class login extends JFrame {
     }
     private void attemptLogin()
     {
-        String [] user;
         DAO dao = new DAO();
         if(dao.openConnection())
         {
