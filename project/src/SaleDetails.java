@@ -187,7 +187,7 @@ public class SaleDetails extends JFrame {
     }
 
 
-    static class Salesdetails extends Thread {
+    /*static class Salesdetails extends Thread {
 
         public void run(){
             try{
@@ -232,7 +232,7 @@ public class SaleDetails extends JFrame {
         {
             return this.quantity_sold;
         }
-    }
+    }*/
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown

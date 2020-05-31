@@ -13,6 +13,7 @@ import javax.swing.*;
 public class MenuScreen extends JFrame {
     public MenuScreen(User userLogin) {
         initComponents();
+
         // Personalise the menu screen to match the user's login credentials
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
         fnameLabel.setText(userLogin.getFirstName());
