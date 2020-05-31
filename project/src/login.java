@@ -140,7 +140,7 @@ public class login extends JFrame {
         {
             user = dao.userLogin(userField.getText(), String.valueOf(passwordField1.getPassword()));
             frame.setVisible(false);
-            new MenuScreen();
+            new MenuScreen(user);
 
         }
         else
