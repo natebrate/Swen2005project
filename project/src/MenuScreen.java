@@ -68,17 +68,17 @@ public class MenuScreen extends JFrame {
         //---- userLabel ----
         userLabel.setText("User");
         contentPane.add(userLabel);
-        userLabel.setBounds(new Rectangle(new Point(420, 10), userLabel.getPreferredSize()));
+        userLabel.setBounds(325, 10, 118, userLabel.getPreferredSize().height);
 
         //---- fnameLabel ----
         fnameLabel.setText("first name");
         contentPane.add(fnameLabel);
-        fnameLabel.setBounds(370, 30, 95, fnameLabel.getPreferredSize().height);
+        fnameLabel.setBounds(325, 30, 140, fnameLabel.getPreferredSize().height);
 
         //---- lnameLabel ----
         lnameLabel.setText("last name");
         contentPane.add(lnameLabel);
-        lnameLabel.setBounds(370, 55, 95, lnameLabel.getPreferredSize().height);
+        lnameLabel.setBounds(325, 55, 140, lnameLabel.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(480, 430));
         pack();
