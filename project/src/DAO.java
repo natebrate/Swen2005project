@@ -41,10 +41,6 @@ public class DAO {
             if (rs.next()) {
                 String[] user = {String.valueOf(rs.getInt("user_ID")), rs.getString("first_name"),
                 rs.getString("last_name")};
-                for (String i : user)
-                {
-                    System.out.println(i);
-                }
             }
             else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username Or Password",
