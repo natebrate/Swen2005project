@@ -34,5 +34,20 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+    public boolean getIsAdmin()
+    {
+        return isAdmin;
+    }
+
+    public String adminCredentials()
+    {
+        if (getIsAdmin())
+        {
+            return "ADMIN";
+        }
+        else
+            return "";
+    }
 }
 
