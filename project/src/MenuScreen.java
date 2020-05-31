@@ -27,7 +27,7 @@ public class MenuScreen extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         menuLabel = new JLabel();
-        saleDetialsBtn = new JButton();
+        salesDetailsBtn = new JButton();
         prodDetailsBtn = new JButton();
         userLabel = new JLabel();
         fnameLabel = new JLabel();
@@ -43,11 +43,11 @@ public class MenuScreen extends JFrame {
         contentPane.add(menuLabel);
         menuLabel.setBounds(new Rectangle(new Point(10, 10), menuLabel.getPreferredSize()));
 
-        //---- saleDetialsBtn ----
-        saleDetialsBtn.setText("Sale Details");
-        saleDetialsBtn.addActionListener(e -> saleDetialsBtnActionPerformed(e));
-        contentPane.add(saleDetialsBtn);
-        saleDetialsBtn.setBounds(75, 145, 295, saleDetialsBtn.getPreferredSize().height);
+        //---- salesDetailsBtn ----
+        salesDetailsBtn.setText("Sale Details");
+        salesDetailsBtn.addActionListener(e -> saleDetialsBtnActionPerformed(e));
+        contentPane.add(salesDetailsBtn);
+        salesDetailsBtn.setBounds(75, 145, 295, salesDetailsBtn.getPreferredSize().height);
 
         //---- prodDetailsBtn ----
         prodDetailsBtn.setText("Product Details");
@@ -79,7 +79,7 @@ public class MenuScreen extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
     private JLabel menuLabel;
-    private JButton saleDetialsBtn;
+    private JButton salesDetailsBtn;
     private JButton prodDetailsBtn;
     private JLabel userLabel;
     private JLabel fnameLabel;

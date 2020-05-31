@@ -54,5 +54,26 @@ public class DAO {
         return null;
     }
 
+    /*Use to find invoice in the sales details*/
+    public saleDetailsCON findsalesRecord(int code)
+    {
+        saleDetailsCON theOne = null;
+        //the mysql insert statement
+        String query = "select * from sales_details where invoice = ?";
+        try {
+            //create the mysql insert preparedstatement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, code);
+            ResultSet rs = myPreStmt.executeQuery();
+            while (rs.next()) {
+                theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getInt("sub_total "));
+            }
+        } catch (Exception e) {
+            System.out.println("Got an exception! Error in Find Record");
+            System.out.println(e.getMessage());
+        }
+        return theOne;
+    }
+
 
 }

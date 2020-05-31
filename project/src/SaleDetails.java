@@ -189,6 +189,24 @@ public class SaleDetails extends JFrame {
 
     static class Salesdetails extends Thread {
 
+        public void run(){
+            try{
+                DAO salesDAO = new DAO();
+                if (salesDAO.openConnection()){
+                    saleDetailsCON thefind = null;
+                    thefind = salesDAO.findsalesRecord(Integer.parseInt(invoice.getText()));
+                if (thefind != null){
+                }
+                    jLabel2.setText(thefind.getInvoice());
+                    jLabel4.setText(Float.toString(thefind.getUnitprice()));
+                    unitprice = thefind.getUnitprice();
+                    prodname = thefind.getProdname();
+                }
+            } catch (Exception e) {
+                System.out.println("Error in Check data method call. Exception!");
+            }
+        }
+
         int invoice, P_ID, quantity_sold, sub_total;
 
         public Salesdetails(int invoice, int P_ID, int quantity_sold, int sub_total)
