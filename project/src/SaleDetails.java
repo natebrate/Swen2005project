@@ -58,13 +58,22 @@ public class SaleDetails extends javax.swing.JFrame {
         searchButton.setText("Search");
         //searchButton.addActionListener(e -> searchButtonActionPerformed(e));
 
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
+        searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                prodcodeActionPerformed(e);
+                prodcodeActionPerformed(evt);
             }
         });
 
+        searchField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) { }
+            @Override
+            public void focusLost(FocusEvent e) {
+                checkRecord cd = new checkRecord();
+                cd.start();
+            }
+        });
 
         contentPane.add(searchButton);
         searchButton.setBounds(new Rectangle(new Point(630, 5), searchButton.getPreferredSize()));
@@ -240,10 +249,10 @@ public class SaleDetails extends javax.swing.JFrame {
                 DAO salesDAO = new DAO();
                 if (salesDAO.openConnection()) {
                     saleDetailsCON thefind = null;
-                    thefind = salesDAO.findsalesRecord(Integer.parseInt(searchButton.getText()));
+                    thefind = salesDAO.findsalesRecord(Integer.parseInt(searchField.getText()));
                     if (thefind != null) {
                     }
-                    searchButton.setText(thefind.getInvoice());
+                    searchField.setText(thefind.getInvoice());
                     P_ID = thefind.getP_ID();
                     quantity_sold = thefind.getQuantity_sold();
                 }

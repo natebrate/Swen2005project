@@ -7,11 +7,14 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://remotemysql.com:3306/bNop6iwTmM</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="swen2005_finalproject@localhost" uuid="26b4512e-5059-4266-8790-19a6c8a2d927">
+    <data-source source="LOCAL" name="swen2005_finalproject@localhost" uuid="6c4cd9df-e769-4ca7-a0b0-545e9e5c1895">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/swen2005_finalproject</jdbc-url>
+      <driver-properties>
+        <property name="serverTimezone" value="UTC" />
+      </driver-properties>
     </data-source>
   </component>
 </project>
