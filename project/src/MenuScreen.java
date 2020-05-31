@@ -18,6 +18,11 @@ public class MenuScreen extends JFrame {
         fnameLabel.setText(userLogin.getFirstName());
         lnameLabel.setText(userLogin.getLastName());
 
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     private void saleDetialsBtnActionPerformed(ActionEvent e) {
