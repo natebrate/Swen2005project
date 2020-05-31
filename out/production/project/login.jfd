@@ -3,22 +3,24 @@ JFDML JFormDesigner: "7.0.1.0.272" Java: "11.0.4" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
 			name: "this"
 			"title": "Login "
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userLabel"
 				"text": "USER:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 5
+				"x": 40
 				"y": 155
-				"width": 90
+				"width": 55
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "passLabel"
 				"text": "PASSWORD:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 0
+				"x": 10
 				"y": 195
 				"width": 100
 			} )
@@ -27,14 +29,14 @@ new FormModel {
 				"text": "Username"
 				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "userFieldFocusGained", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 105
-				"y": 150
+				"x": 145
+				"y": 145
 				"width": 220
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "passwordField1"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 105
+				"x": 145
 				"y": 190
 				"width": 220
 			} )
@@ -54,8 +56,8 @@ new FormModel {
 				"y": 40
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 520, 405 )
+			"location": new java.awt.Point( 300, 80 )
+			"size": new java.awt.Dimension( 505, 405 )
 		} )
 	}
 }

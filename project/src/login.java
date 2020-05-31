@@ -20,14 +20,9 @@ public class login extends JFrame {
     private void button1ActionPerformed(ActionEvent e) {
         // If there is no username, DO NOT run no password check. This is because each no---Check has an AddFocus. Also
         // because we do not wish to bombard the user with popups
-        if(!noUsernameCheck())
-        {
-            noPasswordCheck();
-        }
-        else
-        {
-            attemptLogin();
-        }
+        if(noUsernameCheck())
+            if(noPasswordCheck())
+            //attemptLogin();
     }
 
 
@@ -117,19 +112,21 @@ public class login extends JFrame {
             JOptionPane.showMessageDialog(null, "Please enter a username!",
                     "Enter a Username", JOptionPane.WARNING_MESSAGE);
             userField.requestFocus();
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
-    private void noPasswordCheck()
+    private Boolean noPasswordCheck()
             // Returns an error warning to user if the password field is blank
     {
         if (String.valueOf(passwordField1.getPassword()).isBlank())
         {
             JOptionPane.showMessageDialog(null, "Please enter a password!",
                     "Please enter a password", JOptionPane.WARNING_MESSAGE);
-            requestFocus();
+            passwordField1.requestFocus();
+            return false;
         }
+        return true;
     }
     private void attemptLogin()
     {
@@ -139,6 +136,7 @@ public class login extends JFrame {
         if(dao.openConnection())
         {
             user = dao.userLogin(userField.getText(), String.valueOf(passwordField1.getPassword()));
+            System.out.println(user.getFullName());
             frame.setVisible(false);
             new MenuScreen(user);
 
@@ -152,7 +150,7 @@ public class login extends JFrame {
     }
 
     public static void main(String[] args) {
-         frame = new JFrame("Login");
+        frame = new JFrame("Login");
         frame.setContentPane(new login().rootPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
