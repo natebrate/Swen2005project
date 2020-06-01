@@ -157,6 +157,16 @@ public class ProductsPanel extends JFrame {
         IDField.setBounds(120, 65, 190, IDField.getPreferredSize().height);
         IDField.addActionListener(e -> IDFieldActionPerformed(e));
         contentPane.add(IDField);
+        // --- FOCUS LISTENER ----
+        IDField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) { }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
 
         //---- nameField ----
         nameField.setVisible(false);
