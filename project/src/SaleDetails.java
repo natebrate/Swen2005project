@@ -240,9 +240,7 @@ public class SaleDetails extends javax.swing.JFrame {
         if (dao.openConnection())
         {
             saleDetailsCON thefind = null;
-
             thefind = dao.findsalesRecord(Integer.parseInt(searchField.getText()));
-
             if (thefind != null)
             {
                 searchField.setText(Integer.toString(thefind.getInvoice()));
@@ -279,10 +277,6 @@ public class SaleDetails extends javax.swing.JFrame {
         }
         dao.closeConnection();
     }
-    private void prodcodeActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
 
 
     private void idFieldActionPerformed(ActionEvent e) {
