@@ -143,7 +143,6 @@ public class login extends JFrame {
             else {
                 userField.requestFocus();
             }
-
         }
         else
             // If Username-Password combination is incorrect

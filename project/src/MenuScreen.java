@@ -12,6 +12,7 @@ import javax.swing.*;
  * @author unknown
  */
 public class MenuScreen extends JFrame {
+    // Instantiate User class in order to carry on credentials into main menu
     User userLogin;
     public MenuScreen(User userLogin) {
         initComponents();
@@ -22,6 +23,7 @@ public class MenuScreen extends JFrame {
         fnameLabel.setText(userLogin.getFirstName());
         lnameLabel.setText(userLogin.getLastName());
 
+        // Load this menu
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

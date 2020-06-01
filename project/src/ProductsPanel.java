@@ -21,6 +21,8 @@ public class ProductsPanel extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Populate JTable from Database
         DAO dao = new DAO();
         if (dao.openConnection()) {
             dao.loadProductsTable(productTable);

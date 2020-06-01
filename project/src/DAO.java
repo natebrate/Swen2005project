@@ -83,7 +83,39 @@ public class DAO {
         {
             e.printStackTrace();
         }
+    }
+    public void insertProduct(Product theProd) {
+        //the mysql insert statement
+        String query = "insert into products (name, quantity, price) values (?,?,?)";
 
+        //create the mysql insert prepared statement
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setString(1, theProd.getName());
+            myPreStmt.setInt(2, theProd.getQuantity());
+            myPreStmt.setDouble(3, theProd.getPrice());
+
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
+    public void deleteProdRecord(int id) {
+        //the mysql insert statement
+        String query = "delete from products where prod_id = ?";
+
+        try {
+            //create the mysql insert prepared statement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, id);
+            //execute the preparedstatement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
     }
 
     /*Use to find invoice in the sales details*/
