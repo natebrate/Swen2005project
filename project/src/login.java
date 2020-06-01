@@ -44,6 +44,21 @@ public class login extends JFrame {
         // TODO add your code here
     }
 
+    private void loginBtnKeyPressed(KeyEvent e) {
+        // TODO add your code here
+    }
+
+    private void passwordField1KeyPressed(KeyEvent e) {
+
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            Toolkit.getDefaultToolkit().beep();
+            System.out.println("ENTER pressed");
+            attemptLogin();
+
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -51,7 +66,7 @@ public class login extends JFrame {
         passLabel = new JLabel();
         userField = new JTextField();
         passwordField1 = new JPasswordField();
-        button1 = new JButton();
+        loginBtn = new JButton();
         loginLabel = new JLabel();
 
         //======== this ========
@@ -83,14 +98,26 @@ public class login extends JFrame {
 
         //---- passwordField1 ----
         passwordField1.addActionListener(e -> passwordField1ActionPerformed(e));
+        passwordField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                passwordField1KeyPressed(e);
+            }
+        });
         contentPane.add(passwordField1);
         passwordField1.setBounds(145, 190, 220, passwordField1.getPreferredSize().height);
 
-        //---- button1 ----
-        button1.setText("LOGIN");
-        button1.addActionListener(e -> button1ActionPerformed(e));
-        contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(225, 300), button1.getPreferredSize()));
+        //---- loginBtn ----
+        loginBtn.setText("LOGIN");
+        loginBtn.addActionListener(e -> button1ActionPerformed(e));
+        loginBtn.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                loginBtnKeyPressed(e);
+            }
+        });
+        contentPane.add(loginBtn);
+        loginBtn.setBounds(new Rectangle(new Point(225, 300), loginBtn.getPreferredSize()));
 
         //---- loginLabel ----
         loginLabel.setText("LOGIN");
@@ -109,7 +136,7 @@ public class login extends JFrame {
     private JLabel passLabel;
     private JTextField userField;
     private JPasswordField passwordField1;
-    private JButton button1;
+    private JButton loginBtn;
     private JLabel loginLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
