@@ -17,6 +17,7 @@ import java.util.Date;
  */
 public class SaleDetails extends javax.swing.JFrame {
     public int P_ID, quantity_sold;
+    public String search;
 
     /**
      * Creates new form SaleDetails
@@ -30,6 +31,15 @@ public class SaleDetails extends javax.swing.JFrame {
     }
 
     public SaleDetails(String text, int quantity_sold) {
+    }
+
+    private void searchFieldKeyPressed(KeyEvent e) {
+        // TODO add your code here
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            Toolkit.getDefaultToolkit().beep();
+            fillTable();
+        }
     }
 
 
@@ -70,6 +80,12 @@ public class SaleDetails extends javax.swing.JFrame {
 
         //---- searchField ----
         searchField.setText("Search");
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                searchFieldKeyPressed(e);
+            }
+        });
         contentPane.add(searchField);
         searchField.setBounds(10, 5, 620, searchField.getPreferredSize().height);
 
@@ -213,27 +229,56 @@ public class SaleDetails extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null, "Please enter an invoice number");
             searchField.requestFocus();
+            fillTable();
             return;
         }
-
-        SaleDetails g = new SaleDetails(searchField.getText(), quantity_sold);
-
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
-
-        DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
-        Object rowData[] = new Object[3];
-        model.setRowCount(0);
-        for (int i=0;i < vec.size(); i++)
-        {
-            rowData[0] = formatter.format(date);
-            rowData[1] = vec.elementAt(i).getP_ID();
-            rowData[2] = vec.elementAt(i).getQuantity_sold();
-            model.addRow(rowData);
-        }
-        searchField.requestFocus();
     }
 
+    private void fillTable()
+    {
+        DAO dao = new DAO();
+        if (dao.openConnection())
+        {
+            saleDetailsCON thefind = null;
+
+            thefind = dao.findsalesRecord(Integer.parseInt(searchField.getText()));
+
+            if (thefind != null)
+            {
+                searchField.setText(Integer.toString(thefind.getInvoice()));
+                P_ID = thefind.getP_ID();
+                quantity_sold = thefind.getQuantity_sold();
+                fillTable();
+
+                SaleDetails g = new SaleDetails(searchField.getText(), quantity_sold);
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+                Date date = new Date(System.currentTimeMillis());
+
+                DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+                Object rowData[] = new Object[3];
+                model.setRowCount(0);
+                for (int i = 0; i < vec.size(); i++) {
+                    rowData[0] = formatter.format(date);
+                    rowData[1] = vec.elementAt(i).getP_ID();
+                    rowData[2] = vec.elementAt(i).getQuantity_sold();
+                    model.addRow(rowData);
+                }
+                searchField.requestFocus();
+
+            }
+            else {
+                searchField.requestFocus();
+            }
+
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Sorry Invoice doesn't exist",
+                    "Sorry Invoice doesn't exist", JOptionPane.WARNING_MESSAGE);
+        }
+        dao.closeConnection();
+    }
     private void prodcodeActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -245,26 +290,34 @@ public class SaleDetails extends javax.swing.JFrame {
     }
 
 
-    class checkRecord extends Thread {
+    class checkInvoice extends Thread {
 
         public void run() {
             try {
-                DAO salesDAO = new DAO();
-                if (salesDAO.openConnection())
+                DAO dao = new DAO();
+                if (dao.openConnection())
                 {
                     saleDetailsCON thefind = null;
 
-                    thefind = salesDAO.findsalesRecord(Integer.parseInt(searchField.getText()));
+                    thefind = dao.findsalesRecord(Integer.parseInt(searchField.getText()));
 
                     if (thefind != null)
                     {
-
                         searchField.setText(Integer.toString(thefind.getInvoice()));
                         P_ID = thefind.getP_ID();
                         quantity_sold = thefind.getQuantity_sold();
                     }
+                    else {
+                        searchField.requestFocus();
+                    }
 
                 }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Sorry Invoice doesn't exist",
+                            "Sorry Invoice doesn't exist", JOptionPane.WARNING_MESSAGE);
+                }
+                dao.closeConnection();
             } catch (Exception e) {
                 System.out.println("Error in Check method call. Exception!");
             }

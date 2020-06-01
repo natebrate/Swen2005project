@@ -44,10 +44,6 @@ public class login extends JFrame {
         // TODO add your code here
     }
 
-    private void loginBtnKeyPressed(KeyEvent e) {
-        // TODO add your code here
-    }
-
     private void passwordField1KeyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
@@ -109,12 +105,6 @@ public class login extends JFrame {
         //---- loginBtn ----
         loginBtn.setText("LOGIN");
         loginBtn.addActionListener(e -> button1ActionPerformed(e));
-        loginBtn.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                loginBtnKeyPressed(e);
-            }
-        });
         contentPane.add(loginBtn);
         loginBtn.setBounds(new Rectangle(new Point(225, 300), loginBtn.getPreferredSize()));
 
