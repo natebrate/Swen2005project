@@ -13,8 +13,13 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class ProductsPanel extends JFrame {
-    public ProductsPanel() {
+    public ProductsPanel(User userLogin) {
         initComponents();
+
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void productPanePropertyChange(PropertyChangeEvent e) {

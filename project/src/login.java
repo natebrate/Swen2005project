@@ -146,6 +146,7 @@ public class login extends JFrame {
 
         }
         else
+            // If Username-Password combination is incorrect
         {
             JOptionPane.showMessageDialog(null, "Sorry incorrect username or password",
                     "Incorrect username or password", JOptionPane.WARNING_MESSAGE);

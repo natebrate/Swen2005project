@@ -11,8 +11,10 @@ import javax.swing.*;
  * @author unknown
  */
 public class MenuScreen extends JFrame {
+    User userLogin;
     public MenuScreen(User userLogin) {
         initComponents();
+        this.userLogin = userLogin;
 
         // Personalise the menu screen to match the user's login credentials
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
@@ -31,7 +33,7 @@ public class MenuScreen extends JFrame {
     }
 
     private void prodDetailsBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        new ProductsPanel(userLogin);
     }
 
     private void initComponents() {
