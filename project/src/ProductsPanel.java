@@ -33,6 +33,26 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
+    private void updateBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void addBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void deleteBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void clearBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void IDFieldActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
