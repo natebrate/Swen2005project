@@ -51,19 +51,19 @@ public class MenuScreen extends JFrame {
         //---- menuLabel ----
         menuLabel.setText("Menu");
         contentPane.add(menuLabel);
-        menuLabel.setBounds(new Rectangle(new Point(10, 10), menuLabel.getPreferredSize()));
+        menuLabel.setBounds(10, 10, 50, menuLabel.getPreferredSize().height);
 
         //---- salesDetailsBtn ----
         salesDetailsBtn.setText("Sale Details");
         salesDetailsBtn.addActionListener(e -> saleDetialsBtnActionPerformed(e));
         contentPane.add(salesDetailsBtn);
-        salesDetailsBtn.setBounds(75, 145, 295, salesDetailsBtn.getPreferredSize().height);
+        salesDetailsBtn.setBounds(85, 145, 300, salesDetailsBtn.getPreferredSize().height);
 
         //---- prodDetailsBtn ----
         prodDetailsBtn.setText("Product Details");
         prodDetailsBtn.addActionListener(e -> prodDetailsBtnActionPerformed(e));
         contentPane.add(prodDetailsBtn);
-        prodDetailsBtn.setBounds(75, 185, 295, prodDetailsBtn.getPreferredSize().height);
+        prodDetailsBtn.setBounds(85, 185, 300, prodDetailsBtn.getPreferredSize().height);
 
         //---- userLabel ----
         userLabel.setText("User");
@@ -80,7 +80,7 @@ public class MenuScreen extends JFrame {
         contentPane.add(lnameLabel);
         lnameLabel.setBounds(325, 55, 140, lnameLabel.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(480, 430));
+        contentPane.setPreferredSize(new Dimension(480, 415));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
