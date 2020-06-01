@@ -137,6 +137,49 @@ public class DAO {
         }
     }
 
+    public void deleteSaleRecord(int id) {
+        //the mysql insert statement
+        String query = "delete from sales_details where invoice = ?";
+
+        try {
+            //create the mysql insert prepared statement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, id);
+            //execute the preparedstatement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void loadSalesDetailsTable (JTable table) throws SQLException {
+        try {
+            String query = "SELECT * from sales_details where invoice  = ?";
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            ResultSet rs = myPreStmt.executeQuery();
+            //To remove previously added rows
+            while(table.getRowCount() > 0)
+            {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while(rs.next())
+            {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++)
+                {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
         public saleDetailsCON findsalesRecord (int code)
         {
             saleDetailsCON theOne = null;
