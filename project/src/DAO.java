@@ -60,7 +60,7 @@ public class DAO {
 
     public void loadProductsTable(JTable table) throws SQLException {
         try {
-            String query = "Select * from products";
+            String query = "SELECT * from products order by name";
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
