@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.table.*;
 /*
@@ -13,13 +14,19 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class ProductsPanel extends JFrame {
-    public ProductsPanel(User userLogin) {
+    public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
 
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.loadProductsTable(productTable);
+        }
+
+
     }
 
     private void productPanePropertyChange(PropertyChangeEvent e) {

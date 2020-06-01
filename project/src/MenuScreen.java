@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Fri May 29 14:19:37 BOT 2020
@@ -32,7 +33,7 @@ public class MenuScreen extends JFrame {
         // TODO add your code here
     }
 
-    private void prodDetailsBtnActionPerformed(ActionEvent e) {
+    private void prodDetailsBtnActionPerformed(ActionEvent e) throws SQLException {
         new ProductsPanel(userLogin);
     }
 
@@ -64,7 +65,13 @@ public class MenuScreen extends JFrame {
 
         //---- prodDetailsBtn ----
         prodDetailsBtn.setText("Product Details");
-        prodDetailsBtn.addActionListener(e -> prodDetailsBtnActionPerformed(e));
+        prodDetailsBtn.addActionListener(e -> {
+            try {
+                prodDetailsBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(prodDetailsBtn);
         prodDetailsBtn.setBounds(75, 185, 295, prodDetailsBtn.getPreferredSize().height);
 

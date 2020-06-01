@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.sql.*;
+import java.util.Vector;
+import javax.swing.table.*;
 
 public class DAO {
     private Connection myConn = null;
@@ -54,6 +56,34 @@ public class DAO {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public void loadProductsTable(JTable table) throws SQLException {
+        try {
+            String query = "Select * from products";
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            ResultSet rs = myPreStmt.executeQuery();
+            //To remove previously added rows
+            while(table.getRowCount() > 0)
+            {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while(rs.next())
+            {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++)
+                {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     /*Use to find invoice in the sales details*/
