@@ -63,8 +63,8 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
-    private void button1ActionPerformed(ActionEvent e) {
-        // TODO add your code here
+    private void IDFieldActionPerformed(ActionEvent e) {
+        beginSearch();
     }
 
     private void initComponents() {
@@ -160,11 +160,15 @@ public class ProductsPanel extends JFrame {
         // --- FOCUS LISTENER ----
         IDField.addFocusListener(new FocusListener() {
             @Override
-            public void focusGained(FocusEvent e) { }
+            public void focusGained(FocusEvent e) {
+//                checkData cd = new checkData();
+//                cd.start();
+            }
 
             @Override
             public void focusLost(FocusEvent e) {
-
+//                checkData cd = new checkData();
+//                cd.start();
             }
         });
 
@@ -243,6 +247,8 @@ public class ProductsPanel extends JFrame {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
+
+
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
     private JScrollPane productPane;
@@ -263,28 +269,47 @@ public class ProductsPanel extends JFrame {
     private JButton returnBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    class checkData extends Thread
+//    class checkData extends Thread
+//    {
+//        public void run() throws NumberFormatException //This exception needed as this runs when the num field is blank
+//        {
+//            try {
+//                DAO dao = new DAO();
+//                if (dao.openConnection())
+//                {
+//                    Product thefind;
+//                    thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
+//                    dao.closeConnection();
+//                    if (thefind != null)
+//                    {
+//                        nameField.setText(thefind.getName());
+//                        quantityField.setText(String.valueOf(thefind.getQuantity()));
+//                        priceField.setText(String.valueOf(thefind.getPrice()));
+//                        addUpdateBtn.setText("Update");
+//                        deleteBtn.setVisible(true);
+//                    }
+//                }
+//            } catch (NumberFormatException ignored) { //Do nothing about the exception. It is harmless
+//            }
+//        }
+//    }
+    private void beginSearch()
     {
-        public void run() throws NumberFormatException //This exception needed as this runs when the num field is blank
+        DAO dao = new DAO();
+        if (dao.openConnection())
         {
-            try {
-                DAO dao = new DAO();
-                if (dao.openConnection())
-                {
-                    Product thefind = null;
-                    thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
-                    dao.closeConnection();
-                    if (thefind != null)
-                    {
-                        nameField.setText(thefind.getName());
-                        quantityField.setText(String.valueOf(thefind.getQuantity()));
-                        priceField.setText(String.valueOf(thefind.getPrice()));
-                        addUpdateBtn.setText("Update");
-                        deleteBtn.setVisible(true);
-                    }
-                }
-            } catch (NumberFormatException ignored) { //Do nothing about the exception. It is harmless
+            Product thefind;
+            thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
+            dao.closeConnection();
+            if (thefind != null)
+            {
+                nameField.setText(thefind.getName());
+                quantityField.setText(String.valueOf(thefind.getQuantity()));
+                priceField.setText(String.valueOf(thefind.getPrice()));
+                addUpdateBtn.setText("Update");
+                deleteBtn.setVisible(true);
             }
         }
+
     }
 }

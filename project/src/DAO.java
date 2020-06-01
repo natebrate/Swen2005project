@@ -149,7 +149,7 @@ public class DAO {
             while (rs.next()) {
                 theOne = new Product(rs.getInt("prod_id"), rs.getString("name"),
                         rs.getInt("quantity"), rs.getDouble("price"));
-                theOne.setProd_id(rs.getInt("id"));
+                theOne.setProd_id(rs.getInt("prod_id"));
             }
         } catch (Exception e) {
             System.out.println("Got an exception!");
