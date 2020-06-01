@@ -15,6 +15,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 630
 				"y": 5
+				"width": 110
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "searchField"
@@ -155,7 +156,7 @@ new FormModel {
 					} )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 275
+				"x": 280
 				"y": 90
 				"height": 325
 				"width": 445
@@ -164,43 +165,48 @@ new FormModel {
 				name: "quantityLabel"
 				"text": "Amount Items Sold:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 250
-				"y": 415
+				"x": 295
+				"y": 430
+				"width": 120
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "amountLabels"
 				"text": "Quantity"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 380
-				"y": 415
+				"x": 455
+				"y": 430
+				"width": 150
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "totalSoldLabel"
 				"text": "Total Sold:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 295
-				"y": 445
-				"width": 60
+				"y": 455
+				"width": 120
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "soldLabel"
 				"text": "$00000000.00"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 370
-				"y": 445
+				"x": 455
+				"y": 455
+				"width": 150
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "displayButton"
 				"text": "Display Report"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "displayButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 130
+				"x": 133
 				"y": 155
+				"width": 110
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "printButton"
 				"text": "Print Report"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 130
+				"x": 133
 				"y": 200
 				"width": 110
 			} )
@@ -208,15 +214,16 @@ new FormModel {
 				name: "saveButton"
 				"text": "Save Report"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 130
+				"x": 133
 				"y": 240
 				"width": 110
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "clearBtn"
 				"text": "Clear Records"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clearBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 130
+				"x": 133
 				"y": 280
 				"width": 110
 			} )
@@ -224,9 +231,9 @@ new FormModel {
 				name: "returnBtn"
 				"text": "Return to Menu"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 20
+				"x": 15
 				"y": 325
-				"width": 220
+				"width": 230
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "dateLabel"
@@ -248,7 +255,7 @@ new FormModel {
 				name: "dayLabel"
 				"text": "MM/DD/YYYY"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 50
+				"x": 55
 				"y": 45
 				"width": 100
 			} )
@@ -256,10 +263,11 @@ new FormModel {
 				name: "idField"
 				"text": "ID"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "idFieldActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "idFieldKeyPressed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 20
+				"x": 15
 				"y": 280
-				"width": 95
+				"width": 110
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "fnameLabel"

@@ -42,6 +42,45 @@ public class SaleDetails extends javax.swing.JFrame {
         }
     }
 
+    private void idFieldKeyPressed(KeyEvent e) {
+        // TODO add your code here
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            Toolkit.getDefaultToolkit().beep();
+        }
+    }
+
+    private void displayButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void clearBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        clearBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                DAO dao = new DAO();
+                if (dao.openConnection()) {
+                    try {
+                        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete", "Delete", JOptionPane.YES_NO_OPTION);
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            dao.findsalesRecord(Integer.valueOf(idField.getText())); //add in method to delete record
+                            dao.closeConnection();
+                        } else {
+                            dispose();
+                        }
+                    } catch (NumberFormatException J) {
+                        JOptionPane.showMessageDialog(null, "ID does not exist");
+
+                    }
+                }
+            }
+        }); //end of action listener
+
+
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -76,7 +115,7 @@ public class SaleDetails extends javax.swing.JFrame {
         searchButton.setText("Search");
         searchButton.addActionListener(e -> searchButtonActionPerformed(e));
         contentPane.add(searchButton);
-        searchButton.setBounds(new Rectangle(new Point(630, 5), searchButton.getPreferredSize()));
+        searchButton.setBounds(630, 5, 110, searchButton.getPreferredSize().height);
 
         //---- searchField ----
         searchField.setText("Search");
@@ -133,52 +172,54 @@ public class SaleDetails extends javax.swing.JFrame {
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);
-        salesPane.setBounds(275, 90, 445, 325);
+        salesPane.setBounds(280, 90, 445, 325);
 
         //---- quantityLabel ----
         quantityLabel.setText("Amount Items Sold:");
         contentPane.add(quantityLabel);
-        quantityLabel.setBounds(new Rectangle(new Point(250, 415), quantityLabel.getPreferredSize()));
+        quantityLabel.setBounds(295, 430, 120, quantityLabel.getPreferredSize().height);
 
         //---- amountLabels ----
         amountLabels.setText("Quantity");
         contentPane.add(amountLabels);
-        amountLabels.setBounds(new Rectangle(new Point(380, 415), amountLabels.getPreferredSize()));
+        amountLabels.setBounds(455, 430, 150, amountLabels.getPreferredSize().height);
 
         //---- totalSoldLabel ----
         totalSoldLabel.setText("Total Sold:");
         contentPane.add(totalSoldLabel);
-        totalSoldLabel.setBounds(295, 445, 60, totalSoldLabel.getPreferredSize().height);
+        totalSoldLabel.setBounds(295, 455, 120, totalSoldLabel.getPreferredSize().height);
 
         //---- soldLabel ----
         soldLabel.setText("$00000000.00");
         contentPane.add(soldLabel);
-        soldLabel.setBounds(new Rectangle(new Point(370, 445), soldLabel.getPreferredSize()));
+        soldLabel.setBounds(455, 455, 150, soldLabel.getPreferredSize().height);
 
         //---- displayButton ----
         displayButton.setText("Display Report");
+        displayButton.addActionListener(e -> displayButtonActionPerformed(e));
         contentPane.add(displayButton);
-        displayButton.setBounds(new Rectangle(new Point(130, 155), displayButton.getPreferredSize()));
+        displayButton.setBounds(133, 155, 110, displayButton.getPreferredSize().height);
 
         //---- printButton ----
         printButton.setText("Print Report");
         contentPane.add(printButton);
-        printButton.setBounds(130, 200, 110, printButton.getPreferredSize().height);
+        printButton.setBounds(133, 200, 110, printButton.getPreferredSize().height);
 
         //---- saveButton ----
         saveButton.setText("Save Report");
         contentPane.add(saveButton);
-        saveButton.setBounds(130, 240, 110, saveButton.getPreferredSize().height);
+        saveButton.setBounds(133, 240, 110, saveButton.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear Records");
+        clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
-        clearBtn.setBounds(130, 280, 110, clearBtn.getPreferredSize().height);
+        clearBtn.setBounds(133, 280, 110, clearBtn.getPreferredSize().height);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
         contentPane.add(returnBtn);
-        returnBtn.setBounds(20, 325, 220, returnBtn.getPreferredSize().height);
+        returnBtn.setBounds(15, 325, 230, returnBtn.getPreferredSize().height);
 
         //---- dateLabel ----
         dateLabel.setText("DATE:");
@@ -193,13 +234,19 @@ public class SaleDetails extends javax.swing.JFrame {
         //---- dayLabel ----
         dayLabel.setText("MM/DD/YYYY");
         contentPane.add(dayLabel);
-        dayLabel.setBounds(50, 45, 100, dayLabel.getPreferredSize().height);
+        dayLabel.setBounds(55, 45, 100, dayLabel.getPreferredSize().height);
 
         //---- idField ----
         idField.setText("ID");
         idField.addActionListener(e -> idFieldActionPerformed(e));
+        idField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                idFieldKeyPressed(e);
+            }
+        });
         contentPane.add(idField);
-        idField.setBounds(20, 280, 95, idField.getPreferredSize().height);
+        idField.setBounds(15, 280, 110, idField.getPreferredSize().height);
 
         //---- fnameLabel ----
         fnameLabel.setText("First Name");
@@ -234,6 +281,7 @@ public class SaleDetails extends javax.swing.JFrame {
         }
     }
 
+    //--- GRABS THE DATA FROM THE DATA BASE AND FILLS THE TABLE BASE OFF THE INVOICE NUMBER
     private void fillTable()
     {
         DAO dao = new DAO();
