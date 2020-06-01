@@ -37,11 +37,15 @@ public class login extends JFrame {
     }
 
     private void passwordField1ActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        if(noUsernameCheck())
+            if(noPasswordCheck())
+                attemptLogin();
     }
 
     private void userFieldActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        if(noUsernameCheck())
+            if(noPasswordCheck())
+                attemptLogin();
     }
 
     private void initComponents() {
