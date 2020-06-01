@@ -76,7 +76,7 @@ public class SaleDetails extends javax.swing.JFrame {
         searchButton.setText("Search");
         searchButton.addActionListener(e -> searchButtonActionPerformed(e));
         contentPane.add(searchButton);
-        searchButton.setBounds(new Rectangle(new Point(630, 5), searchButton.getPreferredSize()));
+        searchButton.setBounds(645, 5, 133, searchButton.getPreferredSize().height);
 
         //---- searchField ----
         searchField.setText("Search");
@@ -133,47 +133,47 @@ public class SaleDetails extends javax.swing.JFrame {
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);
-        salesPane.setBounds(275, 90, 445, 325);
+        salesPane.setBounds(275, 90, 515, 355);
 
         //---- quantityLabel ----
         quantityLabel.setText("Amount Items Sold:");
         contentPane.add(quantityLabel);
-        quantityLabel.setBounds(new Rectangle(new Point(250, 415), quantityLabel.getPreferredSize()));
+        quantityLabel.setBounds(new Rectangle(new Point(265, 450), quantityLabel.getPreferredSize()));
 
         //---- amountLabels ----
         amountLabels.setText("Quantity");
         contentPane.add(amountLabels);
-        amountLabels.setBounds(new Rectangle(new Point(380, 415), amountLabels.getPreferredSize()));
+        amountLabels.setBounds(new Rectangle(new Point(395, 450), amountLabels.getPreferredSize()));
 
         //---- totalSoldLabel ----
         totalSoldLabel.setText("Total Sold:");
         contentPane.add(totalSoldLabel);
-        totalSoldLabel.setBounds(295, 445, 60, totalSoldLabel.getPreferredSize().height);
+        totalSoldLabel.setBounds(310, 480, 60, totalSoldLabel.getPreferredSize().height);
 
         //---- soldLabel ----
         soldLabel.setText("$00000000.00");
         contentPane.add(soldLabel);
-        soldLabel.setBounds(new Rectangle(new Point(370, 445), soldLabel.getPreferredSize()));
+        soldLabel.setBounds(new Rectangle(new Point(385, 480), soldLabel.getPreferredSize()));
 
         //---- displayButton ----
         displayButton.setText("Display Report");
         contentPane.add(displayButton);
-        displayButton.setBounds(new Rectangle(new Point(130, 155), displayButton.getPreferredSize()));
+        displayButton.setBounds(130, 155, 139, displayButton.getPreferredSize().height);
 
         //---- printButton ----
         printButton.setText("Print Report");
         contentPane.add(printButton);
-        printButton.setBounds(130, 200, 110, printButton.getPreferredSize().height);
+        printButton.setBounds(130, 200, 139, printButton.getPreferredSize().height);
 
         //---- saveButton ----
         saveButton.setText("Save Report");
         contentPane.add(saveButton);
-        saveButton.setBounds(130, 240, 110, saveButton.getPreferredSize().height);
+        saveButton.setBounds(130, 240, 139, saveButton.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear Records");
         contentPane.add(clearBtn);
-        clearBtn.setBounds(130, 280, 110, clearBtn.getPreferredSize().height);
+        clearBtn.setBounds(130, 280, 139, clearBtn.getPreferredSize().height);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
@@ -199,7 +199,7 @@ public class SaleDetails extends javax.swing.JFrame {
         idField.setText("ID");
         idField.addActionListener(e -> idFieldActionPerformed(e));
         contentPane.add(idField);
-        idField.setBounds(20, 280, 95, idField.getPreferredSize().height);
+        idField.setBounds(0, 280, 130, idField.getPreferredSize().height);
 
         //---- fnameLabel ----
         fnameLabel.setText("First Name");
@@ -209,14 +209,14 @@ public class SaleDetails extends javax.swing.JFrame {
         //---- lnameLabel ----
         lnameLabel.setText("Last Name");
         contentPane.add(lnameLabel);
-        lnameLabel.setBounds(600, 40, 125, lnameLabel.getPreferredSize().height);
+        lnameLabel.setBounds(600, 40, 130, lnameLabel.getPreferredSize().height);
 
         //---- userLabel ----
         userLabel.setText("USER:");
         contentPane.add(userLabel);
         userLabel.setBounds(new Rectangle(new Point(390, 40), userLabel.getPreferredSize()));
 
-        contentPane.setPreferredSize(new Dimension(750, 520));
+        contentPane.setPreferredSize(new Dimension(805, 545));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents

@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.sql.*;
+import java.util.Vector;
+import javax.swing.table.*;
 
 public class DAO {
     private Connection myConn = null;
@@ -7,9 +9,9 @@ public class DAO {
     public boolean openConnection() {
         try {
             // Database parameters.
-            String url = "jdbc:mysql://localhost:3306/swen2005_finalproject";
-            String user = "root";
-            String password = "";
+            String url = "jdbc:mysql://remotemysql.com:3306/bNop6iwTmM";
+            String user = "bNop6iwTmM";
+            String password = "U6IOEuL7qQ";
 
             // creates a connection to the remote database.
             myConn = DriverManager.getConnection(url, user, password);
@@ -56,26 +58,103 @@ public class DAO {
         return null;
     }
 
-    /*Use to find invoice in the sales details*/
-    public saleDetailsCON findsalesRecord(int code)
-    {
-        saleDetailsCON theOne = null;
-        //the mysql insert statement
-        String query = "select * from sales_details where invoice = ?";
+    public void loadProductsTable(JTable table) throws SQLException {
         try {
-            //create the mysql insert preparedstatement
+            String query = "SELECT * from products order by name";
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
-            myPreStmt.setInt(1, code);
             ResultSet rs = myPreStmt.executeQuery();
-            while (rs.next()) {
-                theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getInt("sub_total "));
+            //To remove previously added rows
+            while(table.getRowCount() > 0)
+            {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
             }
+            int columns = rs.getMetaData().getColumnCount();
+            while(rs.next())
+            {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++)
+                {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public void insertProduct(Product theProd) {
+        //the mysql insert statement
+        String query = "insert into products (name, quantity, price) values (?,?,?)";
+
+        //create the mysql insert prepared statement
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setString(1, theProd.getName());
+            myPreStmt.setInt(2, theProd.getQuantity());
+            myPreStmt.setDouble(3, theProd.getPrice());
+
+            //execute the prepared statement
+            myPreStmt.execute();
         } catch (Exception e) {
-            System.out.println("Got an exception! Error in Find Record");
+            System.out.println("Got an exception!");
             System.out.println(e.getMessage());
         }
-        return theOne;
+    }
+    public void deleteProdRecord(int id) {
+        //the mysql insert statement
+        String query = "delete from products where prod_id = ?";
+
+        try {
+            //create the mysql insert prepared statement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, id);
+            //execute the preparedstatement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
+    public void updateProdRecord(Product theProd) {
+        //the mysql insert statement
+        String query = "update products set name=?, quantity=?, price=? WHERE prod_id=?";
+
+        //create the mysql update prepared statement
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setString(1, theProd.getName());
+            myPreStmt.setInt(2, theProd.getQuantity());
+            myPreStmt.setDouble(3, theProd.getPrice());
+            myPreStmt.setInt(4, theProd.getProd_id());
+
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
     }
 
+        public saleDetailsCON findsalesRecord (int code)
+        {
+            saleDetailsCON theOne = null;
+            //the mysql insert statementString query = "select * from sales_details where invoice = ?";
+            String query = "select * from sales_details where invoice  = ?";
+            try {
+                //create the mysql insert preparedstatement
+                PreparedStatement myPreStmt = myConn.prepareStatement(query);
+                myPreStmt.setInt(1, code);
+                ResultSet rs = myPreStmt.executeQuery();
+                while (rs.next()) {
+                    theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getInt("sub_total "));
+                }
+            } catch (Exception e) {
+                System.out.println("Got an exception! Error in Find Record");
+                System.out.println(e.getMessage());
+            }
+            return theOne;
+        }
 
 }

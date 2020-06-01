@@ -1,7 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.sql.SQLException;
 import javax.swing.*;
+import javax.swing.plaf.*;
 import javax.swing.table.*;
 /*
  * Created by JFormDesigner on Fri May 29 13:25:57 BOT 2020
@@ -13,8 +15,21 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class ProductsPanel extends JFrame {
-    public ProductsPanel() {
+    public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
+
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Populate JTable from Database
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.loadProductsTable(productTable);
+        }
+
+
     }
 
     private void productPanePropertyChange(PropertyChangeEvent e) {
@@ -53,11 +68,17 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
+    private void allBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void button1ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
-        searchField = new JTextField();
-        searchBtn = new JButton();
         productPane = new JScrollPane();
         productTable = new JTable();
         allBtn = new JButton();
@@ -66,10 +87,9 @@ public class ProductsPanel extends JFrame {
         quantityField = new JTextField();
         priceField = new JTextField();
         label1 = new JLabel();
-        saveBtn = new JButton();
-        updateBtn = new JButton();
-        deleteBtn = new JButton();
+        addUpdateBtn = new JButton();
         clearBtn = new JButton();
+        deleteBtn = new JButton();
         IDLabel = new JLabel();
         nameLabel = new JLabel();
         quantityLabel = new JLabel();
@@ -77,19 +97,9 @@ public class ProductsPanel extends JFrame {
         returnBtn = new JButton();
 
         //======== this ========
-        setTitle("Product Details");
+        setTitle("Products Page");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
-
-        //---- searchField ----
-        searchField.setText("Search");
-        contentPane.add(searchField);
-        searchField.setBounds(10, 5, 550, searchField.getPreferredSize().height);
-
-        //---- searchBtn ----
-        searchBtn.setText("Search");
-        contentPane.add(searchBtn);
-        searchBtn.setBounds(565, 5, 190, searchBtn.getPreferredSize().height);
 
         //======== productPane ========
         {
@@ -98,7 +108,7 @@ public class ProductsPanel extends JFrame {
             //---- productTable ----
             productTable.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null, null},
+                    {"", null, null, null},
                     {null, null, null, null},
                     {null, null, null, null},
                     {null, null, null, null},
@@ -130,7 +140,7 @@ public class ProductsPanel extends JFrame {
                     {null, null, null, null},
                 },
                 new String[] {
-                    "Name", "P_ID", "Quantity", "Price"
+                    "P_ID", "NAME", "QUANTITY", "PRICE"
                 }
             ) {
                 Class<?>[] columnTypes = new Class<?>[] {
@@ -144,91 +154,85 @@ public class ProductsPanel extends JFrame {
             productPane.setViewportView(productTable);
         }
         contentPane.add(productPane);
-        productPane.setBounds(320, 40, 437, productPane.getPreferredSize().height);
+        productPane.setBounds(320, 15, 510, 440);
 
         //---- allBtn ----
         allBtn.setText("Display All");
+        allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
-        allBtn.setBounds(70, 435, 165, allBtn.getPreferredSize().height);
-
-        //---- IDField ----
-        IDField.setText("P_ID");
+        allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
         contentPane.add(IDField);
-        IDField.setBounds(105, 170, 190, IDField.getPreferredSize().height);
+        IDField.setBounds(120, 65, 190, IDField.getPreferredSize().height);
 
         //---- nameField ----
-        nameField.setText("Name");
+        nameField.setVisible(false);
         nameField.addActionListener(e -> nameFieldActionPerformed(e));
         contentPane.add(nameField);
-        nameField.setBounds(105, 210, 190, nameField.getPreferredSize().height);
+        nameField.setBounds(120, 105, 190, nameField.getPreferredSize().height);
 
         //---- quantityField ----
-        quantityField.setText("Quantity");
+        quantityField.setVisible(false);
         quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
         contentPane.add(quantityField);
-        quantityField.setBounds(105, 255, 190, quantityField.getPreferredSize().height);
+        quantityField.setBounds(120, 150, 190, quantityField.getPreferredSize().height);
 
         //---- priceField ----
-        priceField.setText("Price");
+        priceField.setVisible(false);
         priceField.addActionListener(e -> priceFieldActionPerformed(e));
         contentPane.add(priceField);
-        priceField.setBounds(105, 300, 190, priceField.getPreferredSize().height);
+        priceField.setBounds(120, 195, 190, priceField.getPreferredSize().height);
 
         //---- label1 ----
-        label1.setText("Modify Entrees to Table: Save, Delete and Update");
+        label1.setText("Modify Entrees to Table: Add, Delete and Update");
         contentPane.add(label1);
-        label1.setBounds(10, 140, 295, label1.getPreferredSize().height);
+        label1.setBounds(10, 15, 300, label1.getPreferredSize().height);
 
-        //---- saveBtn ----
-        saveBtn.setText("Save");
-        saveBtn.setForeground(new Color(0, 153, 51));
-        contentPane.add(saveBtn);
-        saveBtn.setBounds(new Rectangle(new Point(70, 355), saveBtn.getPreferredSize()));
-
-        //---- updateBtn ----
-        updateBtn.setText("Update");
-        updateBtn.setForeground(new Color(0, 204, 204));
-        contentPane.add(updateBtn);
-        updateBtn.setBounds(new Rectangle(new Point(155, 355), updateBtn.getPreferredSize()));
-
-        //---- deleteBtn ----
-        deleteBtn.setText("Delete");
-        deleteBtn.setForeground(new Color(204, 0, 0));
-        contentPane.add(deleteBtn);
-        deleteBtn.setBounds(new Rectangle(new Point(70, 395), deleteBtn.getPreferredSize()));
+        //---- addUpdateBtn ----
+        addUpdateBtn.setText("Add");
+        addUpdateBtn.setForeground(new Color(204, 204, 204));
+        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
+        contentPane.add(addUpdateBtn);
+        addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear");
-        clearBtn.setForeground(Color.yellow);
+        clearBtn.setForeground(new Color(204, 204, 204));
+        clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
-        clearBtn.setBounds(new Rectangle(new Point(155, 395), clearBtn.getPreferredSize()));
+        clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
+
+        //---- deleteBtn ----
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
+        contentPane.add(deleteBtn);
+        deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
 
         //---- IDLabel ----
         IDLabel.setText("Product ID:");
         contentPane.add(IDLabel);
-        IDLabel.setBounds(new Rectangle(new Point(35, 175), IDLabel.getPreferredSize()));
+        IDLabel.setBounds(15, 70, 100, IDLabel.getPreferredSize().height);
 
         //---- nameLabel ----
         nameLabel.setText("Product Name:");
         contentPane.add(nameLabel);
-        nameLabel.setBounds(new Rectangle(new Point(15, 215), nameLabel.getPreferredSize()));
+        nameLabel.setBounds(15, 110, 100, nameLabel.getPreferredSize().height);
 
         //---- quantityLabel ----
         quantityLabel.setText("Product Quantity:");
         contentPane.add(quantityLabel);
-        quantityLabel.setBounds(new Rectangle(new Point(5, 260), quantityLabel.getPreferredSize()));
+        quantityLabel.setBounds(15, 155, 100, quantityLabel.getPreferredSize().height);
 
         //---- priceLabel ----
         priceLabel.setText("Product Price:");
         contentPane.add(priceLabel);
-        priceLabel.setBounds(new Rectangle(new Point(25, 310), priceLabel.getPreferredSize()));
+        priceLabel.setBounds(15, 205, 100, priceLabel.getPreferredSize().height);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
         contentPane.add(returnBtn);
-        returnBtn.setBounds(15, 45, 290, returnBtn.getPreferredSize().height);
+        returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(765, 510));
+        contentPane.setPreferredSize(new Dimension(835, 495));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -236,8 +240,6 @@ public class ProductsPanel extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JTextField searchField;
-    private JButton searchBtn;
     private JScrollPane productPane;
     private JTable productTable;
     private JButton allBtn;
@@ -246,10 +248,9 @@ public class ProductsPanel extends JFrame {
     private JTextField quantityField;
     private JTextField priceField;
     private JLabel label1;
-    private JButton saveBtn;
-    private JButton updateBtn;
-    private JButton deleteBtn;
+    private JButton addUpdateBtn;
     private JButton clearBtn;
+    private JButton deleteBtn;
     private JLabel IDLabel;
     private JLabel nameLabel;
     private JLabel quantityLabel;

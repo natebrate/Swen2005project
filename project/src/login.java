@@ -47,19 +47,19 @@ public class login extends JFrame {
         loginLabel = new JLabel();
 
         //======== this ========
-        setTitle("Login ");
+        setTitle("Alpha Group Systems");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
         //---- userLabel ----
         userLabel.setText("USER:");
         contentPane.add(userLabel);
-        userLabel.setBounds(40, 155, 55, userLabel.getPreferredSize().height);
+        userLabel.setBounds(45, 100, 100, userLabel.getPreferredSize().height);
 
         //---- passLabel ----
         passLabel.setText("PASSWORD:");
         contentPane.add(passLabel);
-        passLabel.setBounds(10, 195, 100, passLabel.getPreferredSize().height);
+        passLabel.setBounds(45, 140, 100, passLabel.getPreferredSize().height);
 
         //---- userField ----
         userField.setText("Username");
@@ -70,22 +70,22 @@ public class login extends JFrame {
             }
         });
         contentPane.add(userField);
-        userField.setBounds(145, 145, 220, userField.getPreferredSize().height);
+        userField.setBounds(150, 90, 220, userField.getPreferredSize().height);
         contentPane.add(passwordField1);
-        passwordField1.setBounds(145, 190, 220, passwordField1.getPreferredSize().height);
+        passwordField1.setBounds(150, 135, 220, passwordField1.getPreferredSize().height);
 
         //---- button1 ----
         button1.setText("LOGIN");
         button1.addActionListener(e -> button1ActionPerformed(e));
         contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(225, 300), button1.getPreferredSize()));
+        button1.setBounds(new Rectangle(new Point(220, 180), button1.getPreferredSize()));
 
         //---- loginLabel ----
         loginLabel.setText("LOGIN");
         contentPane.add(loginLabel);
         loginLabel.setBounds(new Rectangle(new Point(235, 40), loginLabel.getPreferredSize()));
 
-        contentPane.setPreferredSize(new Dimension(505, 405));
+        contentPane.setPreferredSize(new Dimension(455, 280));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -143,9 +143,9 @@ public class login extends JFrame {
             else {
                 userField.requestFocus();
             }
-
         }
         else
+            // If Username-Password combination is incorrect
         {
             JOptionPane.showMessageDialog(null, "Sorry incorrect username or password",
                     "Incorrect username or password", JOptionPane.WARNING_MESSAGE);

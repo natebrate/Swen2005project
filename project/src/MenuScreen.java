@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Fri May 29 14:19:37 BOT 2020
@@ -11,13 +12,18 @@ import javax.swing.*;
  * @author unknown
  */
 public class MenuScreen extends JFrame {
+    // Instantiate User class in order to carry on credentials into main menu
+    User userLogin;
     public MenuScreen(User userLogin) {
         initComponents();
+        this.userLogin = userLogin;
+
         // Personalise the menu screen to match the user's login credentials
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
         fnameLabel.setText(userLogin.getFirstName());
         lnameLabel.setText(userLogin.getLastName());
 
+        // Load this menu
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -29,8 +35,8 @@ public class MenuScreen extends JFrame {
         // TODO add your code here
     }
 
-    private void prodDetailsBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+    private void prodDetailsBtnActionPerformed(ActionEvent e) throws SQLException {
+        new ProductsPanel(userLogin);
     }
 
     private void initComponents() {
@@ -61,7 +67,13 @@ public class MenuScreen extends JFrame {
 
         //---- prodDetailsBtn ----
         prodDetailsBtn.setText("Product Details");
-        prodDetailsBtn.addActionListener(e -> prodDetailsBtnActionPerformed(e));
+        prodDetailsBtn.addActionListener(e -> {
+            try {
+                prodDetailsBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(prodDetailsBtn);
         prodDetailsBtn.setBounds(75, 185, 295, prodDetailsBtn.getPreferredSize().height);
 
