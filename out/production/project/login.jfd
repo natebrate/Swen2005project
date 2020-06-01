@@ -7,37 +7,40 @@ new FormModel {
 			"autoSize": false
 		} ) {
 			name: "this"
-			"title": "Login "
+			"title": "Alpha Group Systems"
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userLabel"
 				"text": "USER:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 40
-				"y": 155
-				"width": 55
+				"x": 45
+				"y": 100
+				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "passLabel"
 				"text": "PASSWORD:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 10
-				"y": 195
+				"x": 45
+				"y": 140
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "userField"
 				"text": "Username"
 				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "userFieldFocusGained", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "userFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 145
-				"y": 145
+				"x": 150
+				"y": 90
 				"width": 220
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "passwordField1"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "passwordField1ActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "passwordField1KeyPressed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 145
-				"y": 190
+				"x": 150
+				"y": 135
 				"width": 220
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -45,8 +48,8 @@ new FormModel {
 				"text": "LOGIN"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 225
-				"y": 300
+				"x": 220
+				"y": 180
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "loginLabel"
@@ -57,7 +60,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 300, 80 )
-			"size": new java.awt.Dimension( 505, 405 )
+			"size": new java.awt.Dimension( 455, 280 )
 		} )
 	}
 }

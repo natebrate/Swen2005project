@@ -189,14 +189,12 @@ public class ProductsPanel extends JFrame {
 
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
-        addUpdateBtn.setForeground(new Color(204, 204, 204));
         addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear");
-        clearBtn.setForeground(new Color(204, 204, 204));
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
         clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
@@ -214,16 +212,19 @@ public class ProductsPanel extends JFrame {
 
         //---- nameLabel ----
         nameLabel.setText("Product Name:");
+        nameLabel.setVisible(false);
         contentPane.add(nameLabel);
         nameLabel.setBounds(15, 110, 100, nameLabel.getPreferredSize().height);
 
         //---- quantityLabel ----
         quantityLabel.setText("Product Quantity:");
+        quantityLabel.setVisible(false);
         contentPane.add(quantityLabel);
         quantityLabel.setBounds(15, 155, 100, quantityLabel.getPreferredSize().height);
 
         //---- priceLabel ----
         priceLabel.setText("Product Price:");
+        priceLabel.setVisible(false);
         contentPane.add(priceLabel);
         priceLabel.setBounds(15, 205, 100, priceLabel.getPreferredSize().height);
 
