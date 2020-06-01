@@ -173,19 +173,19 @@ public class ProductsPanel extends JFrame {
         });
 
         //---- nameField ----
-        nameField.setVisible(false);
+        nameField.setEditable(false);
         nameField.addActionListener(e -> nameFieldActionPerformed(e));
         contentPane.add(nameField);
         nameField.setBounds(120, 105, 190, nameField.getPreferredSize().height);
 
         //---- quantityField ----
-        quantityField.setVisible(false);
+        quantityField.setEditable(false);
         quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
         contentPane.add(quantityField);
         quantityField.setBounds(120, 150, 190, quantityField.getPreferredSize().height);
 
         //---- priceField ----
-        priceField.setVisible(false);
+        priceField.setEditable(false);
         priceField.addActionListener(e -> priceFieldActionPerformed(e));
         contentPane.add(priceField);
         priceField.setBounds(120, 195, 190, priceField.getPreferredSize().height);
@@ -220,19 +220,16 @@ public class ProductsPanel extends JFrame {
 
         //---- nameLabel ----
         nameLabel.setText("Product Name:");
-        nameLabel.setVisible(false);
         contentPane.add(nameLabel);
         nameLabel.setBounds(15, 110, 100, nameLabel.getPreferredSize().height);
 
         //---- quantityLabel ----
         quantityLabel.setText("Product Quantity:");
-        quantityLabel.setVisible(false);
         contentPane.add(quantityLabel);
         quantityLabel.setBounds(15, 155, 100, quantityLabel.getPreferredSize().height);
 
         //---- priceLabel ----
         priceLabel.setText("Product Price:");
-        priceLabel.setVisible(false);
         contentPane.add(priceLabel);
         priceLabel.setBounds(15, 205, 100, priceLabel.getPreferredSize().height);
 
@@ -271,7 +268,8 @@ public class ProductsPanel extends JFrame {
 
 //    class checkData extends Thread
 //    {
-//        public void run() throws NumberFormatException //This exception needed as this runs when the num field is blank
+//        public void run() throws NumberFormatException //This exception needed as this runs
+//        when the num field is blank
 //        {
 //            try {
 //                DAO dao = new DAO();
@@ -303,11 +301,17 @@ public class ProductsPanel extends JFrame {
             dao.closeConnection();
             if (thefind != null)
             {
+                // Make textfields visible
                 nameField.setText(thefind.getName());
+                nameField.setEditable(true);
                 quantityField.setText(String.valueOf(thefind.getQuantity()));
+                quantityField.setEditable(true);
                 priceField.setText(String.valueOf(thefind.getPrice()));
+                priceField.setEditable(true);
+
                 addUpdateBtn.setText("Update");
                 deleteBtn.setVisible(true);
+
             }
         }
 
