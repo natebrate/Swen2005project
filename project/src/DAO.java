@@ -117,8 +117,26 @@ public class DAO {
             System.out.println(e.getMessage());
         }
     }
+    public void updateProdRecord(Product theProd) {
+        //the mysql insert statement
+        String query = "update products set name=?, quantity=?, price=? WHERE prod_id=?";
 
-    /*Use to find invoice in the sales details*/
+        //create the mysql update prepared statement
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setString(1, theProd.getName());
+            myPreStmt.setInt(2, theProd.getQuantity());
+            myPreStmt.setDouble(3, theProd.getPrice());
+            myPreStmt.setInt(4, theProd.getProd_id());
+
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+
+        /*Use to find invoice in the sales details*/
 //    public saleDetailsCON findsalesRecord(int code)
 //    {
 //        saleDetailsCON theOne = null;
@@ -139,5 +157,5 @@ public class DAO {
 //        return theOne;
 //    }
 
-
+    }
 }
