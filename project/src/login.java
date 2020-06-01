@@ -53,7 +53,6 @@ public class login extends JFrame {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
             Toolkit.getDefaultToolkit().beep();
-            System.out.println("ENTER pressed");
             attemptLogin();
 
         }
