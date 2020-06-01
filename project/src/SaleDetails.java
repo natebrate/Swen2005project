@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.sql.*;
-import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.text.SimpleDateFormat;
@@ -15,24 +14,15 @@ import java.util.Date;
 /**
  * @author unknown
  */
-public class SaleDetails extends javax.swing.JFrame {
-    public int P_ID, quantity_sold;
-    public String search;
+public class SaleDetails extends JFrame {
+
+    public int invoice, P_ID, quantity_sold, sub_total;
 
     /**
      * Creates new form SaleDetails
      */
     Vector <details> vec = new Vector <details> ();
-
-    public SaleDetails() {
-
-        initComponents();
-        int P_ID, quantity_sold;
-    }
-
-    public SaleDetails(String text, int quantity_sold) {
-    }
-
+   
     private void searchFieldKeyPressed(KeyEvent e) {
         // TODO add your code here
         int key = e.getKeyCode();
@@ -42,8 +32,45 @@ public class SaleDetails extends javax.swing.JFrame {
         }
     }
 
+    private void searchFieldActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
 
-    private void initComponents() {
+    // FIND A RECORD AND DELETE IT FROM SALES DETAILS TABLE
+    private void clearBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        clearBtn.addActionListener(e1 -> {
+
+            DAO dao = new DAO();
+            if (dao.openConnection()) {
+                try {
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete", "Delete", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        dao.deleteSaleRecord(Integer.valueOf(searchField.getText()));
+                        dao.closeConnection();
+                    } else {
+                        dispose();
+                    }
+                } catch (NumberFormatException J) {
+                    JOptionPane.showMessageDialog(null, "Cannot find invoice number");
+                }
+            }
+        }); //end of action listener
+    }
+
+    //PROBABLY CANNOT WORK LIKE THIS
+    private void displayButtonActionPerformed(ActionEvent e) throws SQLException {
+        // TODO add your code here
+        // Populate JTable from Database
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.loadSalesDetailsTable(salesTable);
+        }
+    }
+
+
+    private void initComponents()
+    {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         searchButton = new JButton();
@@ -62,7 +89,6 @@ public class SaleDetails extends javax.swing.JFrame {
         dateLabel = new JLabel();
         saleTitleLabel = new JLabel();
         dayLabel = new JLabel();
-        idField = new JTextField();
         fnameLabel = new JLabel();
         lnameLabel = new JLabel();
         userLabel = new JLabel();
@@ -71,6 +97,10 @@ public class SaleDetails extends javax.swing.JFrame {
         setTitle("Sales Details");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //---- searchButton ----
         searchButton.setText("Search");
@@ -86,6 +116,7 @@ public class SaleDetails extends javax.swing.JFrame {
                 searchFieldKeyPressed(e);
             }
         });
+        searchField.addActionListener(e -> searchFieldActionPerformed(e));
         contentPane.add(searchField);
         searchField.setBounds(10, 5, 620, searchField.getPreferredSize().height);
 
@@ -157,6 +188,13 @@ public class SaleDetails extends javax.swing.JFrame {
 
         //---- displayButton ----
         displayButton.setText("Display Report");
+        displayButton.addActionListener(e -> {
+            try {
+                displayButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(displayButton);
         displayButton.setBounds(130, 155, 139, displayButton.getPreferredSize().height);
 
@@ -172,6 +210,7 @@ public class SaleDetails extends javax.swing.JFrame {
 
         //---- clearBtn ----
         clearBtn.setText("Clear Records");
+        clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
         clearBtn.setBounds(130, 280, 139, clearBtn.getPreferredSize().height);
 
@@ -194,12 +233,6 @@ public class SaleDetails extends javax.swing.JFrame {
         dayLabel.setText("MM/DD/YYYY");
         contentPane.add(dayLabel);
         dayLabel.setBounds(50, 45, 100, dayLabel.getPreferredSize().height);
-
-        //---- idField ----
-        idField.setText("ID");
-        idField.addActionListener(e -> idFieldActionPerformed(e));
-        contentPane.add(idField);
-        idField.setBounds(0, 280, 130, idField.getPreferredSize().height);
 
         //---- fnameLabel ----
         fnameLabel.setText("First Name");
@@ -225,15 +258,33 @@ public class SaleDetails extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(ActionEvent evt) {
         // TODO add your code here
-        if(searchField.getText().isEmpty())
+        if (searchField.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "Please enter an invoice number");
+            JOptionPane.showMessageDialog(null, "Please enter a quantity");
             searchField.requestFocus();
-            fillTable();
             return;
         }
+
+        details g = new details (invoice, P_ID,  quantity_sold, sub_total);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        vec.addElement(g);
+        Date date = new Date(System.currentTimeMillis());
+
+        DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+        Object rowData[] = new Object[3];
+        model.setRowCount(0);
+        for (int i = 0; i < vec.size(); i++) {
+            rowData[0] = formatter.format(date);
+            rowData[1] = vec.elementAt(i).getP_ID();
+            rowData[2] = vec.elementAt(i).getQuantity_sold();
+            model.addRow(rowData);
+        }
+        searchField.setText("");
+        searchField.requestFocus();
     }
 
+    //WHEN USER SEARCHES BY INVOICE THIS POPULATES THE TABLE WITH SAID INVOICE
     private void fillTable()
     {
         DAO dao = new DAO();
@@ -246,26 +297,11 @@ public class SaleDetails extends javax.swing.JFrame {
                 searchField.setText(Integer.toString(thefind.getInvoice()));
                 P_ID = thefind.getP_ID();
                 quantity_sold = thefind.getQuantity_sold();
-                fillTable();
-
-                SaleDetails g = new SaleDetails(searchField.getText(), quantity_sold);
-
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-                Date date = new Date(System.currentTimeMillis());
-
-                DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
-                Object rowData[] = new Object[3];
-                model.setRowCount(0);
-                for (int i = 0; i < vec.size(); i++) {
-                    rowData[0] = formatter.format(date);
-                    rowData[1] = vec.elementAt(i).getP_ID();
-                    rowData[2] = vec.elementAt(i).getQuantity_sold();
-                    model.addRow(rowData);
-                }
-                searchField.requestFocus();
+                sub_total = thefind.getSub_total();
 
             }
             else {
+                JOptionPane.showMessageDialog(null, "Please enter an invoice number");
                 searchField.requestFocus();
             }
 
@@ -281,41 +317,6 @@ public class SaleDetails extends javax.swing.JFrame {
 
     private void idFieldActionPerformed(ActionEvent e) {
         // TODO add your code here
-    }
-
-
-    class checkInvoice extends Thread {
-
-        public void run() {
-            try {
-                DAO dao = new DAO();
-                if (dao.openConnection())
-                {
-                    saleDetailsCON thefind = null;
-
-                    thefind = dao.findsalesRecord(Integer.parseInt(searchField.getText()));
-
-                    if (thefind != null)
-                    {
-                        searchField.setText(Integer.toString(thefind.getInvoice()));
-                        P_ID = thefind.getP_ID();
-                        quantity_sold = thefind.getQuantity_sold();
-                    }
-                    else {
-                        searchField.requestFocus();
-                    }
-
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Sorry Invoice doesn't exist",
-                            "Sorry Invoice doesn't exist", JOptionPane.WARNING_MESSAGE);
-                }
-                dao.closeConnection();
-            } catch (Exception e) {
-                System.out.println("Error in Check method call. Exception!");
-            }
-        }
     }
 
     public class details
@@ -347,6 +348,7 @@ public class SaleDetails extends javax.swing.JFrame {
         }
     }
 
+
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
     private JButton searchButton;
@@ -365,7 +367,6 @@ public class SaleDetails extends javax.swing.JFrame {
     private JLabel dateLabel;
     private JLabel saleTitleLabel;
     private JLabel dayLabel;
-    private JTextField idField;
     private JLabel fnameLabel;
     private JLabel lnameLabel;
     private JLabel userLabel;
