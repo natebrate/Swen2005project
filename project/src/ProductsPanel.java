@@ -152,8 +152,11 @@ public class ProductsPanel extends JFrame {
         allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
-        contentPane.add(IDField);
+
+        //---- IDField -------
         IDField.setBounds(120, 65, 190, IDField.getPreferredSize().height);
+        IDField.addActionListener(e -> IDFieldActionPerformed(e));
+        contentPane.add(IDField);
 
         //---- nameField ----
         nameField.setVisible(false);
