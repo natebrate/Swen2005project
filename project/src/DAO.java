@@ -136,6 +136,27 @@ public class DAO {
             System.out.println(e.getMessage());
         }
     }
+    public Product findProdRecord(int prod_id) {
+        Product theOne = null;
+        //the mysql insert statement
+        String query = "select * from products where prod_id = ?";
+        try {
+            //create the mysql insert preparedstatement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, prod_id);
+            //execute the preparedstatement
+            ResultSet rs = myPreStmt.executeQuery();
+            while (rs.next()) {
+                theOne = new Product(rs.getInt("prod_id"), rs.getString("name"),
+                        rs.getInt("quantity"), rs.getDouble("price"));
+                theOne.setProd_id(rs.getInt("id"));
+            }
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+        return theOne;
+    }
 
         public saleDetailsCON findsalesRecord (int code)
         {

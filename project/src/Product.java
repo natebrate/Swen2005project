@@ -27,4 +27,8 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
+    public void setProd_id(int prod_id) {
+        this.prod_id = prod_id;
+    }
 }

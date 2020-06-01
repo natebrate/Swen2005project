@@ -3,7 +3,6 @@ import java.awt.event.*;
 import java.beans.*;
 import java.sql.SQLException;
 import javax.swing.*;
-import javax.swing.plaf.*;
 import javax.swing.table.*;
 /*
  * Created by JFormDesigner on Fri May 29 13:25:57 BOT 2020
@@ -48,10 +47,6 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
-    private void updateBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
     private void addBtnActionPerformed(ActionEvent e) {
         // TODO add your code here
     }
@@ -61,10 +56,6 @@ public class ProductsPanel extends JFrame {
     }
 
     private void clearBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void IDFieldActionPerformed(ActionEvent e) {
         // TODO add your code here
     }
 
@@ -258,4 +249,29 @@ public class ProductsPanel extends JFrame {
     private JLabel priceLabel;
     private JButton returnBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+
+    class checkData extends Thread
+    {
+        public void run() throws NumberFormatException //This exception needed as this runs when the num field is blank
+        {
+            try {
+                DAO dao = new DAO();
+                if (dao.openConnection())
+                {
+                    Product thefind = null;
+                    thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
+                    dao.closeConnection();
+                    if (thefind != null)
+                    {
+                        nameField.setText(thefind.getName());
+                        quantityField.setText(String.valueOf(thefind.getQuantity()));
+                        priceField.setText(String.valueOf(thefind.getPrice()));
+                        addUpdateBtn.setText("Update");
+                        deleteBtn.setVisible(true);
+                    }
+                }
+            } catch (NumberFormatException ignored) { //Do nothing about the exception. It is harmless
+            }
+        }
+    }
 }
