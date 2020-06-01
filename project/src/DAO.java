@@ -9,9 +9,9 @@ public class DAO {
     public boolean openConnection() {
         try {
             // Database parameters.
-            String url = "jdbc:mysql://remotemysql.com:3306/bNop6iwTmM";
-            String user = "bNop6iwTmM";
-            String password = "U6IOEuL7qQ";
+            String url = "jdbc:mysql://localhost:3306/swen2005_finalproject";
+            String user = "root";
+            String password = "";
 
             // creates a connection to the remote database.
             myConn = DriverManager.getConnection(url, user, password);
