@@ -3,30 +3,33 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 /*
  * Created by JFormDesigner on Fri May 29 12:44:19 BOT 2020
  */
 
 
+
 /**
  * @author unknown
  */
-public class SaleDetails extends javax.swing.JFrame {
-
-    public int P_ID, quantity_sold;
-
-    /**
-     * Creates new form SaleDetails
-     */
-    Vector <Salesdetails> vec = new Vector <Salesdetails> ();
+public class SaleDetails extends JFrame {
     public SaleDetails() {
 
+
         initComponents();
-        int P_ID, quantity_sold;
     }
 
+
+
+    private void searchButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
+
+
+    }
+
+    private void idFieldActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -56,16 +59,7 @@ public class SaleDetails extends javax.swing.JFrame {
 
         //---- searchButton ----
         searchButton.setText("Search");
-        //searchButton.addActionListener(e -> searchButtonActionPerformed(e));
-
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                prodcodeActionPerformed(e);
-            }
-        });
-
-
+        searchButton.addActionListener(e -> searchButtonActionPerformed(e));
         contentPane.add(searchButton);
         searchButton.setBounds(new Rectangle(new Point(630, 5), searchButton.getPreferredSize()));
 
@@ -190,71 +184,29 @@ public class SaleDetails extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
-
-    }
-
-    private void searchButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
-        if(searchButton.getText().isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "Please enter an invoice number");
-            searchButton.requestFocus();
-            return;
-        }
-
-
-        SaleDetails g = new SaleDetails(Integer.parseInt(P_ID.getText()), Integer.parseInt(quantity.getText()));
-        vec.addElement(g);
-
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        Date date = new Date(System.currentTimeMillis());
-
-        DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
-        Object rowData[] = new Object[3];
-        model.setRowCount(0);
-        for (int i=0;i < vec.size(); i++)
-        {
-            rowData[0] = formatter.format(date);
-            rowData[1] = vec.elementAt(i).getP_ID();
-            rowData[2] = vec.elementAt(i).getQuantity_sold();
-            model.addRow(rowData);
-        }
-        searchButton.requestFocus();
-    }
-
-    private void prodcodeActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
 
+    static class Salesdetails extends Thread {
 
-    private void idFieldActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
-
-    class checkRecord extends Thread {
-
-        public void run() {
-            try {
+        public void run(){
+            try{
                 DAO salesDAO = new DAO();
-                if (salesDAO.openConnection()) {
+                if (salesDAO.openConnection()){
                     saleDetailsCON thefind = null;
-                    thefind = salesDAO.findsalesRecord(Integer.parseInt(searchButton.getText()));
-                    if (thefind != null) {
-                    }
-                    searchButton.setText(thefind.getInvoice());
-                    P_ID = thefind.getP_ID();
-                    quantity_sold = thefind.getQuantity_sold();
+                    thefind = salesDAO.findsalesRecord(Integer.parseInt(invoice.getText()));
+                if (thefind != null){
+                }
+                    jLabel2.setText(thefind.getInvoice());
+                    jLabel4.setText(Float.toString(thefind.getUnitprice()));
+                    unitprice = thefind.getUnitprice();
+                    prodname = thefind.getProdname();
                 }
             } catch (Exception e) {
                 System.out.println("Error in Check data method call. Exception!");
             }
         }
-    }
 
-    static class Salesdetails
-    {
         int invoice, P_ID, quantity_sold, sub_total;
 
         public Salesdetails(int invoice, int P_ID, int quantity_sold, int sub_total)
