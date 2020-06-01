@@ -36,6 +36,14 @@ public class login extends JFrame {
 
     }
 
+    private void userFieldActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void passwordField1ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -69,8 +77,12 @@ public class login extends JFrame {
                 userFieldFocusGained(e);
             }
         });
+        userField.addActionListener(e -> userFieldActionPerformed(e));
         contentPane.add(userField);
         userField.setBounds(145, 145, 220, userField.getPreferredSize().height);
+
+        //---- passwordField1 ----
+        passwordField1.addActionListener(e -> passwordField1ActionPerformed(e));
         contentPane.add(passwordField1);
         passwordField1.setBounds(145, 190, 220, passwordField1.getPreferredSize().height);
 
