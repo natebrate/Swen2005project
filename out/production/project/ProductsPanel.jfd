@@ -344,7 +344,6 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 230
 				"y": 65
-				"width": 75
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userNameLabel"

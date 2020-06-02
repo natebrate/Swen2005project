@@ -20,7 +20,7 @@ public class MenuScreen extends JFrame {
 
         // Personalise the menu screen to match the user's login credentials
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
-        nameLabel.setText(userLogin.getFirstName());
+        nameLabel.setText(userLogin.getFullName());
 
         // Load this menu
         this.pack();
@@ -30,8 +30,8 @@ public class MenuScreen extends JFrame {
 
     }
 
-    private void saleDetialsBtnActionPerformed(ActionEvent e) throws SQLException {
-        new SaleDetails(userLogin);
+    private void saleDetialsBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
     }
 
     private void prodDetailsBtnActionPerformed(ActionEvent e) throws SQLException {
@@ -59,13 +59,7 @@ public class MenuScreen extends JFrame {
 
         //---- salesDetailsBtn ----
         salesDetailsBtn.setText("Sale Details");
-        salesDetailsBtn.addActionListener(e -> {
-            try {
-                saleDetialsBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        salesDetailsBtn.addActionListener(e -> saleDetialsBtnActionPerformed(e));
         contentPane.add(salesDetailsBtn);
         salesDetailsBtn.setBounds(75, 85, 295, salesDetailsBtn.getPreferredSize().height);
 
