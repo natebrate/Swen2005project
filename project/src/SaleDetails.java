@@ -84,39 +84,26 @@ public class SaleDetails extends JFrame {
         displayButton = new JButton();
         printButton = new JButton();
         saveButton = new JButton();
-        clearBtn = new JButton();
-        returnBtn = new JButton();
         dateLabel = new JLabel();
         saleTitleLabel = new JLabel();
         dayLabel = new JLabel();
-        fnameLabel = new JLabel();
-        lnameLabel = new JLabel();
-        userLabel = new JLabel();
+        clearBtn = new JButton();
+        idField = new JTextField();
+        returnBtn = new JButton();
 
         //======== this ========
         setTitle("Sales Details");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //---- searchButton ----
         searchButton.setText("Search");
         searchButton.addActionListener(e -> searchButtonActionPerformed(e));
         contentPane.add(searchButton);
-        searchButton.setBounds(645, 5, 133, searchButton.getPreferredSize().height);
+        searchButton.setBounds(new Rectangle(new Point(630, 5), searchButton.getPreferredSize()));
 
         //---- searchField ----
         searchField.setText("Search");
-        searchField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                searchFieldKeyPressed(e);
-            }
-        });
-        searchField.addActionListener(e -> searchFieldActionPerformed(e));
         contentPane.add(searchField);
         searchField.setBounds(10, 5, 620, searchField.getPreferredSize().height);
 
@@ -164,60 +151,42 @@ public class SaleDetails extends JFrame {
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);
-        salesPane.setBounds(275, 90, 515, 355);
+        salesPane.setBounds(255, 65, 445, 325);
 
         //---- quantityLabel ----
         quantityLabel.setText("Amount Items Sold:");
         contentPane.add(quantityLabel);
-        quantityLabel.setBounds(new Rectangle(new Point(265, 450), quantityLabel.getPreferredSize()));
+        quantityLabel.setBounds(new Rectangle(new Point(255, 400), quantityLabel.getPreferredSize()));
 
         //---- amountLabels ----
         amountLabels.setText("Quantity");
         contentPane.add(amountLabels);
-        amountLabels.setBounds(new Rectangle(new Point(395, 450), amountLabels.getPreferredSize()));
+        amountLabels.setBounds(new Rectangle(new Point(365, 400), amountLabels.getPreferredSize()));
 
         //---- totalSoldLabel ----
         totalSoldLabel.setText("Total Sold:");
         contentPane.add(totalSoldLabel);
-        totalSoldLabel.setBounds(310, 480, 60, totalSoldLabel.getPreferredSize().height);
+        totalSoldLabel.setBounds(300, 425, 60, totalSoldLabel.getPreferredSize().height);
 
         //---- soldLabel ----
         soldLabel.setText("$00000000.00");
         contentPane.add(soldLabel);
-        soldLabel.setBounds(new Rectangle(new Point(385, 480), soldLabel.getPreferredSize()));
+        soldLabel.setBounds(new Rectangle(new Point(365, 425), soldLabel.getPreferredSize()));
 
         //---- displayButton ----
         displayButton.setText("Display Report");
-        displayButton.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
         contentPane.add(displayButton);
-        displayButton.setBounds(130, 155, 139, displayButton.getPreferredSize().height);
+        displayButton.setBounds(new Rectangle(new Point(130, 105), displayButton.getPreferredSize()));
 
         //---- printButton ----
         printButton.setText("Print Report");
         contentPane.add(printButton);
-        printButton.setBounds(130, 200, 139, printButton.getPreferredSize().height);
+        printButton.setBounds(130, 145, 110, printButton.getPreferredSize().height);
 
         //---- saveButton ----
         saveButton.setText("Save Report");
         contentPane.add(saveButton);
-        saveButton.setBounds(130, 240, 139, saveButton.getPreferredSize().height);
-
-        //---- clearBtn ----
-        clearBtn.setText("Clear Records");
-        clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
-        contentPane.add(clearBtn);
-        clearBtn.setBounds(130, 280, 139, clearBtn.getPreferredSize().height);
-
-        //---- returnBtn ----
-        returnBtn.setText("Return to Menu");
-        contentPane.add(returnBtn);
-        returnBtn.setBounds(20, 325, 220, returnBtn.getPreferredSize().height);
+        saveButton.setBounds(130, 185, 110, saveButton.getPreferredSize().height);
 
         //---- dateLabel ----
         dateLabel.setText("DATE:");
@@ -234,29 +203,31 @@ public class SaleDetails extends JFrame {
         contentPane.add(dayLabel);
         dayLabel.setBounds(50, 45, 100, dayLabel.getPreferredSize().height);
 
-        //---- fnameLabel ----
-        fnameLabel.setText("First Name");
-        contentPane.add(fnameLabel);
-        fnameLabel.setBounds(460, 40, 130, fnameLabel.getPreferredSize().height);
+        //---- clearBtn ----
+        clearBtn.setText("Clear Records");
+        contentPane.add(clearBtn);
+        clearBtn.setBounds(130, 225, 110, clearBtn.getPreferredSize().height);
 
-        //---- lnameLabel ----
-        lnameLabel.setText("Last Name");
-        contentPane.add(lnameLabel);
-        lnameLabel.setBounds(600, 40, 130, lnameLabel.getPreferredSize().height);
+        //---- idField ----
+        idField.setText("ID");
+        idField.addActionListener(e -> idFieldActionPerformed(e));
+        contentPane.add(idField);
+        idField.setBounds(15, 225, 95, idField.getPreferredSize().height);
 
-        //---- userLabel ----
-        userLabel.setText("USER:");
-        contentPane.add(userLabel);
-        userLabel.setBounds(new Rectangle(new Point(390, 40), userLabel.getPreferredSize()));
+        //---- returnBtn ----
+        returnBtn.setText("Return to Menu");
+        contentPane.add(returnBtn);
+        returnBtn.setBounds(15, 265, 220, returnBtn.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(805, 545));
+        contentPane.setPreferredSize(new Dimension(720, 485));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
     }
 
-    private void searchButtonActionPerformed(ActionEvent evt) {
+    private void searchButtonActionPerformed(ActionEvent evt)
+    {
         // TODO add your code here
         if (searchField.getText().isEmpty())
         {
@@ -362,13 +333,11 @@ public class SaleDetails extends JFrame {
     private JButton displayButton;
     private JButton printButton;
     private JButton saveButton;
-    private JButton clearBtn;
-    private JButton returnBtn;
     private JLabel dateLabel;
     private JLabel saleTitleLabel;
     private JLabel dayLabel;
-    private JLabel fnameLabel;
-    private JLabel lnameLabel;
-    private JLabel userLabel;
+    private JButton clearBtn;
+    private JTextField idField;
+    private JButton returnBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

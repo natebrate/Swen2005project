@@ -46,8 +46,7 @@ public class MenuScreen extends JFrame {
         salesDetailsBtn = new JButton();
         prodDetailsBtn = new JButton();
         userLabel = new JLabel();
-        fnameLabel = new JLabel();
-        lnameLabel = new JLabel();
+        nameLabel = new JLabel();
 
         //======== this ========
         setTitle("Menu");
@@ -63,36 +62,25 @@ public class MenuScreen extends JFrame {
         salesDetailsBtn.setText("Sale Details");
         salesDetailsBtn.addActionListener(e -> saleDetialsBtnActionPerformed(e));
         contentPane.add(salesDetailsBtn);
-        salesDetailsBtn.setBounds(75, 145, 295, salesDetailsBtn.getPreferredSize().height);
+        salesDetailsBtn.setBounds(75, 85, 295, salesDetailsBtn.getPreferredSize().height);
 
         //---- prodDetailsBtn ----
         prodDetailsBtn.setText("Product Details");
-        prodDetailsBtn.addActionListener(e -> {
-            try {
-                prodDetailsBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        prodDetailsBtn.addActionListener(e -> prodDetailsBtnActionPerformed(e));
         contentPane.add(prodDetailsBtn);
-        prodDetailsBtn.setBounds(75, 185, 295, prodDetailsBtn.getPreferredSize().height);
+        prodDetailsBtn.setBounds(75, 125, 295, prodDetailsBtn.getPreferredSize().height);
 
         //---- userLabel ----
         userLabel.setText("User");
         contentPane.add(userLabel);
         userLabel.setBounds(325, 10, 118, userLabel.getPreferredSize().height);
 
-        //---- fnameLabel ----
-        fnameLabel.setText("first name");
-        contentPane.add(fnameLabel);
-        fnameLabel.setBounds(325, 30, 140, fnameLabel.getPreferredSize().height);
+        //---- nameLabel ----
+        nameLabel.setText("Full Name");
+        contentPane.add(nameLabel);
+        nameLabel.setBounds(325, 30, 140, nameLabel.getPreferredSize().height);
 
-        //---- lnameLabel ----
-        lnameLabel.setText("last name");
-        contentPane.add(lnameLabel);
-        lnameLabel.setBounds(325, 55, 140, lnameLabel.getPreferredSize().height);
-
-        contentPane.setPreferredSize(new Dimension(480, 430));
+        contentPane.setPreferredSize(new Dimension(480, 265));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -104,7 +92,6 @@ public class MenuScreen extends JFrame {
     private JButton salesDetailsBtn;
     private JButton prodDetailsBtn;
     private JLabel userLabel;
-    private JLabel fnameLabel;
-    private JLabel lnameLabel;
+    private JLabel nameLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

@@ -217,10 +217,10 @@ new FormModel {
 					} )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 320
-				"y": 15
+				"x": 315
+				"y": 60
 				"width": 510
-				"height": 440
+				"height": 395
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "allBtn"
@@ -234,34 +234,31 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "IDField"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
+				"x": 118
 				"y": 65
-				"width": 190
+				"width": 95
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "nameField"
-				"visible": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "nameFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
+				"x": 118
 				"y": 105
 				"width": 190
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "quantityField"
-				"visible": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "quantityFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
+				"x": 118
 				"y": 150
 				"width": 190
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "priceField"
-				"visible": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priceFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
+				"x": 118
 				"y": 195
 				"width": 190
 			} )
@@ -294,6 +291,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "deleteBtn"
 				"text": "Delete"
+				"foreground": new java.awt.Color( 204, 0, 0, 255 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 65
@@ -304,35 +302,32 @@ new FormModel {
 				name: "IDLabel"
 				"text": "Product ID:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 15
+				"x": 10
 				"y": 70
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "nameLabel"
 				"text": "Product Name:"
-				"visible": false
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 15
+				"x": 10
 				"y": 110
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "quantityLabel"
 				"text": "Product Quantity:"
-				"visible": false
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 15
+				"x": 10
 				"y": 155
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "priceLabel"
 				"text": "Product Price:"
-				"visible": false
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 15
-				"y": 205
+				"x": 10
+				"y": 200
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -343,8 +338,31 @@ new FormModel {
 				"y": 420
 				"width": 200
 			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "Search"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 230
+				"y": 65
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "userNameLabel"
+				"text": "Full Name"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 650
+				"y": 35
+				"width": 145
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "userLabel"
+				"text": "USER:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 650
+				"y": 5
+				"width": 145
+			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 9, 0 )
+			"location": new java.awt.Point( 5, 20 )
 			"size": new java.awt.Dimension( 835, 495 )
 		} )
 	}
