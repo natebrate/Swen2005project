@@ -67,7 +67,7 @@ public class ProductsPanel extends JFrame {
     }
 
     private void button1ActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        beginSearch();
     }
 
     private void productPanePropertyChange(PropertyChangeEvent e) {
