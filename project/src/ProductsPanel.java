@@ -55,7 +55,7 @@ public class ProductsPanel extends JFrame {
     }
 
     private void clearBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        clearAllFields();
     }
 
     private void allBtnActionPerformed(ActionEvent e) {
@@ -334,14 +334,11 @@ public class ProductsPanel extends JFrame {
             dao.closeConnection();
             if (thefind != null)
             {
-                // Make textfields visible
+                // Make textfields editable
                 nameField.setText(thefind.getName());
-                nameField.setEditable(true);
                 quantityField.setText(String.valueOf(thefind.getQuantity()));
-                quantityField.setEditable(true);
                 priceField.setText(String.valueOf(thefind.getPrice()));
-                priceField.setEditable(true);
-
+                unlockEditableFields();
                 // Make buttons editable
                 addUpdateBtn.setEnabled(true);
                 deleteBtn.setEnabled(true);
@@ -359,13 +356,38 @@ public class ProductsPanel extends JFrame {
                 if (returnValue == JOptionPane.YES_OPTION)
                 {
                     // Lock ID fields and allow editing of other fields
+                    clearEditableFields();
+                    lockEditableFields();
                     IDField.setEditable(false);
-                    nameField.setEditable(true);
-                    quantityField.setEditable(true);
-                    priceField.setEditable(true);
+
                 }
             }
         }
+    }
+    private void lockEditableFields()
+    {
+        nameField.setEditable(false);
+        quantityField.setEditable(false);
+        priceField.setEditable(false);
+    }
+    private void unlockEditableFields()
+    {
+        nameField.setEditable(true);
+        quantityField.setEditable(true);
+        priceField.setEditable(true);
+    }
+    private void clearEditableFields()
+    {
+        nameField.setText("");
+        quantityField.setText("");
+        priceField.setText("");
+    }
+    private void clearAllFields()
+    {
+        IDField.setText("");
+        nameField.setText("");
+        quantityField.setText("");
+        priceField.setText("");
 
     }
 }
