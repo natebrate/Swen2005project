@@ -216,10 +216,8 @@ public class DAO {
                 PreparedStatement myPreStmt = myConn.prepareStatement(query);
                 myPreStmt.setInt(1, code);
                 ResultSet rs = myPreStmt.executeQuery();
-                System.out.println("Run here");
                 while (rs.next()) {
                     theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
-                    System.out.println("We here");
                 }
             } catch (Exception e) {
                 System.out.println("Got an exception! Error in Find Record");

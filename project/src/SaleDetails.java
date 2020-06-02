@@ -223,7 +223,7 @@ public class SaleDetails extends JFrame {
         //---- idField ----
         idField.addActionListener(e -> idFieldActionPerformed(e));
         contentPane.add(idField);
-        idField.setBounds(5, 225, 95, idField.getPreferredSize().height);
+        idField.setBounds(15, 225, 110, idField.getPreferredSize().height);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
@@ -241,7 +241,6 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
 
         DAO dao = new DAO();
-        System.out.println("What happening");
         if (dao.openConnection())
         {
             saleDetailsCON thefind = null;
@@ -251,7 +250,7 @@ public class SaleDetails extends JFrame {
             {
                 System.out.println("Did it get here though?");
                 details g = new details(invoice, P_ID, quantity_sold, sub_total);
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 vec.addElement(g);
                 Date date = new Date(System.currentTimeMillis());
                 String day = formatter.format(date);
@@ -267,7 +266,6 @@ public class SaleDetails extends JFrame {
                     rowData[4] = day;
                     model.addRow(rowData);
                 }
-                System.out.println("Did it get here?");
                 searchField.setText("");
                 searchField.requestFocus();
                 searchField.requestFocus();
