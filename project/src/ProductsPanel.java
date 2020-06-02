@@ -156,6 +156,7 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
+        allBtn.setEnabled(false);
         allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
@@ -190,12 +191,14 @@ public class ProductsPanel extends JFrame {
 
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
+        addUpdateBtn.setEnabled(false);
         addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear");
+        clearBtn.setEnabled(false);
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
         clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
@@ -203,6 +206,7 @@ public class ProductsPanel extends JFrame {
         //---- deleteBtn ----
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
+        deleteBtn.setEnabled(false);
         deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);

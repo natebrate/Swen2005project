@@ -183,7 +183,7 @@ public class SaleDetails extends JFrame {
         //---- displayButton ----
         displayButton.setText("Display Report");
         contentPane.add(displayButton);
-        displayButton.setBounds(new Rectangle(new Point(130, 105), displayButton.getPreferredSize()));
+        displayButton.setBounds(130, 105, 110, displayButton.getPreferredSize().height);
 
         //---- printButton ----
         printButton.setText("Print Report");
