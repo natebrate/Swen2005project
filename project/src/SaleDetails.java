@@ -17,7 +17,14 @@ import java.util.Date;
 public class SaleDetails extends JFrame {
 
     public int invoice, P_ID, quantity_sold, sub_total;
+    public SaleDetails(User userLogin) throws SQLException {
+        initComponents();
 
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
     /**
      * Creates new form SaleDetails
      */
