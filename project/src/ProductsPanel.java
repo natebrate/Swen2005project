@@ -51,6 +51,10 @@ public class ProductsPanel extends JFrame {
         {
             addProduct();
         }
+        else
+        {
+            updateProduct();
+        }
     }
 
     private void deleteBtnActionPerformed(ActionEvent e) {
@@ -86,7 +90,7 @@ public class ProductsPanel extends JFrame {
     }
 
     private void returnBtnActionPerformed(ActionEvent e) throws SQLException{
-        new MenuScreen();
+        //new MenuScreen();
     }
 
     private void initComponents() {
@@ -381,13 +385,31 @@ public class ProductsPanel extends JFrame {
             DAO dao = new DAO();
             if (dao.openConnection())
             {
-                dao.insertProduct(theAdd);
+                dao.updateProdRecord(theAdd);
                 // Refresh Product Table
                 dao.loadProductsTable(productTable);
                 dao.closeConnection();
                 clearAllFields();
                 searchBtn.setText("Search");
 
+            }
+        }
+    }
+    private void updateProduct() throws SQLException {
+        if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields to continue!",
+                    "Fill in all fields to continue", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Product theUpdate = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
+                    Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
+            DAO dao = new DAO();
+            if (dao.openConnection()) {
+                dao.insertProduct(theUpdate);
+                // Refresh Product Table
+                dao.loadProductsTable(productTable);
+                dao.closeConnection();
+                clearAllFields();
+                searchBtn.setText("Search");
             }
         }
     }
