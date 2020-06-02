@@ -46,8 +46,11 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
-    private void addBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+    private void addBtnActionPerformed(ActionEvent e) throws SQLException {
+        if (addUpdateBtn.getText().equals("Add"))
+        {
+            addProduct();
+        }
     }
 
     private void deleteBtnActionPerformed(ActionEvent e) {
@@ -207,7 +210,13 @@ public class ProductsPanel extends JFrame {
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
         addUpdateBtn.setEnabled(false);
-        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
+        addUpdateBtn.addActionListener(e -> {
+            try {
+                addBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
@@ -332,6 +341,9 @@ public class ProductsPanel extends JFrame {
                 addUpdateBtn.setText("Update");
                 deleteBtn.setVisible(true);
 
+                // Lock ID field to prevent updating primary key
+
+
             }
             else
             {
@@ -341,11 +353,41 @@ public class ProductsPanel extends JFrame {
                 if (returnValue == JOptionPane.YES_OPTION)
                 {
                     // Lock ID fields and allow editing of other fields
+                    addUpdateBtn.setText("Add");
+                    addUpdateBtn.setEnabled(true);
                     clearEditableFields();
-                    lockEditableFields();
+                    unlockEditableFields();
                     IDField.setEditable(false);
+                    searchBtn.setText("Clear");
 
                 }
+                else
+                {
+                    IDField.setText("");
+                }
+            }
+        }
+    }
+    private void addProduct() throws SQLException {
+        if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank())
+        {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields to continue!",
+                    "Fill in all fields to continue", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            Product theAdd = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
+                    Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
+            DAO dao = new DAO();
+            if (dao.openConnection())
+            {
+                dao.insertProduct(theAdd);
+                // Refresh Product Table
+                dao.loadProductsTable(productTable);
+                dao.closeConnection();
+                clearAllFields();
+                searchBtn.setText("Search");
+
             }
         }
     }
