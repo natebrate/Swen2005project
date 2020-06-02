@@ -74,6 +74,10 @@ public class SaleDetails extends JFrame {
         new MenuScreen();
     }
 
+    private void idFieldFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -231,6 +235,12 @@ public class SaleDetails extends JFrame {
 
         //---- idField ----
         idField.addActionListener(e -> idFieldActionPerformed(e));
+        idField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                idFieldFocusGained(e);
+            }
+        });
         contentPane.add(idField);
         idField.setBounds(15, 230, 110, 25);
 

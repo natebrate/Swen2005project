@@ -78,6 +78,10 @@ public class ProductsPanel extends JFrame {
         new MenuScreen();
     }
 
+    private void IDFieldFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -163,13 +167,18 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
-        allBtn.setEnabled(false);
         allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
 
         //---- IDField ----
         IDField.addActionListener(e -> IDFieldActionPerformed(e));
+        IDField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                IDFieldFocusGained(e);
+            }
+        });
         contentPane.add(IDField);
         IDField.setBounds(118, 65, 95, IDField.getPreferredSize().height);
 
@@ -205,7 +214,6 @@ public class ProductsPanel extends JFrame {
 
         //---- clearBtn ----
         clearBtn.setText("Clear");
-        clearBtn.setEnabled(false);
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
         clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
@@ -240,13 +248,7 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
-        returnBtn.addActionListener(e -> {
-            try {
-                returnBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 

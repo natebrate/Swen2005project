@@ -225,7 +225,6 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "allBtn"
 				"text": "Display All"
-				"enabled": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "allBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 65
@@ -235,6 +234,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "IDField"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "IDFieldActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "IDFieldFocusGained", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 118
 				"y": 65
@@ -288,7 +288,6 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "clearBtn"
 				"text": "Clear"
-				"enabled": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "clearBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 165
