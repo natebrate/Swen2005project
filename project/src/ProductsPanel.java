@@ -67,7 +67,15 @@ public class ProductsPanel extends JFrame {
     }
 
     private void button1ActionPerformed(ActionEvent e) {
+        if(searchBtn.getText().equals("Search"))
         beginSearch();
+        else
+        {
+            IDField.setEditable(true);
+            clearAllFields();
+            lockEditableFields();
+            searchBtn.setText("Search");
+        }
     }
 
     private void productPanePropertyChange(PropertyChangeEvent e) {
@@ -297,31 +305,6 @@ public class ProductsPanel extends JFrame {
     private JLabel userLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-//    class checkData extends Thread
-//    {
-//        public void run() throws NumberFormatException //This exception needed as this runs
-//        when the num field is blank
-//        {
-//            try {
-//                DAO dao = new DAO();
-//                if (dao.openConnection())
-//                {
-//                    Product thefind;
-//                    thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
-//                    dao.closeConnection();
-//                    if (thefind != null)
-//                    {
-//                        nameField.setText(thefind.getName());
-//                        quantityField.setText(String.valueOf(thefind.getQuantity()));
-//                        priceField.setText(String.valueOf(thefind.getPrice()));
-//                        addUpdateBtn.setText("Update");
-//                        deleteBtn.setVisible(true);
-//                    }
-//                }
-//            } catch (NumberFormatException ignored) { //Do nothing about the exception. It is harmless
-//            }
-//        }
-//    }
     private void beginSearch()
     {
         // Initalize return value for option dialogue below
@@ -343,6 +326,8 @@ public class ProductsPanel extends JFrame {
                 addUpdateBtn.setEnabled(true);
                 deleteBtn.setEnabled(true);
 
+                // Change search button to clear ID
+                searchBtn.setText("Clear");
 
                 addUpdateBtn.setText("Update");
                 deleteBtn.setVisible(true);
@@ -389,5 +374,10 @@ public class ProductsPanel extends JFrame {
         quantityField.setText("");
         priceField.setText("");
 
+    }
+    private void lockButtons()
+    {
+        addUpdateBtn.setEnabled(false);
+        deleteBtn.setEnabled(false);
     }
 }
