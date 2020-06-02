@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.beans.*;
 import java.sql.*;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
@@ -47,7 +46,7 @@ public class SaleDetails extends JFrame {
                 try {
                     int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete", "Delete", JOptionPane.YES_NO_OPTION);
                     if (confirm == JOptionPane.YES_OPTION) {
-                        dao.deleteSaleRecord(Integer.valueOf(searchField.getText()));
+                        dao.deleteSaleRecord(Integer.parseInt(searchField.getText()));
                         dao.closeConnection();
                     } else {
                         dispose();
@@ -98,6 +97,7 @@ public class SaleDetails extends JFrame {
         returnBtn = new JButton();
         nameLabel = new JLabel();
         userLabel = new JLabel();
+        hSpacer1 = new JPanel(null);
 
         //======== this ========
         setTitle("Sales Details");
@@ -114,7 +114,7 @@ public class SaleDetails extends JFrame {
             }
         });
         contentPane.add(searchButton);
-        searchButton.setBounds(new Rectangle(new Point(630, 5), searchButton.getPreferredSize()));
+        searchButton.setBounds(635, 5, searchButton.getPreferredSize().width, 25);
 
         //---- searchField ----
         searchField.addActionListener(e -> searchFieldActionPerformed(e));
@@ -165,27 +165,27 @@ public class SaleDetails extends JFrame {
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);
-        salesPane.setBounds(255, 65, 445, 325);
+        salesPane.setBounds(260, 70, 445, 325);
 
         //---- quantityLabel ----
         quantityLabel.setText("Amount Items Sold:");
         contentPane.add(quantityLabel);
-        quantityLabel.setBounds(new Rectangle(new Point(255, 400), quantityLabel.getPreferredSize()));
+        quantityLabel.setBounds(new Rectangle(new Point(260, 405), quantityLabel.getPreferredSize()));
 
         //---- amountLabels ----
         amountLabels.setText("Quantity");
         contentPane.add(amountLabels);
-        amountLabels.setBounds(365, 400, 100, amountLabels.getPreferredSize().height);
+        amountLabels.setBounds(370, 405, 100, amountLabels.getPreferredSize().height);
 
         //---- totalSoldLabel ----
         totalSoldLabel.setText("Total Sold:");
         contentPane.add(totalSoldLabel);
-        totalSoldLabel.setBounds(300, 425, 60, totalSoldLabel.getPreferredSize().height);
+        totalSoldLabel.setBounds(305, 430, 60, totalSoldLabel.getPreferredSize().height);
 
         //---- soldLabel ----
         soldLabel.setText("$00000000.00");
         contentPane.add(soldLabel);
-        soldLabel.setBounds(365, 425, 100, soldLabel.getPreferredSize().height);
+        soldLabel.setBounds(370, 430, 100, soldLabel.getPreferredSize().height);
 
         //---- displayButton ----
         displayButton.setText("Display Report");
@@ -232,7 +232,7 @@ public class SaleDetails extends JFrame {
         //---- idField ----
         idField.addActionListener(e -> idFieldActionPerformed(e));
         contentPane.add(idField);
-        idField.setBounds(15, 225, 110, idField.getPreferredSize().height);
+        idField.setBounds(15, 230, 110, 25);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
@@ -249,6 +249,8 @@ public class SaleDetails extends JFrame {
         userLabel.setText("USER:");
         contentPane.add(userLabel);
         userLabel.setBounds(465, 40, 115, userLabel.getPreferredSize().height);
+        contentPane.add(hSpacer1);
+        hSpacer1.setBounds(0, 60, 730, hSpacer1.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(730, 485));
         pack();
@@ -288,8 +290,6 @@ public class SaleDetails extends JFrame {
                 }
                 searchField.setText("");
                 searchField.requestFocus();
-                searchField.requestFocus();
-                searchField.setText(Integer.toString(thefind.getInvoice()));
                 P_ID = thefind.getP_ID();
                 quantity_sold = thefind.getQuantity_sold();
                 sub_total = thefind.getSub_total();
@@ -311,7 +311,7 @@ public class SaleDetails extends JFrame {
         int invoice, P_ID, quantity_sold;
         double sub_total;
 
-        public details(int invoice, int P_ID, int quantity_sold, double sub_total)
+        public details(int searchField, int P_ID, int quantity_sold, double sub_total)
         {
             this.invoice = invoice;
             this.P_ID = P_ID;
@@ -358,5 +358,6 @@ public class SaleDetails extends JFrame {
     private JButton returnBtn;
     private JLabel nameLabel;
     private JLabel userLabel;
+    private JPanel hSpacer1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
