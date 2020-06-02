@@ -233,6 +233,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "IDField"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "IDFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 118
 				"y": 65
@@ -240,6 +241,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "nameField"
+				"editable": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "nameFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 118
@@ -248,6 +250,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "quantityField"
+				"editable": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "quantityFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 118
@@ -256,6 +259,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "priceField"
+				"editable": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "priceFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 118
@@ -263,7 +267,7 @@ new FormModel {
 				"width": 190
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label1"
+				name: "InfoLabel"
 				"text": "Modify Entrees to Table: Add, Delete and Update"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
@@ -339,8 +343,9 @@ new FormModel {
 				"width": 200
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
+				name: "searchBtn"
 				"text": "Search"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 230
 				"y": 65
