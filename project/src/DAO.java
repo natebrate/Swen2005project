@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.sql.*;
-import java.util.Vector;
 import javax.swing.table.*;
 
 public class DAO {
@@ -181,7 +180,7 @@ public class DAO {
 
     public void loadSalesDetailsTable (JTable table) throws SQLException {
         try {
-            String query = "SELECT * from sales_details where invoice  = ?";
+            String query = "SELECT * from sales_details order by Invoice";
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
@@ -210,14 +209,17 @@ public class DAO {
         {
             saleDetailsCON theOne = null;
             //the mysql insert statementString query = "select * from sales_details where invoice = ?";
-            String query = "select * from sales_details where invoice  = ?";
+            String query = "select * from sales_details where P_ID  = ?";
             try {
+
                 //create the mysql insert preparedstatement
                 PreparedStatement myPreStmt = myConn.prepareStatement(query);
                 myPreStmt.setInt(1, code);
                 ResultSet rs = myPreStmt.executeQuery();
+                System.out.println("Run here");
                 while (rs.next()) {
-                    theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getInt("sub_total "));
+                    theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
+                    System.out.println("We here");
                 }
             } catch (Exception e) {
                 System.out.println("Got an exception! Error in Find Record");

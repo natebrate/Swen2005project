@@ -30,6 +30,10 @@ public class MenuScreen extends JFrame {
 
     }
 
+    public MenuScreen() {
+
+    }
+
     private void saleDetialsBtnActionPerformed(ActionEvent e) throws SQLException {
         new SaleDetails(userLogin);
     }

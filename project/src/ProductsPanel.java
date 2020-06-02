@@ -71,6 +71,10 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
+    private void returnBtnActionPerformed(ActionEvent e) throws SQLException{
+        new MenuScreen();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -233,6 +237,13 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
+        returnBtn.addActionListener(e -> {
+            try {
+                returnBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
