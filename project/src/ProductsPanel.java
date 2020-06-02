@@ -28,11 +28,10 @@ public class ProductsPanel extends JFrame {
             dao.loadProductsTable(productTable);
         }
 
+        userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
+        userNameLabel.setText(userLogin.getFirstName());
 
-    }
 
-    private void productPanePropertyChange(PropertyChangeEvent e) {
-        // TODO add your code here
     }
 
     private void nameFieldActionPerformed(ActionEvent e) {
@@ -63,6 +62,22 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
+    private void IDFieldActionPerformed(ActionEvent e) {
+        beginSearch();
+    }
+
+    private void button1ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void productPanePropertyChange(PropertyChangeEvent e) {
+        // TODO add your code here
+    }
+
+    private void returnBtnActionPerformed(ActionEvent e) throws SQLException{
+        new MenuScreen();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -73,7 +88,7 @@ public class ProductsPanel extends JFrame {
         nameField = new JTextField();
         quantityField = new JTextField();
         priceField = new JTextField();
-        label1 = new JLabel();
+        InfoLabel = new JLabel();
         addUpdateBtn = new JButton();
         clearBtn = new JButton();
         deleteBtn = new JButton();
@@ -82,7 +97,7 @@ public class ProductsPanel extends JFrame {
         quantityLabel = new JLabel();
         priceLabel = new JLabel();
         returnBtn = new JButton();
-        button1 = new JButton();
+        searchBtn = new JButton();
         userNameLabel = new JLabel();
         userLabel = new JLabel();
 
@@ -148,40 +163,49 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
+        allBtn.setEnabled(false);
         allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
+
+        //---- IDField ----
+        IDField.addActionListener(e -> IDFieldActionPerformed(e));
         contentPane.add(IDField);
         IDField.setBounds(118, 65, 95, IDField.getPreferredSize().height);
 
         //---- nameField ----
+        nameField.setEditable(false);
         nameField.addActionListener(e -> nameFieldActionPerformed(e));
         contentPane.add(nameField);
         nameField.setBounds(118, 105, 190, nameField.getPreferredSize().height);
 
         //---- quantityField ----
+        quantityField.setEditable(false);
         quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
         contentPane.add(quantityField);
         quantityField.setBounds(118, 150, 190, quantityField.getPreferredSize().height);
 
         //---- priceField ----
+        priceField.setEditable(false);
         priceField.addActionListener(e -> priceFieldActionPerformed(e));
         contentPane.add(priceField);
         priceField.setBounds(118, 195, 190, priceField.getPreferredSize().height);
 
-        //---- label1 ----
-        label1.setText("Modify Entrees to Table: Add, Delete and Update");
-        contentPane.add(label1);
-        label1.setBounds(10, 15, 300, label1.getPreferredSize().height);
+        //---- InfoLabel ----
+        InfoLabel.setText("Modify Entrees to Table: Add, Delete and Update");
+        contentPane.add(InfoLabel);
+        InfoLabel.setBounds(10, 15, 300, InfoLabel.getPreferredSize().height);
 
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
+        addUpdateBtn.setEnabled(false);
         addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear");
+        clearBtn.setEnabled(false);
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
         clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
@@ -189,6 +213,7 @@ public class ProductsPanel extends JFrame {
         //---- deleteBtn ----
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
+        deleteBtn.setEnabled(false);
         deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
@@ -215,13 +240,21 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
+        returnBtn.addActionListener(e -> {
+            try {
+                returnBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
-        //---- button1 ----
-        button1.setText("Search");
-        contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(230, 65), button1.getPreferredSize()));
+        //---- searchBtn ----
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(e -> button1ActionPerformed(e));
+        contentPane.add(searchBtn);
+        searchBtn.setBounds(230, 65, 75, searchBtn.getPreferredSize().height);
 
         //---- userNameLabel ----
         userNameLabel.setText("Full Name");
@@ -250,7 +283,7 @@ public class ProductsPanel extends JFrame {
     private JTextField nameField;
     private JTextField quantityField;
     private JTextField priceField;
-    private JLabel label1;
+    private JLabel InfoLabel;
     private JButton addUpdateBtn;
     private JButton clearBtn;
     private JButton deleteBtn;
@@ -259,12 +292,36 @@ public class ProductsPanel extends JFrame {
     private JLabel quantityLabel;
     private JLabel priceLabel;
     private JButton returnBtn;
-    private JButton button1;
+    private JButton searchBtn;
     private JLabel userNameLabel;
     private JLabel userLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-
+//    class checkData extends Thread
+//    {
+//        public void run() throws NumberFormatException //This exception needed as this runs
+//        when the num field is blank
+//        {
+//            try {
+//                DAO dao = new DAO();
+//                if (dao.openConnection())
+//                {
+//                    Product thefind;
+//                    thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
+//                    dao.closeConnection();
+//                    if (thefind != null)
+//                    {
+//                        nameField.setText(thefind.getName());
+//                        quantityField.setText(String.valueOf(thefind.getQuantity()));
+//                        priceField.setText(String.valueOf(thefind.getPrice()));
+//                        addUpdateBtn.setText("Update");
+//                        deleteBtn.setVisible(true);
+//                    }
+//                }
+//            } catch (NumberFormatException ignored) { //Do nothing about the exception. It is harmless
+//            }
+//        }
+//    }
     private void beginSearch()
     {
         DAO dao = new DAO();

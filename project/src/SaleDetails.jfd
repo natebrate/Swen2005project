@@ -13,12 +13,13 @@ new FormModel {
 				"text": "Search"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "searchButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 630
+				"x": 635
 				"y": 5
+				"height": 25
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "searchField"
-				"text": "Search"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "searchFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
 				"y": 5
@@ -34,18 +35,12 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
 							add( null )
 							add( null )
 						} )
 						add( new java.util.Vector {
 							add( null )
 							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
 							add( null )
 							add( null )
 							add( null )
@@ -54,18 +49,12 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
 							add( null )
 							add( null )
 						} )
 						add( new java.util.Vector {
 							add( null )
 							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
 							add( null )
 							add( null )
 							add( null )
@@ -74,18 +63,12 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
 							add( null )
 							add( null )
 						} )
 						add( new java.util.Vector {
 							add( null )
 							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
 							add( null )
 							add( null )
 							add( null )
@@ -94,18 +77,12 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
 							add( null )
 							add( null )
 						} )
 						add( new java.util.Vector {
 							add( null )
 							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
 							add( null )
 							add( null )
 							add( null )
@@ -114,9 +91,6 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
 							add( null )
 							add( null )
 						} )
@@ -124,38 +98,115 @@ new FormModel {
 							add( null )
 							add( null )
 							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
 						} )
 						add( new java.util.Vector {
 							add( null )
 							add( null )
 							add( null )
+							add( null )
+							add( null )
 						} )
 						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+						add( new java.util.Vector {
+							add( null )
+							add( null )
 							add( null )
 							add( null )
 							add( null )
 						} )
 					}, new java.util.Vector {
-						add( "Date" )
+						add( "Invoice" )
 						add( "P_ID" )
 						add( "Quantity" )
+						add( "sub_total" )
+						add( "Date" )
 					}, new java.util.Vector {
-						add( class java.util.Date )
 						add( class java.lang.Integer )
 						add( class java.lang.Integer )
+						add( class java.lang.Integer )
+						add( class java.lang.Integer )
+						add( class java.lang.String )
 					}, new java.util.Vector {
 						add( null )
 						add( null )
 						add( null )
+						add( null )
+						add( null )
 					}, new java.util.Vector {
+						add( null )
+						add( null )
 						add( null )
 						add( null )
 						add( null )
 					} )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 255
-				"y": 65
+				"x": 260
+				"y": 70
 				"height": 325
 				"width": 445
 			} )
@@ -163,38 +214,41 @@ new FormModel {
 				name: "quantityLabel"
 				"text": "Amount Items Sold:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 255
-				"y": 400
+				"x": 260
+				"y": 405
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "amountLabels"
 				"text": "Quantity"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 365
-				"y": 400
+				"x": 370
+				"y": 405
+				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "totalSoldLabel"
 				"text": "Total Sold:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 300
-				"y": 425
+				"x": 305
+				"y": 430
 				"width": 60
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "soldLabel"
 				"text": "$00000000.00"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 365
-				"y": 425
+				"x": 370
+				"y": 430
+				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "displayButton"
 				"text": "Display Report"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "displayButtonActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 130
 				"y": 105
-				"width": 110
+				"width": 120
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "printButton"
@@ -202,7 +256,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 130
 				"y": 145
-				"width": 110
+				"width": 120
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "saveButton"
@@ -210,7 +264,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 130
 				"y": 185
-				"width": 110
+				"width": 120
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "dateLabel"
@@ -242,28 +296,52 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 130
 				"y": 225
-				"width": 110
+				"width": 120
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "idField"
-				"text": "ID"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "idFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 15
-				"y": 225
-				"width": 95
+				"y": 230
+				"width": 110
+				"height": 25
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "returnBtn"
 				"text": "Return to Menu"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "returnBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 15
 				"y": 265
 				"width": 220
 			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "nameLabel"
+				"text": "Name"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 585
+				"y": 40
+				"width": 115
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "userLabel"
+				"text": "USER:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 465
+				"y": 40
+				"width": 115
+			} )
+			add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+				name: "hSpacer1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 60
+				"width": 730
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 720, 485 )
+			"size": new java.awt.Dimension( 730, 485 )
 		} )
 	}
 }

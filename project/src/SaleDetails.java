@@ -3,9 +3,9 @@ import java.awt.event.*;
 import java.util.*;
 import java.sql.*;
 import javax.swing.*;
-import javax.swing.table.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.table.*;
 /*
  * Created by JFormDesigner on Fri May 29 12:44:19 BOT 2020
  */
@@ -15,8 +15,11 @@ import java.util.Date;
  * @author unknown
  */
 public class SaleDetails extends JFrame {
+    public int invoice, P_ID, quantity_sold;
+    public double sub_total;
 
-    public int invoice, P_ID, quantity_sold, sub_total;
+    Vector<details> vec = new Vector<details>();
+
     public SaleDetails(User userLogin) throws SQLException {
         initComponents();
 
@@ -24,20 +27,10 @@ public class SaleDetails extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
+        nameLabel.setText(userLogin.getFirstName());
     }
-    /**
-     * Creates new form SaleDetails
-     */
-    Vector <details> vec = new Vector <details> ();
-   
-    private void searchFieldKeyPressed(KeyEvent e) {
-        // TODO add your code here
-        int key = e.getKeyCode();
-        if (key == KeyEvent.VK_ENTER) {
-            Toolkit.getDefaultToolkit().beep();
-            fillTable();
-        }
-    }
+
 
     private void searchFieldActionPerformed(ActionEvent e) {
         // TODO add your code here
@@ -53,7 +46,7 @@ public class SaleDetails extends JFrame {
                 try {
                     int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete", "Delete", JOptionPane.YES_NO_OPTION);
                     if (confirm == JOptionPane.YES_OPTION) {
-                        dao.deleteSaleRecord(Integer.valueOf(searchField.getText()));
+                        dao.deleteSaleRecord(Integer.parseInt(searchField.getText()));
                         dao.closeConnection();
                     } else {
                         dispose();
@@ -73,11 +66,16 @@ public class SaleDetails extends JFrame {
         if (dao.openConnection()) {
             dao.loadSalesDetailsTable(salesTable);
         }
+        dao.closeConnection();
+    }
+
+    private void returnBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        new MenuScreen();
     }
 
 
-    private void initComponents()
-    {
+    private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         searchButton = new JButton();
@@ -97,6 +95,9 @@ public class SaleDetails extends JFrame {
         clearBtn = new JButton();
         idField = new JTextField();
         returnBtn = new JButton();
+        nameLabel = new JLabel();
+        userLabel = new JLabel();
+        hSpacer1 = new JPanel(null);
 
         //======== this ========
         setTitle("Sales Details");
@@ -105,12 +106,18 @@ public class SaleDetails extends JFrame {
 
         //---- searchButton ----
         searchButton.setText("Search");
-        searchButton.addActionListener(e -> searchButtonActionPerformed(e));
+        searchButton.addActionListener(e -> {
+            try {
+                searchButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(searchButton);
-        searchButton.setBounds(new Rectangle(new Point(630, 5), searchButton.getPreferredSize()));
+        searchButton.setBounds(635, 5, searchButton.getPreferredSize().width, 25);
 
         //---- searchField ----
-        searchField.setText("Search");
+        searchField.addActionListener(e -> searchFieldActionPerformed(e));
         contentPane.add(searchField);
         searchField.setBounds(10, 5, 620, searchField.getPreferredSize().height);
 
@@ -121,34 +128,34 @@ public class SaleDetails extends JFrame {
             salesTable.setAutoCreateRowSorter(true);
             salesTable.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
                 },
                 new String[] {
-                    "Date", "P_ID", "Quantity"
+                    "Invoice", "P_ID", "Quantity", "sub_total", "Date"
                 }
             ) {
                 Class<?>[] columnTypes = new Class<?>[] {
-                    Date.class, Integer.class, Integer.class
+                    Integer.class, Integer.class, Integer.class, Integer.class, String.class
                 };
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
@@ -158,42 +165,49 @@ public class SaleDetails extends JFrame {
             salesPane.setViewportView(salesTable);
         }
         contentPane.add(salesPane);
-        salesPane.setBounds(255, 65, 445, 325);
+        salesPane.setBounds(260, 70, 445, 325);
 
         //---- quantityLabel ----
         quantityLabel.setText("Amount Items Sold:");
         contentPane.add(quantityLabel);
-        quantityLabel.setBounds(new Rectangle(new Point(255, 400), quantityLabel.getPreferredSize()));
+        quantityLabel.setBounds(new Rectangle(new Point(260, 405), quantityLabel.getPreferredSize()));
 
         //---- amountLabels ----
         amountLabels.setText("Quantity");
         contentPane.add(amountLabels);
-        amountLabels.setBounds(new Rectangle(new Point(365, 400), amountLabels.getPreferredSize()));
+        amountLabels.setBounds(370, 405, 100, amountLabels.getPreferredSize().height);
 
         //---- totalSoldLabel ----
         totalSoldLabel.setText("Total Sold:");
         contentPane.add(totalSoldLabel);
-        totalSoldLabel.setBounds(300, 425, 60, totalSoldLabel.getPreferredSize().height);
+        totalSoldLabel.setBounds(305, 430, 60, totalSoldLabel.getPreferredSize().height);
 
         //---- soldLabel ----
         soldLabel.setText("$00000000.00");
         contentPane.add(soldLabel);
-        soldLabel.setBounds(new Rectangle(new Point(365, 425), soldLabel.getPreferredSize()));
+        soldLabel.setBounds(370, 430, 100, soldLabel.getPreferredSize().height);
 
         //---- displayButton ----
         displayButton.setText("Display Report");
+        displayButton.addActionListener(e -> {
+            try {
+                displayButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(displayButton);
-        displayButton.setBounds(130, 105, 110, displayButton.getPreferredSize().height);
+        displayButton.setBounds(130, 105, 120, displayButton.getPreferredSize().height);
 
         //---- printButton ----
         printButton.setText("Print Report");
         contentPane.add(printButton);
-        printButton.setBounds(130, 145, 110, printButton.getPreferredSize().height);
+        printButton.setBounds(130, 145, 120, printButton.getPreferredSize().height);
 
         //---- saveButton ----
         saveButton.setText("Save Report");
         contentPane.add(saveButton);
-        saveButton.setBounds(130, 185, 110, saveButton.getPreferredSize().height);
+        saveButton.setBounds(130, 185, 120, saveButton.getPreferredSize().height);
 
         //---- dateLabel ----
         dateLabel.setText("DATE:");
@@ -213,83 +227,78 @@ public class SaleDetails extends JFrame {
         //---- clearBtn ----
         clearBtn.setText("Clear Records");
         contentPane.add(clearBtn);
-        clearBtn.setBounds(130, 225, 110, clearBtn.getPreferredSize().height);
+        clearBtn.setBounds(130, 225, 120, clearBtn.getPreferredSize().height);
 
         //---- idField ----
-        idField.setText("ID");
         idField.addActionListener(e -> idFieldActionPerformed(e));
         contentPane.add(idField);
-        idField.setBounds(15, 225, 95, idField.getPreferredSize().height);
+        idField.setBounds(15, 230, 110, 25);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(15, 265, 220, returnBtn.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(720, 485));
+        //---- nameLabel ----
+        nameLabel.setText("Name");
+        contentPane.add(nameLabel);
+        nameLabel.setBounds(585, 40, 115, nameLabel.getPreferredSize().height);
+
+        //---- userLabel ----
+        userLabel.setText("USER:");
+        contentPane.add(userLabel);
+        userLabel.setBounds(465, 40, 115, userLabel.getPreferredSize().height);
+        contentPane.add(hSpacer1);
+        hSpacer1.setBounds(0, 60, 730, hSpacer1.getPreferredSize().height);
+
+        contentPane.setPreferredSize(new Dimension(730, 485));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
     }
 
-    private void searchButtonActionPerformed(ActionEvent evt)
-    {
+    private void searchButtonActionPerformed(ActionEvent evt) throws SQLException {
         // TODO add your code here
-        if (searchField.getText().isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "Please enter a quantity");
-            searchField.requestFocus();
-            return;
-        }
 
-        details g = new details (invoice, P_ID,  quantity_sold, sub_total);
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        vec.addElement(g);
-        Date date = new Date(System.currentTimeMillis());
-
-        DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
-        Object rowData[] = new Object[3];
-        model.setRowCount(0);
-        for (int i = 0; i < vec.size(); i++) {
-            rowData[0] = formatter.format(date);
-            rowData[1] = vec.elementAt(i).getP_ID();
-            rowData[2] = vec.elementAt(i).getQuantity_sold();
-            model.addRow(rowData);
-        }
-        searchField.setText("");
-        searchField.requestFocus();
-    }
-
-    //WHEN USER SEARCHES BY INVOICE THIS POPULATES THE TABLE WITH SAID INVOICE
-    private void fillTable()
-    {
         DAO dao = new DAO();
         if (dao.openConnection())
         {
             saleDetailsCON thefind = null;
             thefind = dao.findsalesRecord(Integer.parseInt(searchField.getText()));
+            System.out.println(searchField);
             if (thefind != null)
             {
-                searchField.setText(Integer.toString(thefind.getInvoice()));
+                System.out.println("Did it get here though?");
+                details g = new details(invoice, P_ID, quantity_sold, sub_total);
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                vec.addElement(g);
+                Date date = new Date(System.currentTimeMillis());
+                String day = formatter.format(date);
+
+                DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+                Object rowData[] = new Object[5];
+                model.setRowCount(0);
+                for (int i = 0; i < vec.size(); i++) {
+                    rowData[0] = vec.elementAt(i).getInvoice();
+                    rowData[1] = vec.elementAt(i).getP_ID();
+                    rowData[2] = vec.elementAt(i).getQuantity_sold();
+                    rowData[3] = vec.elementAt(i).getSub_total();
+                    rowData[4] = day;
+                    model.addRow(rowData);
+                }
+                searchField.setText("");
+                searchField.requestFocus();
                 P_ID = thefind.getP_ID();
                 quantity_sold = thefind.getQuantity_sold();
                 sub_total = thefind.getSub_total();
 
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Please enter an invoice number");
                 searchField.requestFocus();
             }
-
         }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Sorry Invoice doesn't exist",
-                    "Sorry Invoice doesn't exist", JOptionPane.WARNING_MESSAGE);
-        }
-        dao.closeConnection();
     }
 
 
@@ -297,11 +306,12 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
-    public class details
+    static class details
     {
-        int invoice, P_ID, quantity_sold, sub_total;
+        int invoice, P_ID, quantity_sold;
+        double sub_total;
 
-        public details(int invoice, int P_ID, int quantity_sold, int sub_total)
+        public details(int searchField, int P_ID, int quantity_sold, double sub_total)
         {
             this.invoice = invoice;
             this.P_ID = P_ID;
@@ -316,16 +326,16 @@ public class SaleDetails extends JFrame {
         {
             return this.P_ID;
         }
-        public int getSub_total()
-        {
-            return this.sub_total;
-        }
         public int getQuantity_sold()
         {
             return this.quantity_sold;
         }
-    }
+        public double getSub_total()
+        {
+            return this.sub_total;
+        }
 
+    }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
@@ -346,5 +356,8 @@ public class SaleDetails extends JFrame {
     private JButton clearBtn;
     private JTextField idField;
     private JButton returnBtn;
+    private JLabel nameLabel;
+    private JLabel userLabel;
+    private JPanel hSpacer1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
