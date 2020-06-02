@@ -15,6 +15,7 @@ import javax.swing.table.*;
  */
 public class ProductsPanel extends JFrame {
     Product lastSearchedProduct = null;
+    User userLogin = null;
     public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
         // Load blank Product for purposes later
@@ -29,7 +30,7 @@ public class ProductsPanel extends JFrame {
         if (dao.openConnection()) {
             dao.loadProductsTable(productTable);
         }
-
+        this.userLogin = userLogin;
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
         userNameLabel.setText(userLogin.getFirstName());
 
@@ -95,7 +96,8 @@ public class ProductsPanel extends JFrame {
     }
 
     private void returnBtnActionPerformed(ActionEvent e) throws SQLException{
-        //new MenuScreen();
+        setVisible(false);
+        dispose();
     }
 
     private void initComponents() {
@@ -451,22 +453,30 @@ public class ProductsPanel extends JFrame {
             }
     }
     private void deleteProduct() throws SQLException {
-        int returnValue;
-        returnValue = JOptionPane.showConfirmDialog(null, "Are you certain you want to " +
-                        "delete this product?:\n\n"
-                        + lastSearchedProduct.toString(),
-                "Delete Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-        if (returnValue == JOptionPane.YES_OPTION) {
-            int theDeleteID = Integer.parseInt(IDField.getText());
-            DAO dao = new DAO();
-            if (dao.openConnection()) {
-                dao.deleteProdRecord(theDeleteID);
-                // Refresh Product Table
-                dao.loadProductsTable(productTable);
-                dao.closeConnection();
-                clearAllFields();
-                searchBtn.setText("Search");
+        if (userLogin.getIsAdmin()) {
+            int returnValue;
+            returnValue = JOptionPane.showConfirmDialog(null, "Are you certain you want to " +
+                            "delete this product?:\n\n"
+                            + lastSearchedProduct.toString(),
+                    "Delete Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (returnValue == JOptionPane.YES_OPTION) {
+                int theDeleteID = Integer.parseInt(IDField.getText());
+                DAO dao = new DAO();
+                if (dao.openConnection()) {
+                    dao.deleteProdRecord(theDeleteID);
+                    // Refresh Product Table
+                    dao.loadProductsTable(productTable);
+                    dao.closeConnection();
+                    clearAllFields();
+                    searchBtn.setText("Search");
+                }
             }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "You must have admint credentials to delete" +
+                            "a product!",
+                    "Need Admin Credentials!", JOptionPane.WARNING_MESSAGE);
         }
     }
 
