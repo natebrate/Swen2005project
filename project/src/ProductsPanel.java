@@ -14,8 +14,10 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class ProductsPanel extends JFrame {
+    Product lastSearchedProduct = null;
     public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
+        // Load blank Product for purposes later
 
         this.pack();
         this.setLocationRelativeTo(null);
@@ -57,8 +59,9 @@ public class ProductsPanel extends JFrame {
         }
     }
 
-    private void deleteBtnActionPerformed(ActionEvent e) {
+    private void deleteBtnActionPerformed(ActionEvent e) throws SQLException {
         // TODO add your code here
+        deleteProduct();
     }
 
     private void clearBtnActionPerformed(ActionEvent e) {
@@ -235,7 +238,13 @@ public class ProductsPanel extends JFrame {
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
         deleteBtn.setEnabled(false);
-        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
+        deleteBtn.addActionListener(e -> {
+            try {
+                deleteBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
 
@@ -325,15 +334,16 @@ public class ProductsPanel extends JFrame {
         DAO dao = new DAO();
         if (dao.openConnection())
         {
-            Product thefind;
-            thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
+            Product theFind;
+            theFind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
             dao.closeConnection();
-            if (thefind != null)
+            if (theFind != null)
             {
+                lastSearchedProduct = theFind;
                 // Make textfields editable
-                nameField.setText(thefind.getName());
-                quantityField.setText(String.valueOf(thefind.getQuantity()));
-                priceField.setText(String.valueOf(thefind.getPrice()));
+                nameField.setText(theFind.getName());
+                quantityField.setText(String.valueOf(theFind.getQuantity()));
+                priceField.setText(String.valueOf(theFind.getPrice()));
                 unlockEditableFields();
                 // Make buttons editable
                 addUpdateBtn.setEnabled(true);
@@ -356,12 +366,17 @@ public class ProductsPanel extends JFrame {
                         "Add Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (returnValue == JOptionPane.YES_OPTION)
                 {
-                    // Lock ID fields and allow editing of other fields
+                    // Unlock ID fields and allow editing of other fields
                     addUpdateBtn.setText("Add");
                     addUpdateBtn.setEnabled(true);
+                    //Disable delete button, cannot delete something that doesn't exist!
+                    deleteBtn.setEnabled(false);
+                    // Clear and unlock all fields to facilitate data entry
                     clearEditableFields();
                     unlockEditableFields();
+                    //Block ID field to prevent updating an existing product's primary key!
                     IDField.setEditable(false);
+                    // Change search to clear in case user wants to go back
                     searchBtn.setText("Clear");
 
                 }
@@ -413,6 +428,27 @@ public class ProductsPanel extends JFrame {
             }
         }
     }
+    private void deleteProduct() throws SQLException {
+        int returnValue;
+        returnValue = JOptionPane.showConfirmDialog(null, "Are you certain you want to " +
+                        "delete this product?:"
+                        + lastSearchedProduct.toString(),
+                "Add Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (returnValue == JOptionPane.YES_OPTION) {
+            int theDeleteID = Integer.parseInt(IDField.getText());
+            DAO dao = new DAO();
+            if (dao.openConnection()) {
+                dao.deleteProdRecord(theDeleteID);
+                // Refresh Product Table
+                dao.loadProductsTable(productTable);
+                dao.closeConnection();
+                clearAllFields();
+                searchBtn.setText("Search");
+            }
+        }
+    }
+
+
     private void lockEditableFields()
     {
         nameField.setEditable(false);
