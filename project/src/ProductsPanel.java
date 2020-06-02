@@ -28,6 +28,9 @@ public class ProductsPanel extends JFrame {
             dao.loadProductsTable(productTable);
         }
 
+        userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
+        userNameLabel.setText(userLogin.getFirstName());
+
 
     }
 

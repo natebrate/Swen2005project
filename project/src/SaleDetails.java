@@ -28,6 +28,8 @@ public class SaleDetails extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
+        nameLabel.setText(userLogin.getFirstName());
     }
 
 
@@ -68,6 +70,11 @@ public class SaleDetails extends JFrame {
         dao.closeConnection();
     }
 
+    private void returnBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        new MenuScreen();
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -89,6 +96,8 @@ public class SaleDetails extends JFrame {
         clearBtn = new JButton();
         idField = new JTextField();
         returnBtn = new JButton();
+        nameLabel = new JLabel();
+        userLabel = new JLabel();
 
         //======== this ========
         setTitle("Sales Details");
@@ -227,8 +236,19 @@ public class SaleDetails extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(15, 265, 220, returnBtn.getPreferredSize().height);
+
+        //---- nameLabel ----
+        nameLabel.setText("Name");
+        contentPane.add(nameLabel);
+        nameLabel.setBounds(585, 40, 115, nameLabel.getPreferredSize().height);
+
+        //---- userLabel ----
+        userLabel.setText("USER:");
+        contentPane.add(userLabel);
+        userLabel.setBounds(465, 40, 115, userLabel.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(730, 485));
         pack();
@@ -336,5 +356,7 @@ public class SaleDetails extends JFrame {
     private JButton clearBtn;
     private JTextField idField;
     private JButton returnBtn;
+    private JLabel nameLabel;
+    private JLabel userLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
