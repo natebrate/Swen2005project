@@ -225,7 +225,7 @@ public class ProductsPanel extends JFrame {
         //---- button1 ----
         button1.setText("Search");
         contentPane.add(button1);
-        button1.setBounds(new Rectangle(new Point(230, 65), button1.getPreferredSize()));
+        button1.setBounds(230, 65, 75, button1.getPreferredSize().height);
 
         //---- userNameLabel ----
         userNameLabel.setText("Full Name");
