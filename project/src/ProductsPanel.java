@@ -324,6 +324,8 @@ public class ProductsPanel extends JFrame {
 //    }
     private void beginSearch()
     {
+        // Initalize return value for option dialogue below
+        int returnValue;
         DAO dao = new DAO();
         if (dao.openConnection())
         {
@@ -340,9 +342,28 @@ public class ProductsPanel extends JFrame {
                 priceField.setText(String.valueOf(thefind.getPrice()));
                 priceField.setEditable(true);
 
+                // Make buttons editable
+                addUpdateBtn.setEnabled(true);
+                deleteBtn.setEnabled(true);
+
+
                 addUpdateBtn.setText("Update");
                 deleteBtn.setVisible(true);
 
+            }
+            else
+            {
+                returnValue = JOptionPane.showConfirmDialog(null, "Product ID not found! Would you like to " +
+                                "add this product now?",
+                        "Add Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                if (returnValue == JOptionPane.YES_OPTION)
+                {
+                    // Lock ID fields and allow editing of other fields
+                    IDField.setEditable(false);
+                    nameField.setEditable(true);
+                    quantityField.setEditable(true);
+                    priceField.setEditable(true);
+                }
             }
         }
 
