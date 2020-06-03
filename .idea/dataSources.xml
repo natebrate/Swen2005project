@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="bNop6iwTmM@remotemysql.com" uuid="a0066ef7-f0e8-48ca-91fc-88295e4b92ca">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://remotemysql.com:3306/bNop6iwTmM</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="swen2005_finalproject@localhost" uuid="26b4512e-5059-4266-8790-19a6c8a2d927">
+    <data-source source="LOCAL" name="MySQL - swen2005_finalproject@localhost" uuid="af00624f-b149-4294-a750-b636cc764bf9">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/swen2005_finalproject</jdbc-url>
-      <driver-properties>
-        <property name="serverTimezone" value="UTC" />
-      </driver-properties>
     </data-source>
   </component>
 </project>
