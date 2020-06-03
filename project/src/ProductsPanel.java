@@ -126,11 +126,16 @@ public class ProductsPanel extends JFrame {
     }
 
 
-    private void searchFieldFocusLost(FocusEvent e) {
+    private void searchFieldFocusLost(FocusEvent e) throws SQLException {
         if (searchField.getText().isBlank()) {
             searchField.setText("Search");
             searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
             searchField.setForeground(Color.lightGray);
+
+        }
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.loadProductsTable(productTable);
         }
     }
 
@@ -359,7 +364,11 @@ public class ProductsPanel extends JFrame {
 
             @Override
             public void focusLost(FocusEvent e) {
-                searchFieldFocusLost(e);
+                try {
+                    searchFieldFocusLost(e);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         contentPane.add(searchField);
@@ -463,7 +472,7 @@ public class ProductsPanel extends JFrame {
             Product theAdd = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
                     Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
             returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
-                            + "add this product??\n" + theAdd.toString(),
+                            + "add this product?\n" + theAdd.toString(),
                     "Confirm Changes", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
             DAO dao = new DAO();
             if (returnValue == JOptionPane.YES_OPTION) {
@@ -476,6 +485,7 @@ public class ProductsPanel extends JFrame {
                     lockEditableFields();
                     searchBtn.setText("Search");
                     IDField.setEnabled(true);
+                    searchBtn.setEnabled(true;
 
                 }
             }
@@ -569,7 +579,7 @@ public class ProductsPanel extends JFrame {
         nameField.setText("");
         quantityField.setText("");
         priceField.setText("");
-        searchField.setText("Clear");
+        searchField.setText("Search");
 
     }
 
