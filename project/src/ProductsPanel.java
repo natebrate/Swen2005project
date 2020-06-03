@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.beans.*;
 import java.sql.SQLException;
 import javax.swing.*;
+import javax.swing.plaf.*;
 import javax.swing.table.*;
 /*
  * Created by JFormDesigner on Fri May 29 13:25:57 BOT 2020
@@ -101,6 +102,10 @@ public class ProductsPanel extends JFrame {
         dispose();
     }
 
+    private void IDFieldFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -123,6 +128,7 @@ public class ProductsPanel extends JFrame {
         searchBtn = new JButton();
         userNameLabel = new JLabel();
         userLabel = new JLabel();
+        searchField = new JTextField();
 
         //======== this ========
         setTitle("Products Page");
@@ -186,19 +192,18 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
-        allBtn.setEnabled(false);
-        allBtn.addActionListener(e -> {
-            try {
-                allBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
 
         //---- IDField ----
         IDField.addActionListener(e -> IDFieldActionPerformed(e));
+        IDField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                IDFieldFocusGained(e);
+            }
+        });
         contentPane.add(IDField);
         IDField.setBounds(118, 65, 95, IDField.getPreferredSize().height);
 
@@ -228,19 +233,12 @@ public class ProductsPanel extends JFrame {
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
         addUpdateBtn.setEnabled(false);
-        addUpdateBtn.addActionListener(e -> {
-            try {
-                addBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear");
-        clearBtn.setEnabled(false);
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
         clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
@@ -249,13 +247,7 @@ public class ProductsPanel extends JFrame {
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
         deleteBtn.setEnabled(false);
-        deleteBtn.addActionListener(e -> {
-            try {
-                deleteBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
 
@@ -281,13 +273,7 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
-        returnBtn.addActionListener(e -> {
-            try {
-                returnBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
@@ -306,6 +292,13 @@ public class ProductsPanel extends JFrame {
         userLabel.setText("USER:");
         contentPane.add(userLabel);
         userLabel.setBounds(650, 5, 145, userLabel.getPreferredSize().height);
+
+        //---- searchField ----
+        searchField.setText("Search");
+        searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
+        searchField.setForeground(Color.lightGray);
+        contentPane.add(searchField);
+        searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(835, 495));
         pack();
@@ -336,6 +329,7 @@ public class ProductsPanel extends JFrame {
     private JButton searchBtn;
     private JLabel userNameLabel;
     private JLabel userLabel;
+    private JTextField searchField;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void beginSearch()
