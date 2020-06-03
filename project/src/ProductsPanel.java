@@ -112,6 +112,28 @@ public class ProductsPanel extends JFrame {
     private void IDFieldFocusGained(FocusEvent e) {
         // TODO add your code here
     }
+    private void searchFieldFocusGained(FocusEvent e) {
+        if (searchField.getText().equals("Search"))
+        {
+            searchField.setText("");
+            searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.PLAIN));
+            searchField.setForeground(Color.black);
+        }
+
+//        else
+//        {
+//
+//        }
+    }
+    private void searchFieldFocusLost(FocusEvent e)
+    {
+        if (searchField.getText().isBlank())
+        {
+            searchField.setText("Search");
+            searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
+            searchField.setForeground(Color.lightGray);
+        }
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -329,7 +351,17 @@ public class ProductsPanel extends JFrame {
         searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
         searchField.setForeground(Color.lightGray);
         searchField.addActionListener(e -> searchFieldActionPerformed(e));
-        contentPane.add(searchField);
+        searchField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchFieldFocusGained(e);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                searchFieldFocusLost(e);
+            }
+        });        contentPane.add(searchField);
         searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(835, 495));
@@ -337,7 +369,6 @@ public class ProductsPanel extends JFrame {
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
-
 
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
