@@ -69,6 +69,48 @@ CREATE TABLE `sales_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
+DELIMITER ;;
+
+--
+-- TRIGGER FOR UPDATING SALES SUMMARY WHEN NEW SALES DETAILS ARE ADDED
+--
+
+CREATE TRIGGER transaction BEFORE  INSERT ON sales_details FOR EACH ROW
+BEGIN
+
+
+    if exists (select invoice from sales_summary where invoice=new.invoice) THEN
+        UPDATE sales_summary SET total_revenue=total_revenue+new.sub_total where invoice=new.invoice ;
+        UPDATE sales_summary SET items_sold=items_sold+new.quantity_sold where invoice=new.invoice ;
+
+    ELSE
+        insert into sales_summary (invoice, items_sold, total_revenue, DOS) values (new.invoice,new.quantity_sold, new.sub_total,CURDATE());
+
+    END IF;
+END ;;
+
+
+
+
+-- --------------------------------------------------------
+
+--
+-- PROCEDURE FOR SELLING AN ITEM AND UPDATING THE
+--
+
+CREATE PROCEDURE `sell`(IN invoice_num INT ,in p_id int, in quan int)
+BEGIN
+    DECLARE subtotal DOUBLE;
+    SET subtotal=quan*(select price from products where prod_id=p_id);
+    UPDATE products SET quantity=quantity-quan where prod_id=p_id ;
+    insert into sales_details(invoice, P_ID, quantity_sold, sub_total) values (invoice_num, p_id, quan,  subtotal);
+END;;
+
+
+
+DELIMITER ;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `sales_summary`
