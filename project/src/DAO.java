@@ -206,7 +206,7 @@ public class DAO {
         {
             saleDetailsCON theOne = null;
             //the mysql insert statementString query = "select * from sales_details where invoice = ?";
-            String query = "select * from sales_details where P_ID  = ?";
+            String query = "select * from sales_details where invoice  = ?";
             try {
 
                 //create the mysql insert preparedstatement

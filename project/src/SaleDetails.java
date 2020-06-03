@@ -74,6 +74,10 @@ public class SaleDetails extends JFrame {
         //new MenuScreen();
     }
 
+    private void idFieldFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -220,7 +224,10 @@ public class SaleDetails extends JFrame {
         saleTitleLabel.setBounds(255, 40, 115, saleTitleLabel.getPreferredSize().height);
 
         //---- dayLabel ----
-        dayLabel.setText("MM/DD/YYYY");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        String day = formatter.format(date);
+        dayLabel.setText(day);
         contentPane.add(dayLabel);
         dayLabel.setBounds(50, 45, 100, dayLabel.getPreferredSize().height);
 
@@ -231,6 +238,12 @@ public class SaleDetails extends JFrame {
 
         //---- idField ----
         idField.addActionListener(e -> idFieldActionPerformed(e));
+        idField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                idFieldFocusGained(e);
+            }
+        });
         contentPane.add(idField);
         idField.setBounds(15, 230, 110, 25);
 
@@ -259,18 +272,17 @@ public class SaleDetails extends JFrame {
 
     }
 
-    private void searchButtonActionPerformed(ActionEvent evt) throws SQLException {
-        // TODO add your code here
-
+    //Method to find the invoice number
+    private void searchButtonActionPerformed(ActionEvent evt) throws SQLException
+    {
         DAO dao = new DAO();
         if (dao.openConnection())
         {
-            saleDetailsCON thefind = null;
+            saleDetailsCON thefind;
             thefind = dao.findsalesRecord(Integer.parseInt(searchField.getText()));
-            System.out.println(searchField);
+            System.out.println(thefind);
             if (thefind != null)
             {
-                System.out.println("Did it get here though?");
                 details g = new details(invoice, P_ID, quantity_sold, sub_total);
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 vec.addElement(g);
@@ -311,7 +323,7 @@ public class SaleDetails extends JFrame {
         int invoice, P_ID, quantity_sold;
         double sub_total;
 
-        public details(int searchField, int P_ID, int quantity_sold, double sub_total)
+        public details(int invoice, int P_ID, int quantity_sold, double sub_total)
         {
             this.invoice = invoice;
             this.P_ID = P_ID;
