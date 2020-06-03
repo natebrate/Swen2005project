@@ -586,7 +586,7 @@ public class ProductsPanel extends JFrame {
         addUpdateBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
     }
-    private String nonNegativeCheck(String label, int value)
+    private String nonNegativeCheck(int value)
             // This is used to ensure that negative numbers are not entered. If they are, warn user and then clear the
             // corresponding field
     {
@@ -597,6 +597,7 @@ public class ProductsPanel extends JFrame {
                     "Please enter a non negative number!!", JOptionPane.WARNING_MESSAGE);
             return "";
         }
+    return null;
     }
 
     // FOLLOWING REUSED FROM PUBLIC DOMAIN
