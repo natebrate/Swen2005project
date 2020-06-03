@@ -1,5 +1,3 @@
 products screen:
-no check for negative quantity
-table doesn't refresh after update
-when display all is clicked, sorting is broken
-prevent negative numbers from being entered
+// TODO table doesn't refresh after update
+// TODO prevent negative numbers from being entered

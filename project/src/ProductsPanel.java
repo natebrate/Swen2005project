@@ -122,7 +122,6 @@ public class ProductsPanel extends JFrame {
             searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.PLAIN));
             searchField.setForeground(Color.black);
         }
-        String currentSearch = "";
     }
 
 
@@ -406,8 +405,8 @@ public class ProductsPanel extends JFrame {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void beginSearch() {
-        if (IDField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter an ID!",
+        if (IDField.getText().isEmpty() || Integer.parseInt(IDField.getText()) < 0) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid ID!",
                     "Enter an ID", JOptionPane.WARNING_MESSAGE);
         } else {
             // Initalize return value for option dialogue below
@@ -586,6 +585,18 @@ public class ProductsPanel extends JFrame {
     private void lockButtons() {
         addUpdateBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
+    }
+    private String nonNegativeCheck(String label, int value)
+            // This is used to ensure that negative numbers are not entered. If they are, warn user and then clear the
+            // corresponding field
+    {
+        if (value < 0)
+        {
+            JOptionPane.showMessageDialog(null, "You must enter a non negative number to continue" +
+                            "a product!",
+                    "Please enter a non negative number!!", JOptionPane.WARNING_MESSAGE);
+            return "";
+        }
     }
 
     // FOLLOWING REUSED FROM PUBLIC DOMAIN

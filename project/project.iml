@@ -8,14 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="library" name="mysql-connector-java-8.0.19" level="application" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-java-8.0.18.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.18" level="application" />
   </component>
 </module>
