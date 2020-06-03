@@ -40,8 +40,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`prod_id`, `name`, `quantity`, `price`) VALUES
-(1, 'Sekiro: Shadows  Die Twice', 28, 55.00),
-(2, 'Zelda: Twilight Princess', 28, 30.00),
+(1, 'Sekiro: Shadows  Die Twice', 28, 20.00),
+(2, 'Zelda: Twilight Princess', 28, 9.99),
 (3, 'Just Cause 4 Bundle', 0, 40.00),
 (4, 'Zelda: Breath of the Wild', 50, 45.70),
 (5, 'Muramasa: The Demon Blade', 4, 12.00),
