@@ -19,6 +19,7 @@ public class ProductsPanel extends JFrame {
     User userLogin = null;
     public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
+        IDField.requestFocus();
         // Load blank Product for purposes later
 
         this.pack();
@@ -88,9 +89,15 @@ public class ProductsPanel extends JFrame {
             IDField.setEditable(true);
             clearAllFields();
             lockEditableFields();
-            searchBtn.setText("Search");
             IDField.setEnabled(true);
+            IDField.requestFocus();
+            searchBtn.setText("Search");
         }
+    }
+
+    private void searchFieldActionPerformed(ActionEvent e)
+    {
+        searchName();
     }
 
     private void productPanePropertyChange(PropertyChangeEvent e) {
@@ -321,6 +328,7 @@ public class ProductsPanel extends JFrame {
         searchField.setText("Search");
         searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
         searchField.setForeground(Color.lightGray);
+        searchField.addActionListener(e -> searchFieldActionPerformed(e));
         contentPane.add(searchField);
         searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
 
@@ -512,8 +520,15 @@ public class ProductsPanel extends JFrame {
                     "Need Admin Credentials!", JOptionPane.WARNING_MESSAGE);
         }
     }
-
-
+    private void searchName()
+    {
+        DAO dao = new DAO();
+        if (dao.openConnection())
+        {
+            dao.queryProductsSearch(productTable, searchField.getText());
+            dao.closeConnection();
+        }
+    }
     private void lockEditableFields()
     {
         nameField.setEditable(false);

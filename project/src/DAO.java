@@ -24,6 +24,7 @@ public class DAO {
             return false;
         }
     }
+
     public void closeConnection() {
         try {
             if ((myConn != null))
@@ -32,6 +33,7 @@ public class DAO {
             System.out.println(ex.getMessage());
         }
     }
+
     public User userLogin(String username, String password) {
         User theOne = null;
         String query = "select * from users where user_name=? and user_password=?";
@@ -44,15 +46,13 @@ public class DAO {
             if (rs.next()) {
                 theOne = new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(5), rs.getBoolean(6));
                 return theOne;
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username Or Password",
                         "Login Failed", JOptionPane.ERROR_MESSAGE);
                 return null;
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Got an exception!");
             System.out.println(e.getMessage());
         }
@@ -65,26 +65,22 @@ public class DAO {
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
-            while(table.getRowCount() > 0)
-            {
+            while (table.getRowCount() > 0) {
                 ((DefaultTableModel) table.getModel()).removeRow(0);
             }
             int columns = rs.getMetaData().getColumnCount();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Object[] row = new Object[columns];
-                for (int i = 1; i <= columns; i++)
-                {
+                for (int i = 1; i <= columns; i++) {
                     row[i - 1] = rs.getObject(i);
                 }
-                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
             }
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public void insertProduct(Product theProd) {
         //the mysql insert statement
         String query = "insert into products (name, quantity, price) values (?,?,?)";
@@ -103,6 +99,7 @@ public class DAO {
             System.out.println(e.getMessage());
         }
     }
+
     public void deleteProdRecord(int id) {
         //the mysql insert statement
         String query = "delete from products where prod_id = ?";
@@ -118,6 +115,7 @@ public class DAO {
             System.out.println(e.getMessage());
         }
     }
+
     public void updateProdRecord(Product theProd) {
         //the mysql insert statement
         String query = "update products set name=?, quantity=?, price=? WHERE prod_id=?";
@@ -137,6 +135,7 @@ public class DAO {
             System.out.println(e.getMessage());
         }
     }
+
     public Product findProdRecord(int prod_id) {
         Product theOne = null;
         //the mysql insert statement
@@ -175,52 +174,69 @@ public class DAO {
         }
     }
 
-    public void loadSalesDetailsTable (JTable table) throws SQLException {
+    public void loadSalesDetailsTable(JTable table) throws SQLException {
         try {
             String query = "SELECT * from sales_details order by Invoice";
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
-            while(table.getRowCount() > 0)
-            {
+            while (table.getRowCount() > 0) {
                 ((DefaultTableModel) table.getModel()).removeRow(0);
             }
             int columns = rs.getMetaData().getColumnCount();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Object[] row = new Object[columns];
-                for (int i = 1; i <= columns; i++)
-                {
+                for (int i = 1; i <= columns; i++) {
                     row[i - 1] = rs.getObject(i);
                 }
-                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow()-1,row);
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
             }
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-        public saleDetailsCON findsalesRecord (int code)
-        {
-            saleDetailsCON theOne = null;
-            //the mysql insert statementString query = "select * from sales_details where invoice = ?";
-            String query = "select * from sales_details where invoice  = ?";
-            try {
+    public saleDetailsCON findsalesRecord(int code) {
+        saleDetailsCON theOne = null;
+        //the mysql insert statementString query = "select * from sales_details where invoice = ?";
+        String query = "select * from sales_details where invoice  = ?";
+        try {
 
-                //create the mysql insert preparedstatement
-                PreparedStatement myPreStmt = myConn.prepareStatement(query);
-                myPreStmt.setInt(1, code);
-                ResultSet rs = myPreStmt.executeQuery();
-                while (rs.next()) {
-                    theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
-                }
-            } catch (Exception e) {
-                System.out.println("Got an exception! Error in Find Record");
-                System.out.println(e.getMessage());
+            //create the mysql insert preparedstatement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, code);
+            ResultSet rs = myPreStmt.executeQuery();
+            while (rs.next()) {
+                theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
             }
-            return theOne;
+        } catch (Exception e) {
+            System.out.println("Got an exception! Error in Find Record");
+            System.out.println(e.getMessage());
         }
+        return theOne;
+    }
 
+    public void queryProductsSearch(JTable table, String keyword)
+    {
+        String query = "SELECT * from products where name like '%" + keyword + "%'";
+        try {
+            //create the mysql insert preparedstatement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            ResultSet rs = myPreStmt.executeQuery();
+            //To remove previously added rows
+            while (table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
