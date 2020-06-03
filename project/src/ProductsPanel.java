@@ -14,8 +14,11 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class ProductsPanel extends JFrame {
+    Product lastSearchedProduct = null;
+    User userLogin = null;
     public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
+        // Load blank Product for purposes later
 
         this.pack();
         this.setLocationRelativeTo(null);
@@ -27,7 +30,7 @@ public class ProductsPanel extends JFrame {
         if (dao.openConnection()) {
             dao.loadProductsTable(productTable);
         }
-
+        this.userLogin = userLogin;
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
         userNameLabel.setText(userLogin.getFirstName());
 
@@ -46,20 +49,30 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
-    private void addBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+    private void addBtnActionPerformed(ActionEvent e) throws SQLException {
+        if (addUpdateBtn.getText().equals("Add"))
+        {
+            addProduct();
+        }
+        else
+        {
+            updateProduct();
+        }
     }
 
-    private void deleteBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+    private void deleteBtnActionPerformed(ActionEvent e) throws SQLException {
+        deleteProduct();
     }
 
     private void clearBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        clearAllFields();
     }
 
-    private void allBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+    private void allBtnActionPerformed(ActionEvent e) throws SQLException {
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.loadProductsTable(productTable);
+        }
     }
 
     private void IDFieldActionPerformed(ActionEvent e) {
@@ -67,7 +80,15 @@ public class ProductsPanel extends JFrame {
     }
 
     private void button1ActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        if(searchBtn.getText().equals("Search"))
+        beginSearch();
+        else
+        {
+            IDField.setEditable(true);
+            clearAllFields();
+            lockEditableFields();
+            searchBtn.setText("Search");
+        }
     }
 
     private void productPanePropertyChange(PropertyChangeEvent e) {
@@ -75,11 +96,8 @@ public class ProductsPanel extends JFrame {
     }
 
     private void returnBtnActionPerformed(ActionEvent e) throws SQLException{
-        new MenuScreen();
-    }
-
-    private void IDFieldFocusGained(FocusEvent e) {
-        // TODO add your code here
+        setVisible(false);
+        dispose();
     }
 
     private void initComponents() {
@@ -167,18 +185,19 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
-        allBtn.addActionListener(e -> allBtnActionPerformed(e));
+        allBtn.setEnabled(false);
+        allBtn.addActionListener(e -> {
+            try {
+                allBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
 
         //---- IDField ----
         IDField.addActionListener(e -> IDFieldActionPerformed(e));
-        IDField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                IDFieldFocusGained(e);
-            }
-        });
         contentPane.add(IDField);
         IDField.setBounds(118, 65, 95, IDField.getPreferredSize().height);
 
@@ -208,12 +227,19 @@ public class ProductsPanel extends JFrame {
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
         addUpdateBtn.setEnabled(false);
-        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
+        addUpdateBtn.addActionListener(e -> {
+            try {
+                addBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
         //---- clearBtn ----
         clearBtn.setText("Clear");
+        clearBtn.setEnabled(false);
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
         clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
@@ -222,7 +248,13 @@ public class ProductsPanel extends JFrame {
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
         deleteBtn.setEnabled(false);
-        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
+        deleteBtn.addActionListener(e -> {
+            try {
+                deleteBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
 
@@ -305,54 +337,179 @@ public class ProductsPanel extends JFrame {
     private JLabel userLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-//    class checkData extends Thread
-//    {
-//        public void run() throws NumberFormatException //This exception needed as this runs
-//        when the num field is blank
-//        {
-//            try {
-//                DAO dao = new DAO();
-//                if (dao.openConnection())
-//                {
-//                    Product thefind;
-//                    thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
-//                    dao.closeConnection();
-//                    if (thefind != null)
-//                    {
-//                        nameField.setText(thefind.getName());
-//                        quantityField.setText(String.valueOf(thefind.getQuantity()));
-//                        priceField.setText(String.valueOf(thefind.getPrice()));
-//                        addUpdateBtn.setText("Update");
-//                        deleteBtn.setVisible(true);
-//                    }
-//                }
-//            } catch (NumberFormatException ignored) { //Do nothing about the exception. It is harmless
-//            }
-//        }
-//    }
     private void beginSearch()
     {
+        // Initalize return value for option dialogue below
+        int returnValue;
         DAO dao = new DAO();
         if (dao.openConnection())
         {
-            Product thefind;
-            thefind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
+            Product theFind;
+            theFind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
             dao.closeConnection();
-            if (thefind != null)
+            if (theFind != null)
             {
-                // Make textfields visible
-                nameField.setText(thefind.getName());
-                nameField.setEditable(true);
-                quantityField.setText(String.valueOf(thefind.getQuantity()));
-                quantityField.setEditable(true);
-                priceField.setText(String.valueOf(thefind.getPrice()));
-                priceField.setEditable(true);
+                lastSearchedProduct = theFind;
+                // Make textfields editable
+                nameField.setText(theFind.getName());
+                quantityField.setText(String.valueOf(theFind.getQuantity()));
+                priceField.setText(String.valueOf(theFind.getPrice()));
+                unlockEditableFields();
+                // Make buttons editable
+                addUpdateBtn.setEnabled(true);
+                deleteBtn.setEnabled(true);
+
+                // Change search button to clear ID
+                searchBtn.setText("Clear");
 
                 addUpdateBtn.setText("Update");
                 deleteBtn.setVisible(true);
 
+                // Lock ID field to prevent updating primary key
+
+
+            }
+            else
+            {
+                returnValue = JOptionPane.showConfirmDialog(null, "Product ID not found! Would you like to " +
+                                "add this product now?",
+                        "Add Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                if (returnValue == JOptionPane.YES_OPTION)
+                {
+                    // Unlock ID fields and allow editing of other fields
+                    addUpdateBtn.setText("Add");
+                    addUpdateBtn.setEnabled(true);
+                    //Disable delete button, cannot delete something that doesn't exist!
+                    deleteBtn.setEnabled(false);
+                    // Clear and unlock all fields to facilitate data entry
+                    clearEditableFields();
+                    unlockEditableFields();
+                    //Block ID field to prevent updating an existing product's primary key!
+                    IDField.setEditable(false);
+                    // Change search to clear in case user wants to go back
+                    searchBtn.setText("Clear");
+
+                }
+                else
+                {
+                    IDField.setText("");
+                }
             }
         }
+    }
+    private void addProduct() throws SQLException {
+        int returnValue;
+        if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank())
+        {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields to continue!",
+                    "Fill in all fields to continue", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            Product theAdd = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
+                    Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
+            returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
+                            + "add this product??\n" + theAdd.toString(),
+                    "Confirm Changes", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            DAO dao = new DAO();
+            if (returnValue==JOptionPane.YES_OPTION) {
+                if (dao.openConnection())
+                {
+                    dao.updateProdRecord(theAdd);
+                    // Refresh Product Table
+                    dao.loadProductsTable(productTable);
+                    dao.closeConnection();
+                    clearAllFields();
+                    searchBtn.setText("Search");
 
+                }
+            }
+            }
+        }
+    private void updateProduct() throws SQLException {
+        int returnValue;
+        if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields to continue!",
+                    "Fill in all fields to continue", JOptionPane.WARNING_MESSAGE);
+        } else
+            {
+            Product theUpdate = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
+                    Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
+                returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
+                                + "make this update?\n\nOriginal:\n" + lastSearchedProduct.toString() + "\n\nUpdate:\n" +
+                                theUpdate.toString(),
+                        "Confirm Changes", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                if (returnValue==JOptionPane.YES_OPTION) {
+                    DAO dao = new DAO();
+                    if (dao.openConnection()) {
+                        dao.insertProduct(theUpdate);
+                        // Refresh Product Table
+                        dao.loadProductsTable(productTable);
+                        dao.closeConnection();
+                        clearAllFields();
+                        searchBtn.setText("Search");
+                    }
+                }
+            }
+    }
+    private void deleteProduct() throws SQLException {
+        if (userLogin.getIsAdmin()) {
+            int returnValue;
+            returnValue = JOptionPane.showConfirmDialog(null, "Are you certain you want to " +
+                            "delete this product?:\n\n"
+                            + lastSearchedProduct.toString(),
+                    "Delete Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (returnValue == JOptionPane.YES_OPTION) {
+                int theDeleteID = Integer.parseInt(IDField.getText());
+                DAO dao = new DAO();
+                if (dao.openConnection()) {
+                    dao.deleteProdRecord(theDeleteID);
+                    // Refresh Product Table
+                    dao.loadProductsTable(productTable);
+                    dao.closeConnection();
+                    clearAllFields();
+                    searchBtn.setText("Search");
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "You must have admint credentials to delete" +
+                            "a product!",
+                    "Need Admin Credentials!", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+
+    private void lockEditableFields()
+    {
+        nameField.setEditable(false);
+        quantityField.setEditable(false);
+        priceField.setEditable(false);
+    }
+    private void unlockEditableFields()
+    {
+        nameField.setEditable(true);
+        quantityField.setEditable(true);
+        priceField.setEditable(true);
+    }
+    private void clearEditableFields()
+    {
+        nameField.setText("");
+        quantityField.setText("");
+        priceField.setText("");
+    }
+    private void clearAllFields()
+    {
+        IDField.setText("");
+        nameField.setText("");
+        quantityField.setText("");
+        priceField.setText("");
+
+    }
+    private void lockButtons()
+    {
+        addUpdateBtn.setEnabled(false);
+        deleteBtn.setEnabled(false);
     }
 }

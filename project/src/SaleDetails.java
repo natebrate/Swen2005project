@@ -71,7 +71,7 @@ public class SaleDetails extends JFrame {
 
     private void returnBtnActionPerformed(ActionEvent e) {
         // TODO add your code here
-        new MenuScreen();
+        //new MenuScreen();
     }
 
     private void idFieldFocusGained(FocusEvent e) {
