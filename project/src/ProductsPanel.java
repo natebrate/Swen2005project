@@ -2,13 +2,19 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
 import java.sql.SQLException;
+import java.util.Objects;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.*;
 import javax.swing.table.*;
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
 /*
  * Created by JFormDesigner on Fri May 29 13:25:57 BOT 2020
  */
-
 
 
 /**
@@ -17,9 +23,11 @@ import javax.swing.table.*;
 public class ProductsPanel extends JFrame {
     Product lastSearchedProduct = null;
     User userLogin = null;
+
     public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
         IDField.requestFocus();
+        addChangeListener(searchField, e -> searchName());
         // Load blank Product for purposes later
 
         this.pack();
@@ -52,12 +60,9 @@ public class ProductsPanel extends JFrame {
     }
 
     private void addBtnActionPerformed(ActionEvent e) throws SQLException {
-        if (addUpdateBtn.getText().equals("Add"))
-        {
+        if (addUpdateBtn.getText().equals("Add")) {
             addProduct();
-        }
-        else
-        {
+        } else {
             updateProduct();
         }
     }
@@ -82,10 +87,9 @@ public class ProductsPanel extends JFrame {
     }
 
     private void button1ActionPerformed(ActionEvent e) {
-        if(searchBtn.getText().equals("Search"))
-        beginSearch();
-        else
-        {
+        if (searchBtn.getText().equals("Search"))
+            beginSearch();
+        else {
             IDField.setEditable(true);
             clearAllFields();
             lockEditableFields();
@@ -95,8 +99,7 @@ public class ProductsPanel extends JFrame {
         }
     }
 
-    private void searchFieldActionPerformed(ActionEvent e)
-    {
+    private void searchFieldActionPerformed(ActionEvent e) {
         searchName();
     }
 
@@ -104,7 +107,7 @@ public class ProductsPanel extends JFrame {
         // TODO add your code here
     }
 
-    private void returnBtnActionPerformed(ActionEvent e) throws SQLException{
+    private void returnBtnActionPerformed(ActionEvent e) throws SQLException {
         setVisible(false);
         dispose();
     }
@@ -112,23 +115,19 @@ public class ProductsPanel extends JFrame {
     private void IDFieldFocusGained(FocusEvent e) {
         // TODO add your code here
     }
+
     private void searchFieldFocusGained(FocusEvent e) {
-        if (searchField.getText().equals("Search"))
-        {
+        if (searchField.getText().equals("Search")) {
             searchField.setText("");
             searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.PLAIN));
             searchField.setForeground(Color.black);
         }
-
-//        else
-//        {
-//
-//        }
+        String currentSearch = "";
     }
-    private void searchFieldFocusLost(FocusEvent e)
-    {
-        if (searchField.getText().isBlank())
-        {
+
+
+    private void searchFieldFocusLost(FocusEvent e) {
+        if (searchField.getText().isBlank()) {
             searchField.setText("Search");
             searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
             searchField.setForeground(Color.lightGray);
@@ -170,45 +169,46 @@ public class ProductsPanel extends JFrame {
 
             //---- productTable ----
             productTable.setModel(new DefaultTableModel(
-                new Object[][] {
-                    {"", null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                },
-                new String[] {
-                    "P_ID", "NAME", "QUANTITY", "PRICE"
-                }
+                    new Object[][]{
+                            {"", null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                            {null, null, null, null},
+                    },
+                    new String[]{
+                            "P_ID", "NAME", "QUANTITY", "PRICE"
+                    }
             ) {
-                Class<?>[] columnTypes = new Class<?>[] {
-                    String.class, Integer.class, Integer.class, Double.class
+                Class<?>[] columnTypes = new Class<?>[]{
+                        String.class, Integer.class, Integer.class, Double.class
                 };
+
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
@@ -361,7 +361,8 @@ public class ProductsPanel extends JFrame {
             public void focusLost(FocusEvent e) {
                 searchFieldFocusLost(e);
             }
-        });        contentPane.add(searchField);
+        });
+        contentPane.add(searchField);
         searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(835, 495));
@@ -395,25 +396,19 @@ public class ProductsPanel extends JFrame {
     private JTextField searchField;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    private void beginSearch()
-    {
-        if(IDField.getText().isEmpty())
-        {
+    private void beginSearch() {
+        if (IDField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter an ID!",
                     "Enter an ID", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        {
+        } else {
             // Initalize return value for option dialogue below
             int returnValue;
             DAO dao = new DAO();
-            if (dao.openConnection())
-            {
+            if (dao.openConnection()) {
                 Product theFind;
                 theFind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
                 dao.closeConnection();
-                if (theFind != null)
-                {
+                if (theFind != null) {
                     lastSearchedProduct = theFind;
                     // Make textfields editable
                     nameField.setText(theFind.getName());
@@ -433,14 +428,11 @@ public class ProductsPanel extends JFrame {
                     // Lock ID field to prevent updating primary key
                     IDField.setEnabled(false);
 
-                }
-                else
-                {
+                } else {
                     returnValue = JOptionPane.showConfirmDialog(null, "Product ID not found! Would you like to " +
                                     "add this product now?",
                             "Add Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                    if (returnValue == JOptionPane.YES_OPTION)
-                    {
+                    if (returnValue == JOptionPane.YES_OPTION) {
                         // Unlock ID fields and allow editing of other fields
                         addUpdateBtn.setText("Add");
                         addUpdateBtn.setEnabled(true);
@@ -454,33 +446,28 @@ public class ProductsPanel extends JFrame {
                         // Change search to clear in case user wants to go back
                         searchBtn.setText("Clear");
 
-                    }
-                    else
-                    {
+                    } else {
                         IDField.setText("");
                     }
                 }
             }
         }
     }
+
     private void addProduct() throws SQLException {
         int returnValue;
-        if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank())
-        {
+        if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Please fill in all fields to continue!",
                     "Fill in all fields to continue", JOptionPane.WARNING_MESSAGE);
-        }
-        else
-        {
+        } else {
             Product theAdd = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
                     Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
             returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
                             + "add this product??\n" + theAdd.toString(),
                     "Confirm Changes", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
             DAO dao = new DAO();
-            if (returnValue==JOptionPane.YES_OPTION) {
-                if (dao.openConnection())
-                {
+            if (returnValue == JOptionPane.YES_OPTION) {
+                if (dao.openConnection()) {
                     dao.insertProduct(theAdd);
                     // Refresh Product Table
                     dao.loadProductsTable(productTable);
@@ -492,36 +479,37 @@ public class ProductsPanel extends JFrame {
 
                 }
             }
-            }
         }
+    }
+
     private void updateProduct() throws SQLException {
         int returnValue;
         if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Please fill in all fields to continue!",
                     "Fill in all fields to continue", JOptionPane.WARNING_MESSAGE);
-        } else
-            {
+        } else {
             Product theUpdate = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
                     Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
-                returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
-                                + "make this update?\n\nOriginal:\n" + lastSearchedProduct.toString() + "\n\nUpdate:\n" +
-                                theUpdate.toString(),
-                        "Confirm Changes", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                if (returnValue==JOptionPane.YES_OPTION) {
-                    DAO dao = new DAO();
-                    if (dao.openConnection()) {
-                        dao.updateProdRecord(theUpdate);
-                        // Refresh Product Table
-                        dao.loadProductsTable(productTable);
-                        dao.closeConnection();
-                        clearAllFields();
-                        lockEditableFields();
-                        searchBtn.setText("Search");
-                        IDField.setEnabled(true);
-                    }
+            returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
+                            + "make this update?\n\nOriginal:\n" + lastSearchedProduct.toString() + "\n\nUpdate:\n" +
+                            theUpdate.toString(),
+                    "Confirm Changes", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (returnValue == JOptionPane.YES_OPTION) {
+                DAO dao = new DAO();
+                if (dao.openConnection()) {
+                    dao.updateProdRecord(theUpdate);
+                    // Refresh Product Table
+                    dao.loadProductsTable(productTable);
+                    dao.closeConnection();
+                    clearAllFields();
+                    lockEditableFields();
+                    searchBtn.setText("Search");
+                    IDField.setEnabled(true);
                 }
             }
+        }
     }
+
     private void deleteProduct() throws SQLException {
         if (userLogin.getIsAdmin()) {
             int returnValue;
@@ -543,52 +531,103 @@ public class ProductsPanel extends JFrame {
                     IDField.setEnabled(true);
                 }
             }
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(null, "You must have admint credentials to delete" +
                             "a product!",
                     "Need Admin Credentials!", JOptionPane.WARNING_MESSAGE);
         }
     }
-    private void searchName()
-    {
+
+    private void searchName() {
         DAO dao = new DAO();
-        if (dao.openConnection())
-        {
+        if (dao.openConnection()) {
             dao.queryProductsSearch(productTable, searchField.getText());
             dao.closeConnection();
         }
     }
-    private void lockEditableFields()
-    {
+
+    private void lockEditableFields() {
         nameField.setEditable(false);
         quantityField.setEditable(false);
         priceField.setEditable(false);
     }
-    private void unlockEditableFields()
-    {
+
+    private void unlockEditableFields() {
         nameField.setEditable(true);
         quantityField.setEditable(true);
         priceField.setEditable(true);
     }
-    private void clearEditableFields()
-    {
+
+    private void clearEditableFields() {
         nameField.setText("");
         quantityField.setText("");
         priceField.setText("");
     }
-    private void clearAllFields()
-    {
+
+    private void clearAllFields() {
         IDField.setText("");
         nameField.setText("");
         quantityField.setText("");
         priceField.setText("");
+        searchField.setText("Clear");
 
     }
-    private void lockButtons()
-    {
+
+    private void lockButtons() {
         addUpdateBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
+    }
+
+    // FOLLOWING REUSED FROM PUBLIC DOMAIN
+    /**
+     * Installs a listener to receive notification when the text of any
+     * {@code JTextComponent} is changed. Internally, it installs a
+     * {@link DocumentListener} on the text component's {@link Document},
+     * and a {@link PropertyChangeListener} on the text component to detect
+     * if the {@code Document} itself is replaced.
+     *
+     * @param text           any text component, such as a {@link JTextField}
+     *                       or {@link JTextArea}
+     * @param changeListener a listener to receieve {@link ChangeEvent}s
+     *                       when the text is changed; the source object for the events
+     *                       will be the text component
+     * @throws NullPointerException if either parameter is null
+     */
+    public static void addChangeListener(JTextComponent text, ChangeListener changeListener) {
+        Objects.requireNonNull(text);
+        Objects.requireNonNull(changeListener);
+        DocumentListener dl = new DocumentListener() {
+            private int lastChange = 0, lastNotifiedChange = 0;
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                lastChange++;
+                SwingUtilities.invokeLater(() -> {
+                    if (lastNotifiedChange != lastChange) {
+                        lastNotifiedChange = lastChange;
+                        changeListener.stateChanged(new ChangeEvent(text));
+                    }
+                });
+            }
+        };
+        text.addPropertyChangeListener("document", (PropertyChangeEvent e) -> {
+            Document d1 = (Document) e.getOldValue();
+            Document d2 = (Document) e.getNewValue();
+            if (d1 != null) d1.removeDocumentListener(dl);
+            if (d2 != null) d2.addDocumentListener(dl);
+            dl.changedUpdate(null);
+        });
+        Document d = text.getDocument();
+        if (d != null) d.addDocumentListener(dl);
     }
 }
