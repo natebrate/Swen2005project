@@ -485,7 +485,7 @@ public class ProductsPanel extends JFrame {
                     lockEditableFields();
                     searchBtn.setText("Search");
                     IDField.setEnabled(true);
-                    searchBtn.setEnabled(true;
+                    searchBtn.setEnabled(true);
 
                 }
             }
@@ -542,7 +542,7 @@ public class ProductsPanel extends JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "You must have admint credentials to delete" +
+            JOptionPane.showMessageDialog(null, "You must have admin credentials to delete" +
                             "a product!",
                     "Need Admin Credentials!", JOptionPane.WARNING_MESSAGE);
         }
