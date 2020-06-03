@@ -173,46 +173,45 @@ public class ProductsPanel extends JFrame {
 
             //---- productTable ----
             productTable.setModel(new DefaultTableModel(
-                    new Object[][]{
-                            {"", null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                            {null, null, null, null},
-                    },
-                    new String[]{
-                            "P_ID", "NAME", "QUANTITY", "PRICE"
-                    }
+                new Object[][] {
+                    {"", null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                },
+                new String[] {
+                    "P_ID", "NAME", "QUANTITY", "PRICE"
+                }
             ) {
-                Class<?>[] columnTypes = new Class<?>[]{
-                        String.class, Integer.class, Integer.class, Double.class
+                Class<?>[] columnTypes = new Class<?>[] {
+                    String.class, Integer.class, Integer.class, Double.class
                 };
-
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
@@ -354,22 +353,6 @@ public class ProductsPanel extends JFrame {
         searchField.setText("Search");
         searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
         searchField.setForeground(Color.lightGray);
-        searchField.addActionListener(e -> searchFieldActionPerformed(e));
-        searchField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                searchFieldFocusGained(e);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                try {
-                    searchFieldFocusLost(e);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
         contentPane.add(searchField);
         searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
 

@@ -9,7 +9,7 @@ public class DAO {
         try {
             // Database parameters.
 
-            String url = "jdbc:mysql://localhost:3306/swen2005_finalproject";
+            String url = "jdbc:mysql://localhost:3306/swen2005_finalproject?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
             String user = "root";
             String password = "";
 
@@ -158,6 +158,9 @@ public class DAO {
         return theOne;
     }
 
+
+    /** SALES DETAILS DAO BELOWE HERE **/
+
     public void deleteSaleRecord(int id) {
         //the mysql insert statement
         String query = "delete from sales_details where invoice = ?";
@@ -170,6 +173,65 @@ public class DAO {
             myPreStmt.execute();
         } catch (Exception e) {
             System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public saleDetailsCON findsalesRecord(int code) {
+        saleDetailsCON theOne = null;
+        String query = "select * from sales_details where invoice  = ?";
+        try {
+
+            //create the mysql insert preparedstatement
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, code);
+            ResultSet rs = myPreStmt.executeQuery();
+            while (rs.next()) {
+                theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
+            }
+        } catch (Exception e) {
+            System.out.println("Got an exception! Error in Find Record");
+            System.out.println(e.getMessage());
+        }
+        return theOne;
+    }
+
+    public void insertSale(saleDetailsCON theSale) {
+        //the mysql insert statement
+        String query = "insert into sales_details (invoice, P_ID, quantity_sold, sub_total) values (?,?,?,?)";
+        //create the mysql insert prepared statement
+        try
+        {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, theSale.getInvoice());
+            myPreStmt.setInt(2,theSale.getP_ID());
+            myPreStmt.setInt(3, theSale.getQuantity_sold());
+            myPreStmt.setInt(4, (int) theSale.getSub_total());
+
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void updateSaleRecord(saleDetailsCON theSale)
+    {
+    //the mysql insert statement
+        String query = "update sales_details set P_ID=?, quantity_sold=? where invoice=?";
+        //create the mysql insert prepared statement
+        try{
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1,theSale.getInvoice());
+            myPreStmt.setInt(2,theSale.getP_ID());
+            myPreStmt.setDouble(3,theSale.getQuantity_sold());
+
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch(Exception e){
+            System.out.println("Got an exception! Error in insert");
             System.out.println(e.getMessage());
         }
     }
@@ -196,25 +258,6 @@ public class DAO {
         }
     }
 
-    public saleDetailsCON findsalesRecord(int code) {
-        saleDetailsCON theOne = null;
-        //the mysql insert statementString query = "select * from sales_details where invoice = ?";
-        String query = "select * from sales_details where invoice  = ?";
-        try {
-
-            //create the mysql insert preparedstatement
-            PreparedStatement myPreStmt = myConn.prepareStatement(query);
-            myPreStmt.setInt(1, code);
-            ResultSet rs = myPreStmt.executeQuery();
-            while (rs.next()) {
-                theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
-            }
-        } catch (Exception e) {
-            System.out.println("Got an exception! Error in Find Record");
-            System.out.println(e.getMessage());
-        }
-        return theOne;
-    }
 
     public void queryProductsSearch(JTable table, String keyword)
     {
