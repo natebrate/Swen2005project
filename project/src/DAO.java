@@ -218,7 +218,7 @@ public class DAO {
 
     public void queryProductsSearch(JTable table, String keyword)
     {
-        String query = "SELECT * from products where name like '%" + keyword + "%'";
+        String query = "SELECT * from products where name like '%" + keyword + "%' order by name";
         try {
             //create the mysql insert preparedstatement
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
