@@ -88,6 +88,7 @@ public class ProductsPanel extends JFrame {
             clearAllFields();
             lockEditableFields();
             searchBtn.setText("Search");
+            IDField.setEnabled(true);
         }
     }
 
@@ -339,60 +340,68 @@ public class ProductsPanel extends JFrame {
 
     private void beginSearch()
     {
-        // Initalize return value for option dialogue below
-        int returnValue;
-        DAO dao = new DAO();
-        if (dao.openConnection())
+        if(IDField.getText().isEmpty())
         {
-            Product theFind;
-            theFind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
-            dao.closeConnection();
-            if (theFind != null)
+            JOptionPane.showMessageDialog(null, "Please enter an ID!",
+                    "Enter an ID", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            // Initalize return value for option dialogue below
+            int returnValue;
+            DAO dao = new DAO();
+            if (dao.openConnection())
             {
-                lastSearchedProduct = theFind;
-                // Make textfields editable
-                nameField.setText(theFind.getName());
-                quantityField.setText(String.valueOf(theFind.getQuantity()));
-                priceField.setText(String.valueOf(theFind.getPrice()));
-                unlockEditableFields();
-                // Make buttons editable
-                addUpdateBtn.setEnabled(true);
-                deleteBtn.setEnabled(true);
-
-                // Change search button to clear ID
-                searchBtn.setText("Clear");
-
-                addUpdateBtn.setText("Update");
-                deleteBtn.setVisible(true);
-
-                // Lock ID field to prevent updating primary key
-
-
-            }
-            else
-            {
-                returnValue = JOptionPane.showConfirmDialog(null, "Product ID not found! Would you like to " +
-                                "add this product now?",
-                        "Add Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                if (returnValue == JOptionPane.YES_OPTION)
+                Product theFind;
+                theFind = dao.findProdRecord(Integer.parseInt(IDField.getText()));
+                dao.closeConnection();
+                if (theFind != null)
                 {
-                    // Unlock ID fields and allow editing of other fields
-                    addUpdateBtn.setText("Add");
-                    addUpdateBtn.setEnabled(true);
-                    //Disable delete button, cannot delete something that doesn't exist!
-                    deleteBtn.setEnabled(false);
-                    // Clear and unlock all fields to facilitate data entry
-                    clearEditableFields();
+                    lastSearchedProduct = theFind;
+                    // Make textfields editable
+                    nameField.setText(theFind.getName());
+                    quantityField.setText(String.valueOf(theFind.getQuantity()));
+                    priceField.setText(String.valueOf(theFind.getPrice()));
                     unlockEditableFields();
-                    //Block ID field to prevent updating an existing product's primary key!
-                    IDField.setEditable(false);
-                    // Change search to clear in case user wants to go back
+                    // Make buttons editable
+                    addUpdateBtn.setEnabled(true);
+                    deleteBtn.setEnabled(true);
+
+                    // Change search button to clear ID
                     searchBtn.setText("Clear");
+
+                    addUpdateBtn.setText("Update");
+                    deleteBtn.setVisible(true);
+
+                    // Lock ID field to prevent updating primary key
+                    IDField.setEnabled(false);
 
                 }
                 else
                 {
-                    IDField.setText("");
+                    returnValue = JOptionPane.showConfirmDialog(null, "Product ID not found! Would you like to " +
+                                    "add this product now?",
+                            "Add Product", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    if (returnValue == JOptionPane.YES_OPTION)
+                    {
+                        // Unlock ID fields and allow editing of other fields
+                        addUpdateBtn.setText("Add");
+                        addUpdateBtn.setEnabled(true);
+                        //Disable delete button, cannot delete something that doesn't exist!
+                        deleteBtn.setEnabled(false);
+                        // Clear and unlock all fields to facilitate data entry
+                        clearEditableFields();
+                        unlockEditableFields();
+                        //Block ID field to prevent updating an existing product's primary key!
+                        IDField.setEditable(false);
+                        // Change search to clear in case user wants to go back
+                        searchBtn.setText("Clear");
+
+                    }
+                    else
+                    {
+                        IDField.setText("");
+                    }
                 }
             }
         }
@@ -415,12 +424,14 @@ public class ProductsPanel extends JFrame {
             if (returnValue==JOptionPane.YES_OPTION) {
                 if (dao.openConnection())
                 {
-                    dao.updateProdRecord(theAdd);
+                    dao.insertProduct(theAdd);
                     // Refresh Product Table
                     dao.loadProductsTable(productTable);
                     dao.closeConnection();
                     clearAllFields();
+                    lockEditableFields();
                     searchBtn.setText("Search");
+                    IDField.setEnabled(true);
 
                 }
             }
@@ -442,12 +453,14 @@ public class ProductsPanel extends JFrame {
                 if (returnValue==JOptionPane.YES_OPTION) {
                     DAO dao = new DAO();
                     if (dao.openConnection()) {
-                        dao.insertProduct(theUpdate);
+                        dao.updateProdRecord(theUpdate);
                         // Refresh Product Table
                         dao.loadProductsTable(productTable);
                         dao.closeConnection();
                         clearAllFields();
+                        lockEditableFields();
                         searchBtn.setText("Search");
+                        IDField.setEnabled(true);
                     }
                 }
             }
@@ -468,7 +481,9 @@ public class ProductsPanel extends JFrame {
                     dao.loadProductsTable(productTable);
                     dao.closeConnection();
                     clearAllFields();
+                    lockEditableFields();
                     searchBtn.setText("Search");
+                    IDField.setEnabled(true);
                 }
             }
         }
