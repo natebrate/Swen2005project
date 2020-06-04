@@ -129,27 +129,29 @@ public class SaleDetails extends JFrame {
         reportPane = new JScrollPane();
         reportTable = new JTable();
         searchBtn = new JButton();
-        saveBtn = new JButton();
-        deleteBtn = new JButton();
-        allBtn = new JButton();
-        returnBtn = new JButton();
         addBtn = new JButton();
+        saveBtn = new JButton();
+        modifyBtn = new JButton();
+        allBtn = new JButton();
+        deleteBtn = new JButton();
+        returnBtn = new JButton();
         reportBtn = new JButton();
         dateLabel = new JLabel();
         dayLabel = new JLabel();
-        nameLabel = new JLabel();
         userLabel = new JLabel();
-        quantityLabel = new JLabel();
-        prodLabel = new JLabel();
-        invoiceLabel = new JLabel();
+        nameLabel = new JLabel();
         DesciptionLabel = new JLabel();
-        quantityField = new JTextField();
-        prodField = new JTextField();
-        invoiceField = new JTextField();
+        invoiceLabel = new JLabel();
+        prodLabel = new JLabel();
+        quantityLabel = new JLabel();
         totalLabel = new JLabel();
         totalFigLabel = new JLabel();
-        textField1 = new JTextField();
-        button1 = new JButton();
+        prodName = new JLabel();
+        priceField = new JLabel();
+        searchField = new JTextField();
+        invoiceField = new JTextField();
+        prodField = new JTextField();
+        quantityField = new JTextField();
 
         //======== this ========
         setTitle("INVOICE AND SALE DETAILS");
@@ -242,15 +244,44 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
+        searchBtn.addActionListener(e -> {
+            try {
+                searchBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(searchBtn);
         searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
+
+        //---- addBtn ----
+        addBtn.setText("Add to Order");
+        contentPane.add(addBtn);
+        addBtn.setBounds(110, 200, 140, addBtn.getPreferredSize().height);
 
         //---- saveBtn ----
         saveBtn.setText("SAVE INVOICE");
         saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
         contentPane.add(saveBtn);
-        saveBtn.setBounds(10, 247, 240, saveBtn.getPreferredSize().height);
+        saveBtn.setBounds(10, 245, 240, saveBtn.getPreferredSize().height);
+
+        //---- modifyBtn ----
+        modifyBtn.setText("MODIFY INVOICE");
+        modifyBtn.addActionListener(e -> addBtnActionPerformed(e));
+        contentPane.add(modifyBtn);
+        modifyBtn.setBounds(10, 290, 240, modifyBtn.getPreferredSize().height);
+
+        //---- allBtn ----
+        allBtn.setText("DISPLAY REPORT");
+        allBtn.addActionListener(e -> {
+            try {
+                displayButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+        contentPane.add(allBtn);
+        allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
         //---- deleteBtn ----
         deleteBtn.setText("DELETE INVOICE");
@@ -259,23 +290,11 @@ public class SaleDetails extends JFrame {
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(10, 370, 240, deleteBtn.getPreferredSize().height);
 
-        //---- allBtn ----
-        allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
-        contentPane.add(allBtn);
-        allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
-
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
         returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(10, 450, 240, returnBtn.getPreferredSize().height);
-
-        //---- addBtn ----
-        addBtn.setText("MODIFY INVOICE");
-        addBtn.addActionListener(e -> addBtnActionPerformed(e));
-        contentPane.add(addBtn);
-        addBtn.setBounds(10, 290, 240, addBtn.getPreferredSize().height);
 
         //---- reportBtn ----
         reportBtn.setText("SALES REPORT");
@@ -294,47 +313,35 @@ public class SaleDetails extends JFrame {
         contentPane.add(dayLabel);
         dayLabel.setBounds(130, 4, 115, dayLabel.getPreferredSize().height);
 
-        //---- nameLabel ----
-        nameLabel.setText("Name");
-        contentPane.add(nameLabel);
-        nameLabel.setBounds(805, 4, 115, nameLabel.getPreferredSize().height);
-
         //---- userLabel ----
         userLabel.setText("USER:");
         contentPane.add(userLabel);
         userLabel.setBounds(680, 4, 115, userLabel.getPreferredSize().height);
 
-        //---- quantityLabel ----
-        quantityLabel.setText("Quantity:");
-        contentPane.add(quantityLabel);
-        quantityLabel.setBounds(10, 160, 100, quantityLabel.getPreferredSize().height);
-
-        //---- prodLabel ----
-        prodLabel.setText("Poduct ID:");
-        contentPane.add(prodLabel);
-        prodLabel.setBounds(10, 115, 100, prodLabel.getPreferredSize().height);
-
-        //---- invoiceLabel ----
-        invoiceLabel.setText("Invoice Number:");
-        contentPane.add(invoiceLabel);
-        invoiceLabel.setBounds(10, 77, 100, invoiceLabel.getPreferredSize().height);
+        //---- nameLabel ----
+        nameLabel.setText("Name");
+        contentPane.add(nameLabel);
+        nameLabel.setBounds(805, 4, 115, nameLabel.getPreferredSize().height);
 
         //---- DesciptionLabel ----
         DesciptionLabel.setText("Search and Create Invoices Here");
         contentPane.add(DesciptionLabel);
         DesciptionLabel.setBounds(10, 40, 350, DesciptionLabel.getPreferredSize().height);
 
-        //---- quantityField ----
-        quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
-        contentPane.add(quantityField);
-        quantityField.setBounds(120, 155, 140, quantityField.getPreferredSize().height);
+        //---- invoiceLabel ----
+        invoiceLabel.setText("Invoice Number:");
+        contentPane.add(invoiceLabel);
+        invoiceLabel.setBounds(10, 77, 100, invoiceLabel.getPreferredSize().height);
 
-        //---- prodField ----
-        prodField.addActionListener(e -> prodFieldActionPerformed(e));
-        contentPane.add(prodField);
-        prodField.setBounds(120, 108, 140, prodField.getPreferredSize().height);
-        contentPane.add(invoiceField);
-        invoiceField.setBounds(120, 70, 140, invoiceField.getPreferredSize().height);
+        //---- prodLabel ----
+        prodLabel.setText("Poduct ID:");
+        contentPane.add(prodLabel);
+        prodLabel.setBounds(10, 115, 100, prodLabel.getPreferredSize().height);
+
+        //---- quantityLabel ----
+        quantityLabel.setText("Quantity:");
+        contentPane.add(quantityLabel);
+        quantityLabel.setBounds(10, 160, 100, quantityLabel.getPreferredSize().height);
 
         //---- totalLabel ----
         totalLabel.setText("GRAND TOTAL:");
@@ -346,18 +353,35 @@ public class SaleDetails extends JFrame {
         contentPane.add(totalFigLabel);
         totalFigLabel.setBounds(795, 250, 115, totalFigLabel.getPreferredSize().height);
 
-        //---- textField1 ----
-        textField1.setText("Search");
-        textField1.setFont(textField1.getFont().deriveFont(textField1.getFont().getStyle() | Font.ITALIC));
-        textField1.setForeground(Color.lightGray);
-        textField1.addActionListener(e -> textField1ActionPerformed(e));
-        contentPane.add(textField1);
-        textField1.setBounds(395, 45, 245, textField1.getPreferredSize().height);
+        //---- prodName ----
+        prodName.setText("prodName ");
+        contentPane.add(prodName);
+        prodName.setBounds(280, 115, 100, prodName.getPreferredSize().height);
 
-        //---- button1 ----
-        button1.setText("Add to Order");
-        contentPane.add(button1);
-        button1.setBounds(120, 200, 140, button1.getPreferredSize().height);
+        //---- priceField ----
+        priceField.setText("priceField");
+        contentPane.add(priceField);
+        priceField.setBounds(280, 165, 100, priceField.getPreferredSize().height);
+
+        //---- searchField ----
+        searchField.setText("Search");
+        searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
+        searchField.setForeground(Color.lightGray);
+        searchField.addActionListener(e -> textField1ActionPerformed(e));
+        contentPane.add(searchField);
+        searchField.setBounds(395, 45, 245, searchField.getPreferredSize().height);
+        contentPane.add(invoiceField);
+        invoiceField.setBounds(110, 70, 140, invoiceField.getPreferredSize().height);
+
+        //---- prodField ----
+        prodField.addActionListener(e -> prodFieldActionPerformed(e));
+        contentPane.add(prodField);
+        prodField.setBounds(110, 110, 140, prodField.getPreferredSize().height);
+
+        //---- quantityField ----
+        quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
+        contentPane.add(quantityField);
+        quantityField.setBounds(110, 155, 140, quantityField.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(930, 610));
         pack();
@@ -458,26 +482,28 @@ public class SaleDetails extends JFrame {
     private JScrollPane reportPane;
     private JTable reportTable;
     private JButton searchBtn;
-    private JButton saveBtn;
-    private JButton deleteBtn;
-    private JButton allBtn;
-    private JButton returnBtn;
     private JButton addBtn;
+    private JButton saveBtn;
+    private JButton modifyBtn;
+    private JButton allBtn;
+    private JButton deleteBtn;
+    private JButton returnBtn;
     private JButton reportBtn;
     private JLabel dateLabel;
     private JLabel dayLabel;
-    private JLabel nameLabel;
     private JLabel userLabel;
-    private JLabel quantityLabel;
-    private JLabel prodLabel;
-    private JLabel invoiceLabel;
+    private JLabel nameLabel;
     private JLabel DesciptionLabel;
-    private JTextField quantityField;
-    private JTextField prodField;
-    private JTextField invoiceField;
+    private JLabel invoiceLabel;
+    private JLabel prodLabel;
+    private JLabel quantityLabel;
     private JLabel totalLabel;
     private JLabel totalFigLabel;
-    private JTextField textField1;
-    private JButton button1;
+    private JLabel prodName;
+    private JLabel priceField;
+    private JTextField searchField;
+    private JTextField invoiceField;
+    private JTextField prodField;
+    private JTextField quantityField;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
