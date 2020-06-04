@@ -178,8 +178,8 @@ public class DAO {
     }
 
 
-    public saleDetailsCON findsalesRecord(int code) {
-        saleDetailsCON theOne = null;
+    public Sale findsalesRecord(int code) {
+        Sale theOne = null;
         String query = "select * from sales_details where invoice  = ?";
         try {
 
@@ -188,7 +188,7 @@ public class DAO {
             myPreStmt.setInt(1, code);
             ResultSet rs = myPreStmt.executeQuery();
             while (rs.next()) {
-                theOne = new saleDetailsCON(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
+                theOne = new Sale(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
             }
         } catch (Exception e) {
             System.out.println("Got an exception! Error in Find Record");
@@ -197,7 +197,7 @@ public class DAO {
         return theOne;
     }
 
-    public void insertSale(saleDetailsCON theSale) {
+    public void insertSale(Sale theSale) {
         //the mysql insert statement
         String query = "insert into sales_details (invoice, P_ID, quantity_sold, sub_total) values (?,?,?,?)";
         //create the mysql insert prepared statement
@@ -217,7 +217,7 @@ public class DAO {
         }
     }
 
-    public void updateSaleRecord(saleDetailsCON theSale)
+    public void updateSaleRecord(Sale theSale)
     {
     //the mysql insert statement
         String query = "update sales_details set P_ID=?, quantity_sold=? where invoice=?";

@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 /*
  * Created by JFormDesigner on Fri May 29 12:44:19 BOT 2020
  */
@@ -296,7 +294,7 @@ public class SaleDetails extends JFrame {
         DAO dao = new DAO();
         if (dao.openConnection())
         {
-            saleDetailsCON thefind;
+            Sale thefind;
             thefind = dao.findsalesRecord(Integer.parseInt(invoiceField.getText()));
             System.out.println(thefind);
             if (thefind != null)

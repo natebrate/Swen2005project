@@ -1,9 +1,9 @@
-public class saleDetailsCON {
+public class Sale {
 
     private int invoice, P_ID, quantity_sold;
     double sub_total;
 
-    saleDetailsCON ( int P_ID, int quantity_sold, double sub_total)
+    Sale(int P_ID, int quantity_sold, double sub_total)
         {
             this.invoice = invoice;
             this.P_ID = P_ID;
@@ -11,7 +11,7 @@ public class saleDetailsCON {
             this.sub_total = sub_total;
         }
 
-    saleDetailsCON (int invoice, int P_ID, int quantity_sold, double sub_total)
+    Sale(int invoice, int P_ID, int quantity_sold, double sub_total)
     {
         this.invoice = invoice;
         this.P_ID = P_ID;
