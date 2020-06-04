@@ -18,6 +18,7 @@ import javax.swing.table.*;
 public class SaleDetails extends JFrame {
     public int invoice, P_ID, quantity_sold;
     public double sub_total;
+    User userLogin = null;
 
     Vector<details> vec = new Vector<details>();
 
@@ -27,9 +28,11 @@ public class SaleDetails extends JFrame {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.userLogin = userLogin;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
         nameLabel.setText(userLogin.getFirstName());
+        dayLabel.setText(CurrentDateTimeExample1());
 
 
         DAO dao = new DAO();
@@ -199,7 +202,9 @@ public class SaleDetails extends JFrame {
         //---- deleteBtn ----
         deleteBtn.setText("Delete Invoice");
         deleteBtn.setForeground(Color.red);
-        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
+        deleteBtn.addActionListener(e -> {
+            deleteBtnActionPerformed(e);
+        });
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(165, 305, 120, deleteBtn.getPreferredSize().height);
 
@@ -280,6 +285,8 @@ public class SaleDetails extends JFrame {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
     }
+
+
 
     public String CurrentDateTimeExample1 (){
 
