@@ -461,6 +461,18 @@ public class SaleDetails extends JFrame {
         Random rand = new Random();
         return rand.nextInt(100000 - 1) + 1;
     }
+    public void unlockFields()
+    {
+        invoiceField.setEnabled(true);
+        prodField.setEnabled(true);
+        quantityField.setEnabled(true);
+    }
+    public void lockFields()
+    {
+        invoiceField.setEnabled(false);
+        prodField.setEnabled(false);
+        quantityField.setEnabled(false);
+    }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
