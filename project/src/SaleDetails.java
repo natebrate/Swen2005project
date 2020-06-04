@@ -16,11 +16,7 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class SaleDetails extends JFrame {
-    public int invoice, P_ID, quantity_sold;
-    public double sub_total;
     User userLogin = null;
-
-    Vector<details> vec = new Vector<details>();
 
     public SaleDetails(User userLogin) throws SQLException {
         initComponents();
