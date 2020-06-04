@@ -113,6 +113,10 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
+    private void textField1ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
@@ -144,6 +148,7 @@ public class SaleDetails extends JFrame {
         invoiceField = new JTextField();
         totalLabel = new JLabel();
         totalFigLabel = new JLabel();
+        textField1 = new JTextField();
 
         //======== this ========
         setTitle("INVOICE AND SALE DETAILS");
@@ -244,7 +249,7 @@ public class SaleDetails extends JFrame {
             }
         });
         contentPane.add(searchBtn);
-        searchBtn.setBounds(272, 70, 120, searchBtn.getPreferredSize().height);
+        searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
 
         //---- saveBtn ----
         saveBtn.setText("SAVE INVOICE");
@@ -255,9 +260,7 @@ public class SaleDetails extends JFrame {
         //---- deleteBtn ----
         deleteBtn.setText("DELETE INVOICE");
         deleteBtn.setForeground(Color.red);
-        deleteBtn.addActionListener(e -> {
-            deleteBtnActionPerformed(e);
-        });
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(10, 370, 240, deleteBtn.getPreferredSize().height);
 
@@ -287,7 +290,6 @@ public class SaleDetails extends JFrame {
 
         //---- reportBtn ----
         reportBtn.setText("SALES REPORT");
-        reportBtn.setToolTipText("SALES REPORT");
         reportBtn.addActionListener(e -> reportBtnActionPerformed(e));
         contentPane.add(reportBtn);
         reportBtn.setBounds(275, 450, 115, reportBtn.getPreferredSize().height);
@@ -354,6 +356,14 @@ public class SaleDetails extends JFrame {
         totalFigLabel.setText("$0");
         contentPane.add(totalFigLabel);
         totalFigLabel.setBounds(275, 190, 115, totalFigLabel.getPreferredSize().height);
+
+        //---- textField1 ----
+        textField1.setText("Search");
+        textField1.setFont(textField1.getFont().deriveFont(textField1.getFont().getStyle() | Font.ITALIC));
+        textField1.setForeground(Color.lightGray);
+        textField1.addActionListener(e -> textField1ActionPerformed(e));
+        contentPane.add(textField1);
+        textField1.setBounds(270, 230, 120, textField1.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(930, 565));
         pack();
@@ -473,5 +483,6 @@ public class SaleDetails extends JFrame {
     private JTextField invoiceField;
     private JLabel totalLabel;
     private JLabel totalFigLabel;
+    private JTextField textField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
