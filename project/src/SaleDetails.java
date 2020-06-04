@@ -81,7 +81,8 @@ public class SaleDetails extends JFrame {
     }
 
     private void prodFieldActionPerformed(ActionEvent e) {
-        //  TODO add your code here
+        findProductDetails();
+        quantityField.requestFocus();
     }
 
     private void quantityFieldActionPerformed(ActionEvent e) {
@@ -102,7 +103,10 @@ public class SaleDetails extends JFrame {
     }
 
     private void addBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        unlockFields();
+        invoiceField.setText(String.valueOf(genInvoiceID()));
+        invoiceField.setEnabled(false);
+        prodField.requestFocus();
     }
 
     private void reportBtnActionPerformed(ActionEvent e) {
@@ -472,6 +476,19 @@ public class SaleDetails extends JFrame {
         invoiceField.setEnabled(false);
         prodField.setEnabled(false);
         quantityField.setEnabled(false);
+    }
+    public void findProductDetails()
+    {
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            Product theFind;
+            theFind = dao.findProdRecord(Integer.parseInt(prodField.getText()));
+            dao.closeConnection();
+            if (theFind != null) {
+//                prodName.setText(theFind.getName());
+//                priceField.setText(String.valueOf(theFind.getPrice()));
+            }
+            }
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables

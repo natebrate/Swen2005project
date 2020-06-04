@@ -26,7 +26,7 @@ public class ProductsPanel extends JFrame {
 
     public ProductsPanel(User userLogin) throws SQLException {
         initComponents();
-        IDField.requestFocus();
+        IDField.requestFocusInWindow();
         addChangeListener(searchField, e -> searchName());
         // Load blank Product for purposes later
 
