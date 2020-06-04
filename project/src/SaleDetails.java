@@ -18,7 +18,6 @@ import javax.swing.table.*;
 public class SaleDetails extends JFrame {
     public int invoice, P_ID, quantity_sold;
     public double sub_total;
-    User userLogin = null;
 
     Vector<details> vec = new Vector<details>();
 
@@ -28,7 +27,6 @@ public class SaleDetails extends JFrame {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        this.userLogin = userLogin;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         userLabel.setText(userLogin.getUsername() + ": " + userLogin.adminCredentials());
         nameLabel.setText(userLogin.getFirstName());
@@ -37,14 +35,13 @@ public class SaleDetails extends JFrame {
 
         DAO dao = new DAO();
         if (dao.openConnection()) {
-            dao.loadSalesDetailsTable(salesTable);
+            dao.loadSalesDetailsTable(reportTable);
         }
         dao.closeConnection();
     }
 
 
     private void searchFieldActionPerformed(ActionEvent e) {
-        // TODO add your code here
     }
 
     // FIND A RECORD AND DELETE IT FROM SALES DETAILS TABLE
@@ -75,7 +72,7 @@ public class SaleDetails extends JFrame {
         // Populate JTable from Database
         DAO dao = new DAO();
         if (dao.openConnection()) {
-            dao.loadSalesDetailsTable(salesTable);
+            dao.loadSalesDetailsTable(reportTable);
         }
         dao.closeConnection();
     }
@@ -86,7 +83,7 @@ public class SaleDetails extends JFrame {
     }
 
     private void prodFieldActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        //  TODO add your code here
     }
 
     private void quantityFieldActionPerformed(ActionEvent e) {
@@ -106,18 +103,32 @@ public class SaleDetails extends JFrame {
             CurrentDateTimeExample1();
     }
 
+    private void addBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void reportBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
-        salesPane = new JScrollPane();
-        salesTable = new JTable();
+        invoicePane = new JScrollPane();
+        invoiceTable = new JTable();
+        searchPane = new JScrollPane();
+        searchTable = new JTable();
+        reportPane = new JScrollPane();
+        reportTable = new JTable();
         searchBtn = new JButton();
         saveBtn = new JButton();
         deleteBtn = new JButton();
         allBtn = new JButton();
         returnBtn = new JButton();
+        addBtn = new JButton();
+        reportBtn = new JButton();
         dateLabel = new JLabel();
         dayLabel = new JLabel();
         nameLabel = new JLabel();
@@ -125,61 +136,101 @@ public class SaleDetails extends JFrame {
         quantityLabel = new JLabel();
         prodLabel = new JLabel();
         invoiceLabel = new JLabel();
+        DesciptionLabel = new JLabel();
         quantityField = new JTextField();
         prodField = new JTextField();
         invoiceField = new JTextField();
-        Desciption_menu = new JLabel();
+        totalLabel = new JLabel();
+        totalFigLabel = new JLabel();
 
         //======== this ========
-        setTitle("Sales Details");
+        setTitle("INVOICE AND SALE DETAILS");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
-        //======== salesPane ========
+        //======== invoicePane ========
         {
 
-            //---- salesTable ----
-            salesTable.setAutoCreateRowSorter(true);
-            salesTable.setModel(new DefaultTableModel(
+            //---- invoiceTable ----
+            invoiceTable.setAutoCreateRowSorter(true);
+            invoiceTable.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
                 },
                 new String[] {
-                    "Invoice", "P_ID", "Amount", "Date"
+                    "PRODUCT ID", "NAME", "QUANTITY", "PRICE", "TOTAL"
                 }
             ) {
                 Class<?>[] columnTypes = new Class<?>[] {
-                    Integer.class, Integer.class, Integer.class, String.class
+                    Integer.class, String.class, Integer.class, Double.class, Double.class
                 };
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
                 }
             });
-            salesPane.setViewportView(salesTable);
+            invoiceTable.setToolTipText("For modification to invoices");
+            invoicePane.setViewportView(invoiceTable);
         }
-        contentPane.add(salesPane);
-        salesPane.setBounds(365, 55, 465, 340);
+        contentPane.add(invoicePane);
+        invoicePane.setBounds(395, 55, 515, 165);
+
+        //======== searchPane ========
+        {
+
+            //---- searchTable ----
+            searchTable.setModel(new DefaultTableModel(
+                new Object[][] {
+                    {null, null, null, null},
+                    {null, null, null, null},
+                },
+                new String[] {
+                    "DATE", "INVOICE", "TOTAL QUANTITY SOLD", "TOTAL SOLD"
+                }
+            ) {
+                Class<?>[] columnTypes = new Class<?>[] {
+                    String.class, Integer.class, Integer.class, Integer.class
+                };
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+                    return columnTypes[columnIndex];
+                }
+            });
+            searchTable.setAutoCreateRowSorter(true);
+            searchTable.setToolTipText("to Search Records in Invoice");
+            searchPane.setViewportView(searchTable);
+        }
+        contentPane.add(searchPane);
+        searchPane.setBounds(395, 225, 515, 180);
+
+        //======== reportPane ========
+        {
+
+            //---- reportTable ----
+            reportTable.setModel(new DefaultTableModel(
+                new Object[][] {
+                    {null, null, null, null, null},
+                    {null, null, null, null, null},
+                },
+                new String[] {
+                    "DATE", "INVOICE", "NAME", "ITEMS SOLD", "TOTAL REVENUE"
+                }
+            ) {
+                Class<?>[] columnTypes = new Class<?>[] {
+                    String.class, Integer.class, String.class, Integer.class, Double.class
+                };
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+                    return columnTypes[columnIndex];
+                }
+            });
+            reportTable.setAutoCreateRowSorter(true);
+            reportTable.setToolTipText("To Display report");
+            reportPane.setViewportView(reportTable);
+        }
+        contentPane.add(reportPane);
+        reportPane.setBounds(395, 410, 515, 110);
 
         //---- searchBtn ----
         searchBtn.setText("Search");
@@ -191,25 +242,23 @@ public class SaleDetails extends JFrame {
             }
         });
         contentPane.add(searchBtn);
-        searchBtn.setBounds(240, 65, 120, searchBtn.getPreferredSize().height);
+        searchBtn.setBounds(272, 70, 120, searchBtn.getPreferredSize().height);
 
         //---- saveBtn ----
-        saveBtn.setText("SAVE");
+        saveBtn.setText("SAVE INVOICE");
         saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
         contentPane.add(saveBtn);
-        saveBtn.setBounds(45, 265, 240, saveBtn.getPreferredSize().height);
+        saveBtn.setBounds(10, 247, 240, saveBtn.getPreferredSize().height);
 
         //---- deleteBtn ----
-        deleteBtn.setText("Delete Invoice");
+        deleteBtn.setText("DELETE INVOICE");
         deleteBtn.setForeground(Color.red);
-        deleteBtn.addActionListener(e -> {
-            deleteBtnActionPerformed(e);
-        });
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
-        deleteBtn.setBounds(165, 305, 120, deleteBtn.getPreferredSize().height);
+        deleteBtn.setBounds(10, 370, 240, deleteBtn.getPreferredSize().height);
 
         //---- allBtn ----
-        allBtn.setText("Display All");
+        allBtn.setText("DISPLAY REPORT");
         allBtn.addActionListener(e -> {
             try {
                 displayButtonActionPerformed(e);
@@ -218,34 +267,47 @@ public class SaleDetails extends JFrame {
             }
         });
         contentPane.add(allBtn);
-        allBtn.setBounds(45, 305, 120, allBtn.getPreferredSize().height);
+        allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
         returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
-        returnBtn.setBounds(45, 345, 240, returnBtn.getPreferredSize().height);
+        returnBtn.setBounds(10, 450, 240, returnBtn.getPreferredSize().height);
+
+        //---- addBtn ----
+        addBtn.setText("MODIFY INVOICE");
+        addBtn.addActionListener(e -> addBtnActionPerformed(e));
+        contentPane.add(addBtn);
+        addBtn.setBounds(10, 290, 240, addBtn.getPreferredSize().height);
+
+        //---- reportBtn ----
+        reportBtn.setText("SALES REPORT");
+        reportBtn.setToolTipText("SALES REPORT");
+        reportBtn.addActionListener(e -> reportBtnActionPerformed(e));
+        contentPane.add(reportBtn);
+        reportBtn.setBounds(275, 450, 115, reportBtn.getPreferredSize().height);
 
         //---- dateLabel ----
         dateLabel.setText("DATE:");
         contentPane.add(dateLabel);
-        dateLabel.setBounds(10, 15, 100, 15);
+        dateLabel.setBounds(395, 5, 115, 15);
 
         //---- dayLabel ----
         dayLabel.setText("MM/DD/YYYY");
-        dayLabel.addPropertyChangeListener(e -> dayLabelPropertyChange(e) );
+        dayLabel.addPropertyChangeListener(e -> dayLabelPropertyChange(e));
         contentPane.add(dayLabel);
-        dayLabel.setBounds(120, 15, 110, dayLabel.getPreferredSize().height);
+        dayLabel.setBounds(515, 5, 115, dayLabel.getPreferredSize().height);
 
         //---- nameLabel ----
         nameLabel.setText("Name");
         contentPane.add(nameLabel);
-        nameLabel.setBounds(675, 15, 115, nameLabel.getPreferredSize().height);
+        nameLabel.setBounds(515, 35, 115, nameLabel.getPreferredSize().height);
 
         //---- userLabel ----
         userLabel.setText("USER:");
         contentPane.add(userLabel);
-        userLabel.setBounds(555, 15, 115, userLabel.getPreferredSize().height);
+        userLabel.setBounds(395, 35, 115, userLabel.getPreferredSize().height);
 
         //---- quantityLabel ----
         quantityLabel.setText("Quantity:");
@@ -253,44 +315,58 @@ public class SaleDetails extends JFrame {
         quantityLabel.setBounds(10, 160, 100, quantityLabel.getPreferredSize().height);
 
         //---- prodLabel ----
-        prodLabel.setText("Product ID:");
+        prodLabel.setText("Poduct ID:");
         contentPane.add(prodLabel);
         prodLabel.setBounds(10, 115, 100, prodLabel.getPreferredSize().height);
 
         //---- invoiceLabel ----
         invoiceLabel.setText("Invoice Number:");
         contentPane.add(invoiceLabel);
-        invoiceLabel.setBounds(10, 75, 100, invoiceLabel.getPreferredSize().height);
+        invoiceLabel.setBounds(10, 77, 100, invoiceLabel.getPreferredSize().height);
+
+        //---- DesciptionLabel ----
+        DesciptionLabel.setText("Search and Create Invoices Here");
+        contentPane.add(DesciptionLabel);
+        DesciptionLabel.setBounds(10, 40, 350, DesciptionLabel.getPreferredSize().height);
 
         //---- quantityField ----
         quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
         contentPane.add(quantityField);
-        quantityField.setBounds(120, 160, 110, quantityField.getPreferredSize().height);
+        quantityField.setBounds(120, 155, 140, quantityField.getPreferredSize().height);
 
         //---- prodField ----
         prodField.addActionListener(e -> prodFieldActionPerformed(e));
         contentPane.add(prodField);
-        prodField.setBounds(120, 115, 110, prodField.getPreferredSize().height);
+        prodField.setBounds(120, 108, 140, prodField.getPreferredSize().height);
         contentPane.add(invoiceField);
-        invoiceField.setBounds(120, 70, 110, invoiceField.getPreferredSize().height);
+        invoiceField.setBounds(120, 70, 140, invoiceField.getPreferredSize().height);
 
-        //---- Desciption_menu ----
-        Desciption_menu.setText("Search and Create Invoices Here");
-        contentPane.add(Desciption_menu);
-        Desciption_menu.setBounds(10, 40, 230, Desciption_menu.getPreferredSize().height);
+        //---- totalLabel ----
+        totalLabel.setText("TOTAL:");
+        contentPane.add(totalLabel);
+        totalLabel.setBounds(275, 165, 115, totalLabel.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(845, 440));
+        //---- totalFigLabel ----
+        totalFigLabel.setText("$0");
+        contentPane.add(totalFigLabel);
+        totalFigLabel.setBounds(275, 190, 115, totalFigLabel.getPreferredSize().height);
+
+        contentPane.setPreferredSize(new Dimension(930, 565));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
     }
 
+    private void invoiceFieldActionPerformed(ActionEvent e) {
+        DAO dao = new DAO();
+        if(dao.openConnection())
+        {
+            dao.findInvoiceNumber(invoiceTable, Integer.parseInt(invoiceField.getText()));
+            dao.closeConnection();
+        }
+    }
 
-    /**
-     * Method used to get current date from system
-     * @return
-     */
     public String CurrentDateTimeExample1 (){
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -301,18 +377,17 @@ public class SaleDetails extends JFrame {
 
     //Method to find record belonging to invoice method
     private void searchBtnActionPerformed(ActionEvent e)  throws SQLException {
-        DAO dao = new DAO();
+ /**       DAO dao = new DAO();
         if (dao.openConnection())
-        {
-            Sale thefind;
-            thefind = dao.findsalesRecord(Integer.parseInt(invoiceField.getText()));
+        { Sale thefind;
+            thefind = dao.findInvoiceNumber(Integer.parseInt(invoiceField.getText()));
             System.out.println(thefind);
             if (thefind != null)
             {
                 details g = new details(invoice, P_ID, quantity_sold, sub_total);
                 vec.addElement(g);
 
-                DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+                DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
                 Object rowData[] = new Object[5];
                 model.setRowCount(0);
                 for (int i = 0; i < vec.size(); i++) {
@@ -330,9 +405,9 @@ public class SaleDetails extends JFrame {
 
             } else {
                 JOptionPane.showMessageDialog(null, "Please enter an invoice number");
-                invoiceField.requestFocus();
-            }
-        }
+               invoiceField.requestFocus();
+           }
+        } **/
     }
 
     static class details
@@ -368,13 +443,19 @@ public class SaleDetails extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JScrollPane salesPane;
-    private JTable salesTable;
+    private JScrollPane invoicePane;
+    private JTable invoiceTable;
+    private JScrollPane searchPane;
+    private JTable searchTable;
+    private JScrollPane reportPane;
+    private JTable reportTable;
     private JButton searchBtn;
     private JButton saveBtn;
     private JButton deleteBtn;
     private JButton allBtn;
     private JButton returnBtn;
+    private JButton addBtn;
+    private JButton reportBtn;
     private JLabel dateLabel;
     private JLabel dayLabel;
     private JLabel nameLabel;
@@ -382,9 +463,11 @@ public class SaleDetails extends JFrame {
     private JLabel quantityLabel;
     private JLabel prodLabel;
     private JLabel invoiceLabel;
+    private JLabel DesciptionLabel;
     private JTextField quantityField;
     private JTextField prodField;
     private JTextField invoiceField;
-    private JLabel Desciption_menu;
+    private JLabel totalLabel;
+    private JLabel totalFigLabel;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
