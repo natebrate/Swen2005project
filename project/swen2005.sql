@@ -90,23 +90,51 @@ BEGIN
 END ;;
 
 
+-- --------------------------------------------------------
+
+--
+-- TRIGGER FOR DELETING A RECORD FORM SALES SUMMARY AND UPDATING APPROPRIATE TABLES
+--
+
+
+CREATE TRIGGER remove AFTER DELETE on sales_details for EACH ROW
+
+BEGIN
+
+    UPDATE sales_summary set total_revenue=total_revenue-old.sub_total;
+    UPDATE sales_summary set items_sold=items_sold-old.quantity_sold;
+    UPDATE products set quantity=quantity+old.quantity_sold;
+
+END;;
+
+-- --------------------------------------------------------
+
+--
+-- PROCEDURE FOR SELLING AN ITEM AND UPDATING THE APPROPRIATE TABLES
+--
+
+CREATE PROCEDURE `sell`(IN invoice_num INT ,in product_id int, in quan int)
+BEGIN
+    DECLARE subtotal DOUBLE;
+    SET subtotal=quan*(select price from products where prod_id=product_id);
+    UPDATE products SET quantity=quantity-quan where prod_id=product_id ;
+    insert into sales_details(invoice, P_ID, quantity_sold, sub_total) values (invoice_num, product_id, quan,  subtotal);
+END;;
 
 
 -- --------------------------------------------------------
 
 --
--- PROCEDURE FOR SELLING AN ITEM AND UPDATING THE
+-- PROCEDURE FOR UPDATING A RECORD IN SALES DETAILS
 --
 
-CREATE PROCEDURE `sell`(IN invoice_num INT ,in p_id int, in quan int)
+CREATE  PROCEDURE `updateSDetails`(IN invoice_num INT, IN product_id INT, IN quan INT )
 BEGIN
-    DECLARE subtotal DOUBLE;
-    SET subtotal=quan*(select price from products where prod_id=p_id);
-    UPDATE products SET quantity=quantity-quan where prod_id=p_id ;
-    insert into sales_details(invoice, P_ID, quantity_sold, sub_total) values (invoice_num, p_id, quan,  subtotal);
+
+    delete from sales_details where invoice=invoice_num and P_ID=product_id;
+    call sell(invoice_num,product_id,quan);
+
 END;;
-
-
 
 DELIMITER ;
 
