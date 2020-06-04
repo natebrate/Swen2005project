@@ -209,7 +209,7 @@ public class SaleDetails extends JFrame {
             searchPane.setViewportView(searchTable);
         }
         contentPane.add(searchPane);
-        searchPane.setBounds(395, 225, 515, 180);
+        searchPane.setBounds(395, 275, 515, 180);
 
         //======== reportPane ========
         {
@@ -237,17 +237,11 @@ public class SaleDetails extends JFrame {
             reportPane.setViewportView(reportTable);
         }
         contentPane.add(reportPane);
-        reportPane.setBounds(395, 410, 515, 110);
+        reportPane.setBounds(395, 460, 515, 110);
 
         //---- searchBtn ----
         searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> {
-            try {
-                searchBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
         contentPane.add(searchBtn);
         searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
 
@@ -266,13 +260,7 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
@@ -363,9 +351,9 @@ public class SaleDetails extends JFrame {
         textField1.setForeground(Color.lightGray);
         textField1.addActionListener(e -> textField1ActionPerformed(e));
         contentPane.add(textField1);
-        textField1.setBounds(270, 230, 120, textField1.getPreferredSize().height);
+        textField1.setBounds(395, 240, 245, textField1.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(930, 565));
+        contentPane.setPreferredSize(new Dimension(930, 610));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
