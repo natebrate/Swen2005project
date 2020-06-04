@@ -178,23 +178,44 @@ public class DAO {
     }
 
 
-    public Sale findsalesRecord(int code) {
-        Sale theOne = null;
-        String query = "select * from sales_details where invoice  = ?";
+    public void findInvoiceNumber(JTable table, int code) {
+//        Sale theOne = null;
+//        String query = "select * from sales_details where invoice  =?";
+//        try {
+//
+//            //create the mysql insert preparedstatement
+//            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+//            myPreStmt.setInt(1, code);
+//            ResultSet rs = myPreStmt.executeQuery();
+//            while (rs.next()) {
+//                theOne = new Sale(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Got an exception! Error in Find Record");
+//            System.out.println(e.getMessage());
+//        }
+//        return theOne;
+        String query = "SELECT * from sales_details where invoice =?";
         try {
-
             //create the mysql insert preparedstatement
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             myPreStmt.setInt(1, code);
             ResultSet rs = myPreStmt.executeQuery();
-            while (rs.next()) {
-                theOne = new Sale(rs.getInt("invoice"), rs.getInt("P_ID"), rs.getInt("quantity_sold"), rs.getDouble("sub_total"));
+            //To remove previously added rows
+            while (table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
             }
-        } catch (Exception e) {
-            System.out.println("Got an exception! Error in Find Record");
-            System.out.println(e.getMessage());
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        return theOne;
     }
 
     public void insertSale(Sale theSale) {

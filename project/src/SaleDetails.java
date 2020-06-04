@@ -41,7 +41,6 @@ public class SaleDetails extends JFrame {
 
 
     private void searchFieldActionPerformed(ActionEvent e) {
-        // TODO add your code here
     }
 
     // FIND A RECORD AND DELETE IT FROM SALES DETAILS TABLE
@@ -83,7 +82,7 @@ public class SaleDetails extends JFrame {
     }
 
     private void prodFieldActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        //  TODO add your code here
     }
 
     private void quantityFieldActionPerformed(ActionEvent e) {
@@ -266,6 +265,9 @@ public class SaleDetails extends JFrame {
         prodField.addActionListener(e -> prodFieldActionPerformed(e));
         contentPane.add(prodField);
         prodField.setBounds(120, 115, 110, prodField.getPreferredSize().height);
+        
+        // --- invoiceField
+        invoiceField.addActionListener(e -> invoiceFieldActionPerformed(e));
         contentPane.add(invoiceField);
         invoiceField.setBounds(120, 70, 110, invoiceField.getPreferredSize().height);
 
@@ -281,6 +283,15 @@ public class SaleDetails extends JFrame {
 
     }
 
+    private void invoiceFieldActionPerformed(ActionEvent e) {
+        DAO dao = new DAO();
+        if(dao.openConnection())
+        {
+            dao.findInvoiceNumber(salesTable, Integer.parseInt(invoiceField.getText()));
+            dao.closeConnection();
+        }
+    }
+
     public String CurrentDateTimeExample1 (){
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -291,38 +302,38 @@ public class SaleDetails extends JFrame {
         //Method to find the invoice number
 
     private void searchBtnActionPerformed(ActionEvent e)  throws SQLException {
-        DAO dao = new DAO();
-        if (dao.openConnection())
-        {
-            Sale thefind;
-            thefind = dao.findsalesRecord(Integer.parseInt(invoiceField.getText()));
-            System.out.println(thefind);
-            if (thefind != null)
-            {
-                details g = new details(invoice, P_ID, quantity_sold, sub_total);
-                vec.addElement(g);
-
-                DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
-                Object rowData[] = new Object[5];
-                model.setRowCount(0);
-                for (int i = 0; i < vec.size(); i++) {
-                    rowData[0] = vec.elementAt(i).getInvoice();
-                    rowData[1] = vec.elementAt(i).getP_ID();
-                    rowData[2] = vec.elementAt(i).getQuantity_sold();
-                    rowData[3] = CurrentDateTimeExample1();
-                    model.addRow(rowData);
-                }
-                invoiceField.setText("");
-                invoiceField.requestFocus();
-                P_ID = thefind.getP_ID();
-                quantity_sold = thefind.getQuantity_sold();
-                sub_total = thefind.getSub_total();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Please enter an invoice number");
-                invoiceField.requestFocus();
-            }
-        }
+//        DAO dao = new DAO();
+//        if (dao.openConnection())
+//        {
+//            Sale thefind;
+//            thefind = dao.findInvoiceNumber(Integer.parseInt(invoiceField.getText()));
+//            System.out.println(thefind);
+//            if (thefind != null)
+//            {
+//                details g = new details(invoice, P_ID, quantity_sold, sub_total);
+//                vec.addElement(g);
+//
+//                DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
+//                Object rowData[] = new Object[5];
+//                model.setRowCount(0);
+//                for (int i = 0; i < vec.size(); i++) {
+//                    rowData[0] = vec.elementAt(i).getInvoice();
+//                    rowData[1] = vec.elementAt(i).getP_ID();
+//                    rowData[2] = vec.elementAt(i).getQuantity_sold();
+//                    rowData[3] = CurrentDateTimeExample1();
+//                    model.addRow(rowData);
+//                }
+//                invoiceField.setText("");
+//                invoiceField.requestFocus();
+//                P_ID = thefind.getP_ID();
+//                quantity_sold = thefind.getQuantity_sold();
+//                sub_total = thefind.getSub_total();
+//
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Please enter an invoice number");
+//                invoiceField.requestFocus();
+//            }
+//        }
     }
 
     static class details
