@@ -57,7 +57,7 @@ new FormModel {
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 395
-				"y": 55
+				"y": 80
 				"height": 165
 				"width": 515
 			} )
@@ -229,7 +229,7 @@ new FormModel {
 				name: "dateLabel"
 				"text": "DATE:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 395
+				"x": 5
 				"y": 5
 				"width": 115
 				"height": 15
@@ -239,24 +239,24 @@ new FormModel {
 				"text": "MM/DD/YYYY"
 				addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "dayLabelPropertyChange", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 515
-				"y": 5
+				"x": 130
+				"y": 4
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "nameLabel"
 				"text": "Name"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 515
-				"y": 35
+				"x": 805
+				"y": 4
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userLabel"
 				"text": "USER:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 395
-				"y": 35
+				"x": 680
+				"y": 4
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -316,18 +316,18 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "totalLabel"
-				"text": "TOTAL:"
+				"text": "GRAND TOTAL:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 275
-				"y": 165
+				"x": 670
+				"y": 250
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "totalFigLabel"
 				"text": "$0"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 275
-				"y": 190
+				"x": 795
+				"y": 250
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
@@ -338,8 +338,16 @@ new FormModel {
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "textField1ActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 395
-				"y": 240
+				"y": 45
 				"width": 245
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "Add to Order"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 120
+				"y": 200
+				"width": 140
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

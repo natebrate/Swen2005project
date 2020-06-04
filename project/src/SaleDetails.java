@@ -149,6 +149,7 @@ public class SaleDetails extends JFrame {
         totalLabel = new JLabel();
         totalFigLabel = new JLabel();
         textField1 = new JTextField();
+        button1 = new JButton();
 
         //======== this ========
         setTitle("INVOICE AND SALE DETAILS");
@@ -181,7 +182,7 @@ public class SaleDetails extends JFrame {
             invoicePane.setViewportView(invoiceTable);
         }
         contentPane.add(invoicePane);
-        invoicePane.setBounds(395, 55, 515, 165);
+        invoicePane.setBounds(395, 80, 515, 165);
 
         //======== searchPane ========
         {
@@ -241,13 +242,7 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> {
-            try {
-                searchBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
         contentPane.add(searchBtn);
         searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
 
@@ -266,13 +261,7 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
@@ -297,23 +286,23 @@ public class SaleDetails extends JFrame {
         //---- dateLabel ----
         dateLabel.setText("DATE:");
         contentPane.add(dateLabel);
-        dateLabel.setBounds(395, 5, 115, 15);
+        dateLabel.setBounds(5, 5, 115, 15);
 
         //---- dayLabel ----
         dayLabel.setText("MM/DD/YYYY");
         dayLabel.addPropertyChangeListener(e -> dayLabelPropertyChange(e));
         contentPane.add(dayLabel);
-        dayLabel.setBounds(515, 5, 115, dayLabel.getPreferredSize().height);
+        dayLabel.setBounds(130, 4, 115, dayLabel.getPreferredSize().height);
 
         //---- nameLabel ----
         nameLabel.setText("Name");
         contentPane.add(nameLabel);
-        nameLabel.setBounds(515, 35, 115, nameLabel.getPreferredSize().height);
+        nameLabel.setBounds(805, 4, 115, nameLabel.getPreferredSize().height);
 
         //---- userLabel ----
         userLabel.setText("USER:");
         contentPane.add(userLabel);
-        userLabel.setBounds(395, 35, 115, userLabel.getPreferredSize().height);
+        userLabel.setBounds(680, 4, 115, userLabel.getPreferredSize().height);
 
         //---- quantityLabel ----
         quantityLabel.setText("Quantity:");
@@ -348,14 +337,14 @@ public class SaleDetails extends JFrame {
         invoiceField.setBounds(120, 70, 140, invoiceField.getPreferredSize().height);
 
         //---- totalLabel ----
-        totalLabel.setText("TOTAL:");
+        totalLabel.setText("GRAND TOTAL:");
         contentPane.add(totalLabel);
-        totalLabel.setBounds(275, 165, 115, totalLabel.getPreferredSize().height);
+        totalLabel.setBounds(670, 250, 115, totalLabel.getPreferredSize().height);
 
         //---- totalFigLabel ----
         totalFigLabel.setText("$0");
         contentPane.add(totalFigLabel);
-        totalFigLabel.setBounds(275, 190, 115, totalFigLabel.getPreferredSize().height);
+        totalFigLabel.setBounds(795, 250, 115, totalFigLabel.getPreferredSize().height);
 
         //---- textField1 ----
         textField1.setText("Search");
@@ -363,7 +352,12 @@ public class SaleDetails extends JFrame {
         textField1.setForeground(Color.lightGray);
         textField1.addActionListener(e -> textField1ActionPerformed(e));
         contentPane.add(textField1);
-        textField1.setBounds(395, 240, 245, textField1.getPreferredSize().height);
+        textField1.setBounds(395, 45, 245, textField1.getPreferredSize().height);
+
+        //---- button1 ----
+        button1.setText("Add to Order");
+        contentPane.add(button1);
+        button1.setBounds(120, 200, 140, button1.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(930, 610));
         pack();
@@ -484,5 +478,6 @@ public class SaleDetails extends JFrame {
     private JLabel totalLabel;
     private JLabel totalFigLabel;
     private JTextField textField1;
+    private JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
