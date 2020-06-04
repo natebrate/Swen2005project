@@ -456,6 +456,11 @@ public class SaleDetails extends JFrame {
         }
 
     }
+    public int genInvoiceID()
+    {
+        Random rand = new Random();
+        return rand.nextInt(100000 - 1) + 1;
+    }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
