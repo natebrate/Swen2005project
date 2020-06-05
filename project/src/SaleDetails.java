@@ -7,10 +7,7 @@ import java.sql.*;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
@@ -24,6 +21,8 @@ import javax.swing.text.JTextComponent;
  */
 public class SaleDetails extends JFrame {
     User userLogin = null;
+    int lastClickedRow;
+    int lastClickedCol;
 
 
     public SaleDetails(User userLogin) throws SQLException {
@@ -152,17 +151,27 @@ public class SaleDetails extends JFrame {
         vec.addElement(order);
         DefaultTableModel model =(DefaultTableModel) invoiceTable.getModel();
         Object[] rowData = new Object[5];
-        for (int i=0; i < vec.size(); i++)
-        {
-            rowData[0] = vec.elementAt(i).getProd_id();
-            rowData[1] = vec.elementAt(i).getName();
-            rowData[2] = vec.elementAt(i).getQuantity();
-            rowData[3] = vec.elementAt(i).getPrice();
-            rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
-            model.addRow(rowData);
+        if (addBtn.getText().equals("Add to Order")) {
+            for (int i=0; i < vec.size(); i++)
+            {
+                rowData[0] = vec.elementAt(i).getProd_id();
+                rowData[1] = vec.elementAt(i).getName();
+                rowData[2] = vec.elementAt(i).getQuantity();
+                rowData[3] = vec.elementAt(i).getPrice();
+                rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
+                model.addRow(rowData);
+            }
+            Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
+            totalFigLabel.setText(String.valueOf(currentTotal));
+        } else {
+            rowData[0] = vec.elementAt(lastClickedRow).getProd_id();
+            rowData[1] = vec.elementAt(lastClickedRow).getName();
+            rowData[2] = vec.elementAt(lastClickedRow).getQuantity();
+            rowData[3] = vec.elementAt(lastClickedRow).getPrice();
+            rowData[4] = vec.elementAt(lastClickedRow).getPrice() * vec.elementAt(lastClickedRow).getQuantity();
+            model.removeRow(lastClickedRow);
+            model.insertRow(lastClickedRow, rowData);
         }
-        Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
-        totalFigLabel.setText(String.valueOf(currentTotal));
     }
 
     private void reportBtnActionPerformed(ActionEvent e) {
@@ -184,9 +193,7 @@ public class SaleDetails extends JFrame {
             }
             dao.closeConnection();
             unlockButtons();
-
-
-
+            invoiceField.setText(String.valueOf(invoiceToSearch));
         }
     }
 
@@ -195,12 +202,61 @@ public class SaleDetails extends JFrame {
     }
 
     private void invoiceTableMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        if (e.getClickCount() == 1) {
+            final JTable jTable = (JTable) e.getSource();
+            this.lastClickedRow = jTable.getSelectedRow();
+            this.lastClickedCol = jTable.getSelectedColumn();
+            int ID = Integer.parseInt(jTable.getValueAt(lastClickedRow, 0).toString());
+            String name = jTable.getValueAt(lastClickedRow,1).toString();
+            int quantity = Integer.parseInt(jTable.getValueAt(lastClickedRow, 2).toString());
+            double price = Double.parseDouble(jTable.getValueAt(lastClickedRow, 3).toString());
+            prodField.setText(String.valueOf(ID));
+            prodName.setText(name);
+            prodName.setVisible(true);
+            quantityField.setText(String.valueOf(quantity));
+            priceField.setText(String.valueOf(price));
+            priceField.setVisible(true);
+            addBtn.setText("Update Order");
+            unlockButtons();
+            unlockFields();
+        }
+    }
+    private void updateCell()
+    {
+        try {
+
+            DAO dao = new DAO();
+            Product prod = null;
+            if (dao.openConnection()) {
+                int ID = Integer.parseInt( invoiceTable.getValueAt(invoiceTable.getEditingRow(), 0).toString());
+                prod = dao.findProdRecord(ID);
+            }
+            dao.closeConnection();
+            int row = invoiceTable.getEditingRow();
+            int col = invoiceTable.getEditingColumn();
+
+            // If editing ID, change name and price
+            if (invoiceTable.getEditingColumn() == 0)
+            {
+                //Set name
+                String name = prod.getName();
+                invoiceTable.setValueAt(name, row, 1);
+
+                // Set price
+                invoiceTable.setValueAt(0, row, 3);
+            }
+            // If editing Quantity, change price
+            if (invoiceTable.getEditingColumn() == 2)
+            {
+                int quantity = Integer.parseInt(invoiceTable.getValueAt(row, col).toString());
+                // Set price
+                invoiceTable.setValueAt(prod.getPrice() * quantity, row, 2 );
+            }
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    private void invoiceTableFocusLost(FocusEvent e) {
-        // TODO add your code here
-    }
 
 
 
@@ -278,12 +334,6 @@ public class SaleDetails extends JFrame {
                     invoiceTableMouseClicked(e);
                 }
             });
-            invoiceTable.addFocusListener(new FocusAdapter() {
-                @Override
-                public void focusLost(FocusEvent e) {
-                    invoiceTableFocusLost(e);
-                }
-            });
             invoicePane.setViewportView(invoiceTable);
         }
         contentPane.add(invoicePane);
@@ -349,7 +399,13 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Go");
-        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
+        searchBtn.addActionListener(e -> {
+            try {
+                searchBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(searchBtn);
         searchBtn.setBounds(645, 45, 70, searchBtn.getPreferredSize().height);
 
@@ -362,7 +418,13 @@ public class SaleDetails extends JFrame {
 
         //---- saveBtn ----
         saveBtn.setText("Create Invoice");
-        saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
+        saveBtn.addActionListener(e -> {
+            try {
+                saveBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(saveBtn);
         saveBtn.setBounds(10, 245, 240, saveBtn.getPreferredSize().height);
 
@@ -374,7 +436,13 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display Report");
-        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
+        allBtn.addActionListener(e -> {
+            try {
+                displayButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
