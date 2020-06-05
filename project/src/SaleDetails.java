@@ -125,14 +125,14 @@ public class SaleDetails extends JFrame {
         searchInvoiceOrDate();
     }
     private void addOrderActionPerformed(ActionEvent e) {
-        if(prodField.getText().isEmpty())
+        if(prodField.getText().isBlank())
         {
             JOptionPane.showMessageDialog(null, "Please enter a Product ID!",
                     "Enter an ID", JOptionPane.WARNING_MESSAGE);
             prodField.requestFocus();
             return;
         }
-        if(quantityField.getText().isEmpty())
+        if(quantityField.getText().isBlank())
         {
             JOptionPane.showMessageDialog(null, "Please enter a quantity!",
                     "Enter a quantity", JOptionPane.WARNING_MESSAGE);
