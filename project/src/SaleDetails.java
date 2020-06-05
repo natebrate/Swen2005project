@@ -122,19 +122,21 @@ public class SaleDetails extends JFrame {
             JOptionPane.showMessageDialog(null, "Please enter a Product ID!",
                     "Enter an ID", JOptionPane.WARNING_MESSAGE);
             prodField.requestFocus();
+            return;
         }
         if(quantityField.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Please enter a quantity!",
                     "Enter a quantity", JOptionPane.WARNING_MESSAGE);
             quantityField.requestFocus();
+            return;
         }
-        Product order = new Product(Integer.parseInt(prodField.getText()), prodName.getName(),
+        Product order = new Product(Integer.parseInt(prodField.getText()), prodName.getText(),
                 Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
         Vector <Product> vec = new Vector<Product>();
         vec.addElement(order);
         DefaultTableModel model =(DefaultTableModel) invoiceTable.getModel();
-        Object rowData[] = new Object[5];
+        Object[] rowData = new Object[5];
         for (int i=0; i < vec.size(); i++)
         {
             rowData[0] = vec.elementAt(i).getProd_id();
