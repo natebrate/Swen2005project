@@ -376,6 +376,9 @@ new FormModel {
 				"text": "Search"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 2, 0, false )
 				"foreground": sfield java.awt.Color lightGray
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "searchFieldActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "searchFieldFocusGained", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "searchFieldFocusLost", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 315
 				"y": 10

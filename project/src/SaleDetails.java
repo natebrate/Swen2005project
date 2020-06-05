@@ -39,7 +39,8 @@ public class SaleDetails extends JFrame {
 
         DAO dao = new DAO();
         if (dao.openConnection()) {
-            dao.loadSalesDetailsTable(reportTable);
+            dao.loadSearchDetails(searchTable);
+            dao.loadSalesReport(reportTable);
         }
         dao.closeConnection();
     }
@@ -50,7 +51,6 @@ public class SaleDetails extends JFrame {
 
     // FIND A RECORD AND DELETE IT FROM SALES DETAILS TABLE
     private void clearBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
         deleteBtn.addActionListener(e1 -> {
 
             DAO dao = new DAO();
@@ -76,7 +76,7 @@ public class SaleDetails extends JFrame {
         // Populate JTable from Database
         DAO dao = new DAO();
         if (dao.openConnection()) {
-            dao.loadSalesDetailsTable(reportTable);
+            dao.loadSalesReport(reportTable);
         }
         dao.closeConnection();
     }
@@ -175,36 +175,20 @@ public class SaleDetails extends JFrame {
     }
     }
 
-    private void invoiceCheckBoxActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void invoiceCheckBoxFocusGained(FocusEvent e) {
-        // TODO add your code here
-    }
-
-    private void invoiceCheckBoxFocusLost(FocusEvent e) {
-        // TODO add your code here
-    }
-
-    private void DateCheckBoxActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void DateCheckBoxFocusGained(FocusEvent e) {
-        // TODO add your code here
-    }
-
-    private void DateCheckBoxFocusLost(FocusEvent e) {
-        // TODO add your code here
-    }
-
-    private void searchTableMousePressed(MouseEvent e) {
-        // TODO add your code here
-    }
-
     private void searchTableMouseClicked(MouseEvent e) {
-        // TODO add your code here
+        if (e.getClickCount() == 1) {
+            final JTable jTable= (JTable)e.getSource();
+            final int row = jTable.getSelectedRow();
+            int invoiceToSearch = Integer.parseInt(jTable.getValueAt(row, 1).toString());
+            DAO dao = new DAO();
+            if (dao.openConnection()) {
+                dao.loadInvoiceTable(invoiceTable, invoiceToSearch);
+            }
+            dao.closeConnection();
+
+
+
+        }
     }
 
 
@@ -334,12 +318,19 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
+        searchBtn.addActionListener(e -> {
+            try {
+                searchBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(searchBtn);
         searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
 
         //---- addBtn ----
         addBtn.setText("Add to Order");
+        addBtn.addActionListener(this::addOrderActionPerformed);
         contentPane.add(addBtn);
         addBtn.setBounds(110, 200, 140, addBtn.getPreferredSize().height);
 
@@ -357,7 +348,13 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
+        allBtn.addActionListener(e -> {
+            try {
+                displayButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
