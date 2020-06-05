@@ -234,8 +234,6 @@ public class SaleDetails extends JFrame {
         invoiceField = new JTextField();
         prodField = new JTextField();
         quantityField = new JTextField();
-        invoiceCheckBox = new JCheckBox();
-        DateCheckBox = new JCheckBox();
 
         //======== this ========
         setTitle("INVOICE AND SALE DETAILS");
@@ -461,38 +459,6 @@ public class SaleDetails extends JFrame {
         contentPane.add(quantityField);
         quantityField.setBounds(110, 155, 140, quantityField.getPreferredSize().height);
 
-        //---- invoiceCheckBox ----
-        invoiceCheckBox.setText("Search by Invoice");
-        invoiceCheckBox.addActionListener(e -> invoiceCheckBoxActionPerformed(e));
-        invoiceCheckBox.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                invoiceCheckBoxFocusGained(e);
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                invoiceCheckBoxFocusLost(e);
-            }
-        });
-        contentPane.add(invoiceCheckBox);
-        invoiceCheckBox.setBounds(270, 200, 110, invoiceCheckBox.getPreferredSize().height);
-
-        //---- DateCheckBox ----
-        DateCheckBox.setText("Search by Date");
-        DateCheckBox.addActionListener(e -> DateCheckBoxActionPerformed(e));
-        DateCheckBox.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                DateCheckBoxFocusGained(e);
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                DateCheckBoxFocusLost(e);
-            }
-        });
-        contentPane.add(DateCheckBox);
-        DateCheckBox.setBounds(270, 225, 115, DateCheckBox.getPreferredSize().height);
-
         contentPane.setPreferredSize(new Dimension(940, 610));
         pack();
         setLocationRelativeTo(getOwner());
@@ -591,8 +557,6 @@ public class SaleDetails extends JFrame {
     private JTextField invoiceField;
     private JTextField prodField;
     private JTextField quantityField;
-    private JCheckBox invoiceCheckBox;
-    private JCheckBox DateCheckBox;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     // FOLLOWING REUSED FROM PUBLIC DOMAIN
