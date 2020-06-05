@@ -259,7 +259,10 @@ public class DAO {
 
     public void loadSalesDetailsTable(JTable table) throws SQLException {
         try {
-            String query = "SELECT * from sales_details order by Invoice";
+            String query = "SELECT sales_summary.DOS, sales_summary.invoice, products.name, sales_summary.items_sold, " +
+                    "sales_summary.total_revenue FROM sales_details INNER JOIN sales_summary ON " +
+                    "sales_details.invoice=sales_summary.invoice INNER JOIN products ON " +
+                    "sales_details.P_ID=products.prod_id order by DOS;";
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
