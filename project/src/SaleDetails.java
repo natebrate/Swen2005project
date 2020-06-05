@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.sql.*;
 import javax.swing.*;
@@ -23,6 +22,11 @@ public class SaleDetails extends JFrame {
     User userLogin = null;
     int lastClickedRow;
     int lastClickedCol;
+
+    //Flags
+    boolean addingNewInvoice;
+    boolean updatingExistingInvoice;
+
 
 
     public SaleDetails(User userLogin) throws SQLException {
@@ -113,6 +117,7 @@ public class SaleDetails extends JFrame {
             prodField.requestFocus();
             saveBtn.setText("Save Invoice");
             addBtn.setEnabled(true);
+            addingNewInvoice = true;
         }
         else {
             uploadInvoice();
@@ -121,6 +126,7 @@ public class SaleDetails extends JFrame {
             lockFields();
             lockButtons();
             saveBtn.setText("Create Invoice");
+            addingNewInvoice = false;
 
 
         }
@@ -161,18 +167,30 @@ public class SaleDetails extends JFrame {
                 rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
                 model.addRow(rowData);
             }
-            Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
-            totalFigLabel.setText(String.valueOf(currentTotal));
         } else {
-            rowData[0] = vec.elementAt(lastClickedRow).getProd_id();
-            rowData[1] = vec.elementAt(lastClickedRow).getName();
-            rowData[2] = vec.elementAt(lastClickedRow).getQuantity();
-            rowData[3] = vec.elementAt(lastClickedRow).getPrice();
-            rowData[4] = vec.elementAt(lastClickedRow).getPrice() * vec.elementAt(lastClickedRow).getQuantity();
-            model.removeRow(lastClickedRow);
-            model.insertRow(lastClickedRow, rowData);
+            for (int i=0; i < vec.size(); i++)
+            {
+                rowData[0] = vec.elementAt(i).getProd_id();
+                rowData[1] = vec.elementAt(i).getName();
+                rowData[2] = vec.elementAt(i).getQuantity();
+                rowData[3] = vec.elementAt(i).getPrice();
+                rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
+                model.removeRow(lastClickedRow);
+                model.insertRow(lastClickedRow, rowData);
+            }
+            addBtn.setText("Add to Order");
         }
+        Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
+        totalFigLabel.setText(String.valueOf(currentTotal));
     }
+
+//    private void loadRowArray(Vector<Product> vec, Object[] rowData, int lastClickedRow) {
+//        rowData[0] = vec.elementAt(lastClickedRow).getProd_id();
+//        rowData[1] = vec.elementAt(lastClickedRow).getName();
+//        rowData[2] = vec.elementAt(lastClickedRow).getQuantity();
+//        rowData[3] = vec.elementAt(lastClickedRow).getPrice();
+//        rowData[4] = vec.elementAt(lastClickedRow).getPrice() * vec.elementAt(lastClickedRow).getQuantity();
+//    }
 
     private void reportBtnActionPerformed(ActionEvent e) {
         // TODO add your code here
@@ -204,8 +222,8 @@ public class SaleDetails extends JFrame {
     private void invoiceTableMouseClicked(MouseEvent e) {
         if (e.getClickCount() == 1) {
             final JTable jTable = (JTable) e.getSource();
-            this.lastClickedRow = jTable.getSelectedRow();
-            this.lastClickedCol = jTable.getSelectedColumn();
+            lastClickedRow = jTable.getSelectedRow();
+            lastClickedCol = jTable.getSelectedColumn();
             int ID = Integer.parseInt(jTable.getValueAt(lastClickedRow, 0).toString());
             String name = jTable.getValueAt(lastClickedRow,1).toString();
             int quantity = Integer.parseInt(jTable.getValueAt(lastClickedRow, 2).toString());
@@ -219,6 +237,7 @@ public class SaleDetails extends JFrame {
             addBtn.setText("Update Order");
             unlockButtons();
             unlockFields();
+            invoiceField.setEnabled(false);
         }
     }
     private void updateCell()
