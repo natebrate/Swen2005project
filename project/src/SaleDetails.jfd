@@ -27,10 +27,10 @@ new FormModel {
 						add( class java.lang.Double )
 					}, new java.util.Vector {
 						add( null )
+						add( false )
 						add( null )
-						add( null )
-						add( null )
-						add( null )
+						add( false )
+						add( false )
 					}, new java.util.Vector {
 						add( null )
 						add( null )

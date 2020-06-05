@@ -255,9 +255,16 @@ public class SaleDetails extends JFrame {
                 Class<?>[] columnTypes = new Class<?>[] {
                     Integer.class, String.class, Integer.class, Double.class, Double.class
                 };
+                boolean[] columnEditable = new boolean[] {
+                    true, false, true, false, false
+                };
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
+                }
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return columnEditable[columnIndex];
                 }
             });
             invoiceTable.setToolTipText("For modification to invoices");
