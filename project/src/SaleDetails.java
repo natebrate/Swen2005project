@@ -199,6 +199,10 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
+    private void searchTableMousePressed(MouseEvent e) {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
@@ -287,6 +291,12 @@ public class SaleDetails extends JFrame {
             });
             searchTable.setAutoCreateRowSorter(true);
             searchTable.setToolTipText("to Search Records in Invoice");
+            searchTable.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    searchTableMousePressed(e);
+                }
+            });
             searchPane.setViewportView(searchTable);
         }
         contentPane.add(searchPane);
@@ -320,13 +330,7 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> {
-            try {
-                searchBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
         contentPane.add(searchBtn);
         searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
 
@@ -349,13 +353,7 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
