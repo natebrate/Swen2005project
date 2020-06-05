@@ -247,13 +247,7 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
-        allBtn.addActionListener(e -> {
-            try {
-                allBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
 
@@ -294,13 +288,7 @@ public class ProductsPanel extends JFrame {
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
         addUpdateBtn.setEnabled(false);
-        addUpdateBtn.addActionListener(e -> {
-            try {
-                addBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
@@ -314,13 +302,7 @@ public class ProductsPanel extends JFrame {
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
         deleteBtn.setEnabled(false);
-        deleteBtn.addActionListener(e -> {
-            try {
-                deleteBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
 
@@ -346,13 +328,7 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
-        returnBtn.addActionListener(e -> {
-            try {
-                returnBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
@@ -384,11 +360,7 @@ public class ProductsPanel extends JFrame {
             }
             @Override
             public void focusLost(FocusEvent e) {
-                try {
-                    searchFieldFocusLost(e);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                searchFieldFocusLost(e);
             }
         });
         contentPane.add(searchField);
@@ -426,7 +398,7 @@ public class ProductsPanel extends JFrame {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void beginSearch() {
-        if (IDField.getText().isEmpty() || Integer.parseInt(IDField.getText()) < 0) {
+        if (IDField.getText().isBlank() || Integer.parseInt(IDField.getText()) < 0) {
             JOptionPane.showMessageDialog(null, "Please enter a valid ID!",
                     "Enter an ID", JOptionPane.WARNING_MESSAGE);
         } else {
