@@ -89,9 +89,9 @@ public class SaleDetails extends JFrame {
     }
 
     private void prodFieldActionPerformed(ActionEvent e) {
-        findProductDetails();
-        quantityField.requestFocus();
-    }
+            findProductDetails();
+            quantityField.requestFocus();
+        }
 
     private void quantityFieldActionPerformed(ActionEvent e) {
         addBtn.setEnabled(true);
@@ -109,6 +109,7 @@ public class SaleDetails extends JFrame {
             invoiceField.setEnabled(false);
             prodField.requestFocus();
             saveBtn.setText("Save Invoice");
+            addBtn.setEnabled(true);
         }
         else {
             uploadInvoice();
@@ -121,17 +122,6 @@ public class SaleDetails extends JFrame {
     }
 
     private void addBtnActionPerformed(ActionEvent e) {
-
-    }
-
-    private void reportBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void textField1ActionPerformed(ActionEvent e) {
-        searchInvoiceOrDate();
-    }
-    private void addOrderActionPerformed(ActionEvent e) {
         if(prodField.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(null, "Please enter a Product ID!",
@@ -164,6 +154,14 @@ public class SaleDetails extends JFrame {
         Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
         totalFigLabel.setText(String.valueOf(currentTotal));
     }
+
+    private void reportBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void textField1ActionPerformed(ActionEvent e) {
+        searchInvoiceOrDate();
+    }
     private void uploadInvoice()
     {
         DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
@@ -179,9 +177,9 @@ public class SaleDetails extends JFrame {
         }
         dao.closeConnection();
 
+    }
         //Reset Invoice Number and Table
         model.setRowCount(0);
-    }
     }
 
     private void searchTableMouseClicked(MouseEvent e) {
@@ -537,16 +535,25 @@ public class SaleDetails extends JFrame {
     }
     private void findProductDetails()
     {
-        DAO dao = new DAO();
-        if (dao.openConnection()) {
-            Product theFind;
-            theFind = dao.findProdRecord(Integer.parseInt(prodField.getText()));
-            dao.closeConnection();
-            if (theFind != null) {
-                prodName.setText(theFind.getName());
-                priceField.setText(String.valueOf(theFind.getPrice()));
-            }
-            }
+        if (!prodField.getText().isBlank()) {
+            DAO dao = new DAO();
+            if (dao.openConnection()) {
+                Product theFind;
+                theFind = dao.findProdRecord(Integer.parseInt(prodField.getText()));
+                dao.closeConnection();
+                if (theFind != null) {
+                    prodName.setText(theFind.getName());
+                    priceField.setText(String.valueOf(theFind.getPrice()));
+                    prodName.setVisible(true);
+                    priceField.setVisible(true);
+                }
+                else
+                {
+                    prodName.setText("Not found");
+                    priceField.setText(null);
+                }
+                }
+        }
     }
     private void searchInvoiceOrDate()
     {
