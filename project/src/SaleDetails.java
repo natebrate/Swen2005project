@@ -16,11 +16,7 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class SaleDetails extends JFrame {
-    public int invoice, P_ID, quantity_sold;
-    public double sub_total;
     User userLogin = null;
-
-    Vector<details> vec = new Vector<details>();
 
     public SaleDetails(User userLogin) throws SQLException {
         initComponents();
@@ -119,6 +115,37 @@ public class SaleDetails extends JFrame {
 
     private void textField1ActionPerformed(ActionEvent e) {
         // TODO add your code here
+    }
+    private void addOrderActionPerformed(ActionEvent e) {
+        if(prodField.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a Product ID!",
+                    "Enter an ID", JOptionPane.WARNING_MESSAGE);
+            prodField.requestFocus();
+        }
+        if(quantityField.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(null, "Please enter a quantity!",
+                    "Enter a quantity", JOptionPane.WARNING_MESSAGE);
+            quantityField.requestFocus();
+        }
+        Product order = new Product(Integer.parseInt(prodField.getText()), prodName.getName(),
+                Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
+        Vector <Product> vec = new Vector<Product>();
+        vec.addElement(order);
+        DefaultTableModel model =(DefaultTableModel) invoiceTable.getModel();
+        Object rowData[] = new Object[5];
+        for (int i=0; i < vec.size(); i++)
+        {
+            rowData[0] = vec.elementAt(i).getProd_id();
+            rowData[1] = vec.elementAt(i).getName();
+            rowData[2] = vec.elementAt(i).getQuantity();
+            rowData[3] = vec.elementAt(i).getPrice();
+            rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
+            model.addRow(rowData);
+        }
+        Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
+        totalFigLabel.setText(String.valueOf(currentTotal));
     }
 
 
@@ -260,6 +287,7 @@ public class SaleDetails extends JFrame {
 
         //---- addBtn ----
         addBtn.setText("Add to Order");
+        addBtn.addActionListener(e -> addOrderActionPerformed(e));
         contentPane.add(addBtn);
         addBtn.setBounds(110, 200, 140, addBtn.getPreferredSize().height);
 
@@ -365,7 +393,7 @@ public class SaleDetails extends JFrame {
         totalLabel.setBounds(670, 250, 115, totalLabel.getPreferredSize().height);
 
         //---- totalFigLabel ----
-        totalFigLabel.setText("$0");
+        totalFigLabel.setText("0.00");
         contentPane.add(totalFigLabel);
         totalFigLabel.setBounds(795, 250, 115, totalFigLabel.getPreferredSize().height);
 
@@ -415,7 +443,7 @@ public class SaleDetails extends JFrame {
         }
     }
 
-    public String CurrentDateTimeExample1 (){
+    private String CurrentDateTimeExample1 (){
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
@@ -488,24 +516,24 @@ public class SaleDetails extends JFrame {
         }
 
     }
-    public int genInvoiceID()
+    private int genInvoiceID()
     {
         Random rand = new Random();
         return rand.nextInt(100000 - 1) + 1;
     }
-    public void unlockFields()
+    private void unlockFields()
     {
         invoiceField.setEnabled(true);
         prodField.setEnabled(true);
         quantityField.setEnabled(true);
     }
-    public void lockFields()
+    private void lockFields()
     {
         invoiceField.setEnabled(false);
         prodField.setEnabled(false);
         quantityField.setEnabled(false);
     }
-    public void findProductDetails()
+    private void findProductDetails()
     {
         DAO dao = new DAO();
         if (dao.openConnection()) {
@@ -513,8 +541,8 @@ public class SaleDetails extends JFrame {
             theFind = dao.findProdRecord(Integer.parseInt(prodField.getText()));
             dao.closeConnection();
             if (theFind != null) {
-//                prodName.setText(theFind.getName());
-//                priceField.setText(String.valueOf(theFind.getPrice()));
+                prodName.setText(theFind.getName());
+                priceField.setText(String.valueOf(theFind.getPrice()));
             }
             }
     }
