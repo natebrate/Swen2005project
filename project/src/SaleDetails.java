@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.sql.*;
 import javax.swing.*;
@@ -23,6 +24,7 @@ import javax.swing.text.JTextComponent;
  */
 public class SaleDetails extends JFrame {
     User userLogin = null;
+
 
     public SaleDetails(User userLogin) throws SQLException {
         initComponents();
@@ -191,6 +193,10 @@ public class SaleDetails extends JFrame {
         }
     }
 
+    private void button1ActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
@@ -204,7 +210,7 @@ public class SaleDetails extends JFrame {
         reportTable = new JTable();
         searchBtn = new JButton();
         addBtn = new JButton();
-        saveBtn = new JButton();
+        createBtn = new JButton();
         modifyBtn = new JButton();
         allBtn = new JButton();
         deleteBtn = new JButton();
@@ -226,6 +232,7 @@ public class SaleDetails extends JFrame {
         invoiceField = new JTextField();
         prodField = new JTextField();
         quantityField = new JTextField();
+        deleteOrderBtn = new JButton();
 
         //======== this ========
         setTitle("INVOICE AND SALE DETAILS");
@@ -317,49 +324,37 @@ public class SaleDetails extends JFrame {
         reportPane.setBounds(395, 460, 515, 110);
 
         //---- searchBtn ----
-        searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> {
-            try {
-                searchBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        searchBtn.setText("Go");
+        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
         contentPane.add(searchBtn);
-        searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
+        searchBtn.setBounds(645, 45, 70, searchBtn.getPreferredSize().height);
 
         //---- addBtn ----
         addBtn.setText("Add to Order");
-        addBtn.addActionListener(this::addOrderActionPerformed);
+        addBtn.setEnabled(false);
         contentPane.add(addBtn);
-        addBtn.setBounds(110, 200, 140, addBtn.getPreferredSize().height);
+        addBtn.setBounds(10, 205, 115, addBtn.getPreferredSize().height);
 
-        //---- saveBtn ----
-        saveBtn.setText("SAVE INVOICE");
-        saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
-        contentPane.add(saveBtn);
-        saveBtn.setBounds(10, 245, 240, saveBtn.getPreferredSize().height);
+        //---- createBtn ----
+        createBtn.setText("Create Invoice");
+        createBtn.addActionListener(e -> saveBtnActionPerformed(e));
+        contentPane.add(createBtn);
+        createBtn.setBounds(10, 245, 240, createBtn.getPreferredSize().height);
 
         //---- modifyBtn ----
-        modifyBtn.setText("MODIFY INVOICE");
+        modifyBtn.setText("Modify Invoice");
         modifyBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(modifyBtn);
         modifyBtn.setBounds(10, 290, 240, modifyBtn.getPreferredSize().height);
 
         //---- allBtn ----
-        allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.setText("Display Report");
+        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
         //---- deleteBtn ----
-        deleteBtn.setText("DELETE INVOICE");
+        deleteBtn.setText("Delete Invoice");
         deleteBtn.setForeground(Color.red);
         deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
@@ -369,13 +364,13 @@ public class SaleDetails extends JFrame {
         returnBtn.setText("Return to Menu");
         returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
-        returnBtn.setBounds(10, 450, 240, returnBtn.getPreferredSize().height);
+        returnBtn.setBounds(7, 538, 240, returnBtn.getPreferredSize().height);
 
         //---- reportBtn ----
-        reportBtn.setText("SALES REPORT");
+        reportBtn.setText("Sales Report");
         reportBtn.addActionListener(e -> reportBtnActionPerformed(e));
         contentPane.add(reportBtn);
-        reportBtn.setBounds(275, 450, 115, reportBtn.getPreferredSize().height);
+        reportBtn.setBounds(127, 473, 115, reportBtn.getPreferredSize().height);
 
         //---- dateLabel ----
         dateLabel.setText("DATE:");
@@ -419,22 +414,28 @@ public class SaleDetails extends JFrame {
         quantityLabel.setBounds(10, 160, 100, quantityLabel.getPreferredSize().height);
 
         //---- totalLabel ----
-        totalLabel.setText("GRAND TOTAL:");
+        totalLabel.setText("GRAND TOTAL: $");
         contentPane.add(totalLabel);
         totalLabel.setBounds(670, 250, 115, totalLabel.getPreferredSize().height);
 
         //---- totalFigLabel ----
-        totalFigLabel.setText("$0");
+        totalFigLabel.setText("0.00");
         contentPane.add(totalFigLabel);
         totalFigLabel.setBounds(795, 250, 115, totalFigLabel.getPreferredSize().height);
 
         //---- prodName ----
         prodName.setText("prodName ");
+        prodName.setForeground(Color.red);
+        prodName.setFont(prodName.getFont().deriveFont(prodName.getFont().getStyle() | Font.ITALIC));
+        prodName.setVisible(false);
         contentPane.add(prodName);
         prodName.setBounds(280, 115, 100, prodName.getPreferredSize().height);
 
         //---- priceField ----
         priceField.setText("priceField");
+        priceField.setFont(priceField.getFont().deriveFont(priceField.getFont().getStyle() | Font.ITALIC));
+        priceField.setForeground(Color.red);
+        priceField.setVisible(false);
         contentPane.add(priceField);
         priceField.setBounds(280, 165, 100, priceField.getPreferredSize().height);
 
@@ -445,6 +446,9 @@ public class SaleDetails extends JFrame {
         searchField.addActionListener(e -> textField1ActionPerformed(e));
         contentPane.add(searchField);
         searchField.setBounds(395, 45, 245, searchField.getPreferredSize().height);
+
+        //---- invoiceField ----
+        invoiceField.setEnabled(false);
         contentPane.add(invoiceField);
         invoiceField.setBounds(110, 70, 140, invoiceField.getPreferredSize().height);
 
@@ -457,6 +461,13 @@ public class SaleDetails extends JFrame {
         quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
         contentPane.add(quantityField);
         quantityField.setBounds(110, 155, 140, quantityField.getPreferredSize().height);
+
+        //---- deleteOrderBtn ----
+        deleteOrderBtn.setText("Delete From Order");
+        deleteOrderBtn.setEnabled(false);
+        deleteOrderBtn.addActionListener(e -> button1ActionPerformed(e));
+        contentPane.add(deleteOrderBtn);
+        deleteOrderBtn.setBounds(135, 205, 115, deleteOrderBtn.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(940, 610));
         pack();
@@ -534,7 +545,7 @@ public class SaleDetails extends JFrame {
     private JTable reportTable;
     private JButton searchBtn;
     private JButton addBtn;
-    private JButton saveBtn;
+    private JButton createBtn;
     private JButton modifyBtn;
     private JButton allBtn;
     private JButton deleteBtn;
@@ -556,6 +567,7 @@ public class SaleDetails extends JFrame {
     private JTextField invoiceField;
     private JTextField prodField;
     private JTextField quantityField;
+    private JButton deleteOrderBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     // FOLLOWING REUSED FROM PUBLIC DOMAIN
