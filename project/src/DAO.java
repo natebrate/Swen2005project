@@ -303,5 +303,24 @@ public class DAO {
             ex.printStackTrace();
         }
     }
+    public void productTransaction(int invoiceNum, Product theProd)
+    {
+
+        //the mysql insert statement
+        String query = "call sell(?,?,?)";
+        //create the mysql insert prepared statement
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, invoiceNum);
+            myPreStmt.setInt(2, theProd.getProd_id());
+            myPreStmt.setInt(3, theProd.getQuantity());
+
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

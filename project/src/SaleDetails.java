@@ -95,7 +95,7 @@ public class SaleDetails extends JFrame {
 
 
     private void saveBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        uploadInvoice();
     }
 
     private void dayLabelPropertyChange(PropertyChangeEvent e) {
@@ -148,6 +148,25 @@ public class SaleDetails extends JFrame {
         }
         Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
         totalFigLabel.setText(String.valueOf(currentTotal));
+    }
+    private void uploadInvoice()
+    {
+        DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
+        Vector<Vector> vec = model.getDataVector();
+        Product prodSale = null;
+        for (int i=0; i < vec.size(); i++)
+    {
+        prodSale = new Product(Integer.parseInt(vec.elementAt(i).get(0).toString()), vec.elementAt(i).get(1).toString(),
+                Integer.parseInt(vec.elementAt(i).get(2).toString()), Double.parseDouble( vec.elementAt(i).get(3).toString()));
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.productTransaction(Integer.parseInt(invoiceField.getText()), prodSale);
+        }
+        dao.closeConnection();
+
+        //Reset Invoice Number and Table
+        model.setRowCount(0);
+    }
     }
 
 
@@ -283,6 +302,7 @@ public class SaleDetails extends JFrame {
 
         //---- addBtn ----
         addBtn.setText("Add to Order");
+        addBtn.addActionListener(e -> addOrderActionPerformed(e));
         contentPane.add(addBtn);
         addBtn.setBounds(110, 200, 140, addBtn.getPreferredSize().height);
 
@@ -376,7 +396,7 @@ public class SaleDetails extends JFrame {
         totalLabel.setBounds(670, 250, 115, totalLabel.getPreferredSize().height);
 
         //---- totalFigLabel ----
-        totalFigLabel.setText("$0");
+        totalFigLabel.setText("0.00");
         contentPane.add(totalFigLabel);
         totalFigLabel.setBounds(795, 250, 115, totalFigLabel.getPreferredSize().height);
 
