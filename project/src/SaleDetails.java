@@ -405,7 +405,7 @@ public class SaleDetails extends JFrame {
         invoiceLabel.setBounds(10, 77, 100, invoiceLabel.getPreferredSize().height);
 
         //---- prodLabel ----
-        prodLabel.setText("Poduct ID:");
+        prodLabel.setText("Product ID:");
         contentPane.add(prodLabel);
         prodLabel.setBounds(10, 115, 100, prodLabel.getPreferredSize().height);
 
@@ -454,11 +454,13 @@ public class SaleDetails extends JFrame {
         invoiceField.setBounds(110, 70, 140, invoiceField.getPreferredSize().height);
 
         //---- prodField ----
+        prodField.setEnabled(false);
         prodField.addActionListener(e -> prodFieldActionPerformed(e));
         contentPane.add(prodField);
         prodField.setBounds(110, 110, 140, prodField.getPreferredSize().height);
 
         //---- quantityField ----
+        quantityField.setEnabled(false);
         quantityField.addActionListener(e -> quantityFieldActionPerformed(e));
         contentPane.add(quantityField);
         quantityField.setBounds(110, 155, 140, quantityField.getPreferredSize().height);
