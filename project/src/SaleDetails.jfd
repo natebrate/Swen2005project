@@ -13,22 +13,7 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "invoiceTable"
 					"autoCreateRowSorter": true
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "PRODUCT ID" )
 						add( "NAME" )
 						add( "QUANTITY" )
@@ -65,20 +50,7 @@ new FormModel {
 				name: "searchPane"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "searchTable"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "DATE" )
 						add( "INVOICE" )
 						add( "TOTAL QUANTITY SOLD" )
@@ -112,22 +84,7 @@ new FormModel {
 				name: "reportPane"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "reportTable"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "DATE" )
 						add( "INVOICE" )
 						add( "NAME" )
