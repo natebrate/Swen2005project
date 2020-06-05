@@ -210,7 +210,7 @@ public class SaleDetails extends JFrame {
         reportTable = new JTable();
         searchBtn = new JButton();
         addBtn = new JButton();
-        createBtn = new JButton();
+        saveBtn = new JButton();
         modifyBtn = new JButton();
         allBtn = new JButton();
         deleteBtn = new JButton();
@@ -336,11 +336,11 @@ public class SaleDetails extends JFrame {
         contentPane.add(addBtn);
         addBtn.setBounds(10, 205, 115, addBtn.getPreferredSize().height);
 
-        //---- createBtn ----
-        createBtn.setText("Create Invoice");
-        createBtn.addActionListener(e -> saveBtnActionPerformed(e));
-        contentPane.add(createBtn);
-        createBtn.setBounds(10, 245, 240, createBtn.getPreferredSize().height);
+        //---- saveBtn ----
+        saveBtn.setText("Create Invoice");
+        saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
+        contentPane.add(saveBtn);
+        saveBtn.setBounds(10, 245, 240, saveBtn.getPreferredSize().height);
 
         //---- modifyBtn ----
         modifyBtn.setText("Modify Invoice");
@@ -546,7 +546,7 @@ public class SaleDetails extends JFrame {
     private JTable reportTable;
     private JButton searchBtn;
     private JButton addBtn;
-    private JButton createBtn;
+    private JButton saveBtn;
     private JButton modifyBtn;
     private JButton allBtn;
     private JButton deleteBtn;
