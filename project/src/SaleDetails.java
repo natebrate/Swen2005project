@@ -332,6 +332,7 @@ public class SaleDetails extends JFrame {
         //---- addBtn ----
         addBtn.setText("Add to Order");
         addBtn.setEnabled(false);
+        addBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addBtn);
         addBtn.setBounds(10, 205, 115, addBtn.getPreferredSize().height);
 
