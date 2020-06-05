@@ -203,6 +203,10 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
+    private void searchTableMouseClicked(MouseEvent e) {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
@@ -293,8 +297,8 @@ public class SaleDetails extends JFrame {
             searchTable.setToolTipText("to Search Records in Invoice");
             searchTable.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mousePressed(MouseEvent e) {
-                    searchTableMousePressed(e);
+                public void mouseClicked(MouseEvent e) {
+                    searchTableMouseClicked(e);
                 }
             });
             searchPane.setViewportView(searchTable);
