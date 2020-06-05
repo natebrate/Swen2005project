@@ -40,6 +40,7 @@ new FormModel {
 					} )
 					"toolTipText": "For modification to invoices"
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "invoiceTableMouseClicked", true ) )
+					addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "invoiceTableFocusLost", true ) )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 395

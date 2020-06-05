@@ -198,6 +198,10 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
+    private void invoiceTableFocusLost(FocusEvent e) {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
@@ -272,6 +276,12 @@ public class SaleDetails extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     invoiceTableMouseClicked(e);
+                }
+            });
+            invoiceTable.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    invoiceTableFocusLost(e);
                 }
             });
             invoicePane.setViewportView(invoiceTable);
