@@ -105,7 +105,18 @@ public class SaleDetails extends JFrame {
     }
 
     private void deleteBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        if (deleteBtn.getText().equals("Cancel"))
+        {
+            addingNewInvoice = false;
+            DefaultTableModel table = (DefaultTableModel) invoiceTable.getModel();
+            table.setRowCount(0);
+            clearAll();
+            lockButtons();
+            lockFields();
+            deleteBtn.setText("Delete");
+            saveBtn.setText("Create Invoice");
+        }
+
     }
 
 
@@ -130,6 +141,7 @@ public class SaleDetails extends JFrame {
 
 
         }
+        deleteBtn.setText("Cancel");
     }
 
     private void dayLabelPropertyChange(PropertyChangeEvent e) {
@@ -201,17 +213,20 @@ public class SaleDetails extends JFrame {
     }
 
     private void searchTableMouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 1) {
-            final JTable jTable= (JTable)e.getSource();
-            final int row = jTable.getSelectedRow();
-            int invoiceToSearch = Integer.parseInt(jTable.getValueAt(row, 1).toString());
-            DAO dao = new DAO();
-            if (dao.openConnection()) {
-                dao.loadInvoiceTable(invoiceTable, invoiceToSearch);
+        // ONLY CLEAR USERS INVOICE FIELD IF AND ONLY IF THEY ARE NOT CREATING SOMETHING NEW
+        if (!addingNewInvoice) {
+            if (e.getClickCount() == 1) {
+                final JTable jTable= (JTable)e.getSource();
+                final int row = jTable.getSelectedRow();
+                int invoiceToSearch = Integer.parseInt(jTable.getValueAt(row, 1).toString());
+                DAO dao = new DAO();
+                if (dao.openConnection()) {
+                    dao.loadInvoiceTable(invoiceTable, invoiceToSearch);
+                }
+                dao.closeConnection();
+                unlockButtons();
+                invoiceField.setText(String.valueOf(invoiceToSearch));
             }
-            dao.closeConnection();
-            unlockButtons();
-            invoiceField.setText(String.valueOf(invoiceToSearch));
         }
     }
 
