@@ -285,10 +285,11 @@ public class DAO {
 
     public void queryProductsSearch(JTable table, String keyword)
     {
-        String query = "SELECT * from products where name like '%" + keyword + "%' order by name";
+        String query = "SELECT * from products where name like ? order by name";
         try {
             //create the mysql insert preparedstatement
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setString(1, '%'+keyword+'%');
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
             while (table.getRowCount() > 0) {
@@ -323,6 +324,31 @@ public class DAO {
         } catch (Exception e) {
             System.out.println("Got an exception!");
             System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void querySalesSearch(JTable table, int invoiceNum)
+    {
+        String query = "SELECT * from sales_summary where invoice like ? order by DOS";
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, invoiceNum);
+            ResultSet rs = myPreStmt.executeQuery();
+            //To remove previously added rows
+            while (table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

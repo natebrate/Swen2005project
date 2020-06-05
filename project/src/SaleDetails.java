@@ -6,7 +6,13 @@ import java.sql.*;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
 /*
  * Created by JFormDesigner on Fri May 29 12:44:19 BOT 2020
  */
@@ -114,7 +120,7 @@ public class SaleDetails extends JFrame {
     }
 
     private void textField1ActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        searchInvoiceOrDate();
     }
     private void addOrderActionPerformed(ActionEvent e) {
         if(prodField.getText().isEmpty())
@@ -316,7 +322,13 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
+        searchBtn.addActionListener(e -> {
+            try {
+                searchBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(searchBtn);
         searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
 
@@ -339,7 +351,13 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
+        allBtn.addActionListener(e -> {
+            try {
+                displayButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
@@ -501,68 +519,6 @@ public class SaleDetails extends JFrame {
 
     //Method to find record belonging to invoice method
     private void searchBtnActionPerformed(ActionEvent e)  throws SQLException {
- /**       DAO dao = new DAO();
-        if (dao.openConnection())
-        { Sale thefind;
-            thefind = dao.findInvoiceNumber(Integer.parseInt(invoiceField.getText()));
-            System.out.println(thefind);
-            if (thefind != null)
-            {
-                details g = new details(invoice, P_ID, quantity_sold, sub_total);
-                vec.addElement(g);
-
-                DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
-                Object rowData[] = new Object[5];
-                model.setRowCount(0);
-                for (int i = 0; i < vec.size(); i++) {
-                    rowData[0] = vec.elementAt(i).getInvoice();
-                    rowData[1] = vec.elementAt(i).getP_ID();
-                    rowData[2] = vec.elementAt(i).getQuantity_sold();
-                    rowData[3] = CurrentDateTimeExample1();
-                    model.addRow(rowData);
-                }
-                invoiceField.setText("");
-                invoiceField.requestFocus();
-                P_ID = thefind.getP_ID();
-                quantity_sold = thefind.getQuantity_sold();
-                sub_total = thefind.getSub_total();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Please enter an invoice number");
-               invoiceField.requestFocus();
-           }
-        } **/
-    }
-
-    static class details
-    {
-        int invoice, P_ID, quantity_sold;
-        double sub_total;
-
-        public details(int invoice, int P_ID, int quantity_sold, double sub_total)
-        {
-            this.invoice = invoice;
-            this.P_ID = P_ID;
-            this.quantity_sold = quantity_sold;
-            this.sub_total = sub_total;
-        }
-        public int getInvoice()
-        {
-            return this.invoice;
-        }
-        public int getP_ID()
-        {
-            return this.P_ID;
-        }
-        public int getQuantity_sold()
-        {
-            return this.quantity_sold;
-        }
-        public double getSub_total()
-        {
-            return this.sub_total;
-        }
-
     }
     private int genInvoiceID()
     {
@@ -593,6 +549,14 @@ public class SaleDetails extends JFrame {
                 priceField.setText(String.valueOf(theFind.getPrice()));
             }
             }
+    }
+    private void searchInvoiceOrDate()
+    {
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+                dao.querySalesSearch(searchTable,Integer.parseInt(searchField.getText()));
+            dao.closeConnection();
+        }
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -630,4 +594,57 @@ public class SaleDetails extends JFrame {
     private JCheckBox invoiceCheckBox;
     private JCheckBox DateCheckBox;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
+
+    // FOLLOWING REUSED FROM PUBLIC DOMAIN
+    /**
+     * Installs a listener to receive notification when the text of any
+     * {@code JTextComponent} is changed. Internally, it installs a
+     * {@link DocumentListener} on the text component's {@link Document},
+     * and a {@link PropertyChangeListener} on the text component to detect
+     * if the {@code Document} itself is replaced.
+     *
+     * @param text           any text component, such as a {@link JTextField}
+     *                       or {@link JTextArea}
+     * @param changeListener a listener to receieve {@link ChangeEvent}s
+     *                       when the text is changed; the source object for the events
+     *                       will be the text component
+     * @throws NullPointerException if either parameter is null
+     */
+    public static void addChangeListener(JTextComponent text, ChangeListener changeListener) {
+        Objects.requireNonNull(text);
+        Objects.requireNonNull(changeListener);
+        DocumentListener dl = new DocumentListener() {
+            private int lastChange = 0, lastNotifiedChange = 0;
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                changedUpdate(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                lastChange++;
+                SwingUtilities.invokeLater(() -> {
+                    if (lastNotifiedChange != lastChange) {
+                        lastNotifiedChange = lastChange;
+                        changeListener.stateChanged(new ChangeEvent(text));
+                    }
+                });
+            }
+        };
+        text.addPropertyChangeListener("document", (PropertyChangeEvent e) -> {
+            Document d1 = (Document) e.getOldValue();
+            Document d2 = (Document) e.getNewValue();
+            if (d1 != null) d1.removeDocumentListener(dl);
+            if (d2 != null) d2.addDocumentListener(dl);
+            dl.changedUpdate(null);
+        });
+        Document d = text.getDocument();
+        if (d != null) d.addDocumentListener(dl);
+    }
 }

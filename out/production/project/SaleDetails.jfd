@@ -322,9 +322,31 @@ new FormModel {
 				"y": 155
 				"width": 140
 			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "invoiceCheckBox"
+				"text": "Search by Invoice"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "invoiceCheckBoxActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "invoiceCheckBoxFocusGained", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "invoiceCheckBoxFocusLost", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 270
+				"y": 200
+				"width": 110
+			} )
+			add( new FormComponent( "javax.swing.JCheckBox" ) {
+				name: "DateCheckBox"
+				"text": "Search by Date"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "DateCheckBoxActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "DateCheckBoxFocusGained", true ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "DateCheckBoxFocusLost", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 270
+				"y": 225
+				"width": 115
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 5 )
-			"size": new java.awt.Dimension( 930, 610 )
+			"size": new java.awt.Dimension( 940, 610 )
 		} )
 	}
 }
