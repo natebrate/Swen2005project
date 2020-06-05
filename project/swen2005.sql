@@ -96,15 +96,12 @@ END ;;
 -- TRIGGER FOR DELETING A RECORD FORM SALES SUMMARY AND UPDATING APPROPRIATE TABLES
 --
 
-
 CREATE TRIGGER remove AFTER DELETE on sales_details for EACH ROW
-
 BEGIN
 
-    UPDATE sales_summary set total_revenue=total_revenue-old.sub_total;
-    UPDATE sales_summary set items_sold=items_sold-old.quantity_sold;
-    UPDATE products set quantity=quantity+old.quantity_sold;
-
+    UPDATE sales_summary set total_revenue=total_revenue-old.sub_total where invoice=old.invoice;
+    UPDATE sales_summary set items_sold=items_sold-old.quantity_sold where invoice=old.invoice;
+    UPDATE products set quantity=quantity+old.quantity_sold where prod_id=old.P_ID;
 END;;
 
 -- --------------------------------------------------------
@@ -150,14 +147,6 @@ CREATE TABLE `sales_summary` (
   `total_revenue` decimal(8,2) NOT NULL,
   `DOS` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `sales_summary`
---
-
-INSERT INTO `sales_summary` (`invoice`, `items_sold`, `total_revenue`, `DOS`) VALUES
-(1, 4, '170.00', '2020-05-29'),
-(2, 1, '26.00', '2020-05-29');
 
 -- --------------------------------------------------------
 
