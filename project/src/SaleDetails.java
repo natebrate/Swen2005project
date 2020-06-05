@@ -39,6 +39,10 @@ public class SaleDetails extends JFrame {
         dayLabel.setText(CurrentDateTimeExample1());
 
 
+        loadTables();
+    }
+
+    private void loadTables() throws SQLException {
         DAO dao = new DAO();
         if (dao.openConnection()) {
             dao.loadSearchDetails(searchTable);
@@ -102,7 +106,7 @@ public class SaleDetails extends JFrame {
     }
 
 
-    private void saveBtnActionPerformed(ActionEvent e) {
+    private void saveBtnActionPerformed(ActionEvent e) throws SQLException {
         if (saveBtn.getText().equals("Create Invoice")) {
             unlockFields();
             invoiceField.setText(String.valueOf(genInvoiceID()));
@@ -113,7 +117,13 @@ public class SaleDetails extends JFrame {
         }
         else {
             uploadInvoice();
+            loadTables();
+            clearAll();
+            lockFields();
+            lockButtons();
             saveBtn.setText("Create Invoice");
+
+
         }
     }
 
@@ -162,25 +172,6 @@ public class SaleDetails extends JFrame {
     private void textField1ActionPerformed(ActionEvent e) {
         searchInvoiceOrDate();
     }
-    private void uploadInvoice()
-    {
-        DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
-        Vector<Vector> vec = model.getDataVector();
-        Product prodSale = null;
-        for (int i=0; i < vec.size(); i++)
-    {
-        prodSale = new Product(Integer.parseInt(vec.elementAt(i).get(0).toString()), vec.elementAt(i).get(1).toString(),
-                Integer.parseInt(vec.elementAt(i).get(2).toString()), Double.parseDouble( vec.elementAt(i).get(3).toString()));
-        DAO dao = new DAO();
-        if (dao.openConnection()) {
-            dao.productTransaction(Integer.parseInt(invoiceField.getText()), prodSale);
-        }
-        dao.closeConnection();
-
-    }
-        //Reset Invoice Number and Table
-        model.setRowCount(0);
-    }
 
     private void searchTableMouseClicked(MouseEvent e) {
         if (e.getClickCount() == 1) {
@@ -192,6 +183,7 @@ public class SaleDetails extends JFrame {
                 dao.loadInvoiceTable(invoiceTable, invoiceToSearch);
             }
             dao.closeConnection();
+            unlockButtons();
 
 
 
@@ -349,7 +341,13 @@ public class SaleDetails extends JFrame {
 
         //---- saveBtn ----
         saveBtn.setText("Create Invoice");
-        saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
+        saveBtn.addActionListener(e -> {
+            try {
+                saveBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(saveBtn);
         saveBtn.setBounds(10, 245, 240, saveBtn.getPreferredSize().height);
 
@@ -650,5 +648,43 @@ public class SaleDetails extends JFrame {
         });
         Document d = text.getDocument();
         if (d != null) d.addDocumentListener(dl);
+    }
+    private void uploadInvoice()
+    {
+        DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
+        Vector<Vector> vec = model.getDataVector();
+        Product prodSale = null;
+        for (int i=0; i < vec.size(); i++)
+        {
+            prodSale = new Product(Integer.parseInt(vec.elementAt(i).get(0).toString()), vec.elementAt(i).get(1).toString(),
+                    Integer.parseInt(vec.elementAt(i).get(2).toString()), Double.parseDouble( vec.elementAt(i).get(3).toString()));
+            DAO dao = new DAO();
+            if (dao.openConnection()) {
+                dao.productTransaction(Integer.parseInt(invoiceField.getText()), prodSale);
+            }
+            dao.closeConnection();
+
+        }
+        //Reset Invoice Number and Table
+        model.setRowCount(0);
+    }
+    private void clearAll()
+    {
+        invoiceField.setText("");
+        prodField.setText("");
+        priceField.setText("");
+        prodName.setText("");
+        searchField.setText("");
+        quantityField.setText("");
+    }
+    private void lockButtons()
+    {
+        addBtn.setEnabled(false);
+        deleteOrderBtn.setEnabled(false);
+    }
+    private void unlockButtons()
+    {
+        addBtn.setEnabled(true);
+        deleteOrderBtn.setEnabled(true);
     }
 }
