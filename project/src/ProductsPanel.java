@@ -103,6 +103,29 @@ public class ProductsPanel extends JFrame {
         searchName();
     }
 
+    public void keyTyped(KeyEvent e) {
+        if (e.getID() == KeyEvent.KEY_TYPED) {
+            char inputChar = e.getKeyChar();
+            if (inputChar >= '0' && inputChar <= '9') {
+                String text = quantityField.getText() + inputChar;
+                System.out.println("Number :- " + Integer.parseInt(text));
+            } else {
+                e.consume();
+            }
+        }
+    }
+
+    public void negativeCheck (int field) {
+        if(field < 0)
+        {
+            System.out.println(field +" is a negative number");
+        }
+        else
+        {
+            System.out.println(field +" is neither positive nor negative");
+        }
+    }
+
     private void productPanePropertyChange(PropertyChangeEvent e) {
         // TODO add your code here
     }
@@ -224,13 +247,7 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
-        allBtn.addActionListener(e -> {
-            try {
-                allBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
 
@@ -271,13 +288,7 @@ public class ProductsPanel extends JFrame {
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
         addUpdateBtn.setEnabled(false);
-        addUpdateBtn.addActionListener(e -> {
-            try {
-                addBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
@@ -291,13 +302,7 @@ public class ProductsPanel extends JFrame {
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
         deleteBtn.setEnabled(false);
-        deleteBtn.addActionListener(e -> {
-            try {
-                deleteBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
 
@@ -323,13 +328,7 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
-        returnBtn.addActionListener(e -> {
-            try {
-                returnBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
@@ -353,6 +352,17 @@ public class ProductsPanel extends JFrame {
         searchField.setText("Search");
         searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
         searchField.setForeground(Color.lightGray);
+        searchField.addActionListener(e -> searchFieldActionPerformed(e));
+        searchField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchFieldFocusGained(e);
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                searchFieldFocusLost(e);
+            }
+        });
         contentPane.add(searchField);
         searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
 
@@ -474,6 +484,20 @@ public class ProductsPanel extends JFrame {
         }
     }
 
+    public void isInt (String Value)
+    {
+        try
+        {
+            Integer.parseInt(Value);
+            JOptionPane.showMessageDialog(null, "please enter a Number",
+                    "please enter a Number", JOptionPane.WARNING_MESSAGE);
+        } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "please enter a Number",
+                "please enter a Number", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
+
     private void updateProduct() throws SQLException {
         int returnValue;
         if (nameField.getText().isBlank() || quantityField.getText().isBlank() || priceField.getText().isBlank()) {
@@ -481,6 +505,7 @@ public class ProductsPanel extends JFrame {
                     "Fill in all fields to continue", JOptionPane.WARNING_MESSAGE);
         } else {
             Product theUpdate = new Product(Integer.parseInt(IDField.getText()), nameField.getText(),
+
                     Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
             returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
                             + "make this update?\n\nOriginal:\n" + lastSearchedProduct.toString() + "\n\nUpdate:\n" +

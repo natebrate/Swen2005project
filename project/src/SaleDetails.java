@@ -169,6 +169,30 @@ public class SaleDetails extends JFrame {
     }
     }
 
+    private void invoiceCheckBoxActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void invoiceCheckBoxFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
+    private void invoiceCheckBoxFocusLost(FocusEvent e) {
+        // TODO add your code here
+    }
+
+    private void DateCheckBoxActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void DateCheckBoxFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
+    private void DateCheckBoxFocusLost(FocusEvent e) {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
@@ -204,6 +228,8 @@ public class SaleDetails extends JFrame {
         invoiceField = new JTextField();
         prodField = new JTextField();
         quantityField = new JTextField();
+        invoiceCheckBox = new JCheckBox();
+        DateCheckBox = new JCheckBox();
 
         //======== this ========
         setTitle("INVOICE AND SALE DETAILS");
@@ -290,19 +316,12 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Search");
-        searchBtn.addActionListener(e -> {
-            try {
-                searchBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
         contentPane.add(searchBtn);
         searchBtn.setBounds(270, 70, 120, searchBtn.getPreferredSize().height);
 
         //---- addBtn ----
         addBtn.setText("Add to Order");
-        addBtn.addActionListener(e -> addOrderActionPerformed(e));
         contentPane.add(addBtn);
         addBtn.setBounds(110, 200, 140, addBtn.getPreferredSize().height);
 
@@ -320,13 +339,7 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
@@ -396,7 +409,7 @@ public class SaleDetails extends JFrame {
         totalLabel.setBounds(670, 250, 115, totalLabel.getPreferredSize().height);
 
         //---- totalFigLabel ----
-        totalFigLabel.setText("0.00");
+        totalFigLabel.setText("$0");
         contentPane.add(totalFigLabel);
         totalFigLabel.setBounds(795, 250, 115, totalFigLabel.getPreferredSize().height);
 
@@ -430,7 +443,39 @@ public class SaleDetails extends JFrame {
         contentPane.add(quantityField);
         quantityField.setBounds(110, 155, 140, quantityField.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(930, 610));
+        //---- invoiceCheckBox ----
+        invoiceCheckBox.setText("Search by Invoice");
+        invoiceCheckBox.addActionListener(e -> invoiceCheckBoxActionPerformed(e));
+        invoiceCheckBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                invoiceCheckBoxFocusGained(e);
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                invoiceCheckBoxFocusLost(e);
+            }
+        });
+        contentPane.add(invoiceCheckBox);
+        invoiceCheckBox.setBounds(270, 200, 110, invoiceCheckBox.getPreferredSize().height);
+
+        //---- DateCheckBox ----
+        DateCheckBox.setText("Search by Date");
+        DateCheckBox.addActionListener(e -> DateCheckBoxActionPerformed(e));
+        DateCheckBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                DateCheckBoxFocusGained(e);
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                DateCheckBoxFocusLost(e);
+            }
+        });
+        contentPane.add(DateCheckBox);
+        DateCheckBox.setBounds(270, 225, 115, DateCheckBox.getPreferredSize().height);
+
+        contentPane.setPreferredSize(new Dimension(940, 610));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -582,5 +627,7 @@ public class SaleDetails extends JFrame {
     private JTextField invoiceField;
     private JTextField prodField;
     private JTextField quantityField;
+    private JCheckBox invoiceCheckBox;
+    private JCheckBox DateCheckBox;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
