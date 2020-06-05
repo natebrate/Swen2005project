@@ -86,7 +86,7 @@ public class SaleDetails extends JFrame {
     }
 
     private void quantityFieldActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        addBtn.setEnabled(true);
     }
 
     private void deleteBtnActionPerformed(ActionEvent e) {
