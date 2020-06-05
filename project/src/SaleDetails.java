@@ -198,8 +198,6 @@ public class SaleDetails extends JFrame {
             invoiceTable.setAutoCreateRowSorter(true);
             invoiceTable.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null, null, null},
-                    {null, null, null, null, null},
                 },
                 new String[] {
                     "PRODUCT ID", "NAME", "QUANTITY", "PRICE", "TOTAL"
@@ -225,8 +223,6 @@ public class SaleDetails extends JFrame {
             //---- searchTable ----
             searchTable.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null, null},
-                    {null, null, null, null},
                 },
                 new String[] {
                     "DATE", "INVOICE", "TOTAL QUANTITY SOLD", "TOTAL SOLD"
@@ -253,8 +249,6 @@ public class SaleDetails extends JFrame {
             //---- reportTable ----
             reportTable.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null, null, null},
-                    {null, null, null, null, null},
                 },
                 new String[] {
                     "DATE", "INVOICE", "NAME", "ITEMS SOLD", "TOTAL REVENUE"
@@ -289,7 +283,6 @@ public class SaleDetails extends JFrame {
 
         //---- addBtn ----
         addBtn.setText("Add to Order");
-        addBtn.addActionListener(e -> addOrderActionPerformed(e));
         contentPane.add(addBtn);
         addBtn.setBounds(110, 200, 140, addBtn.getPreferredSize().height);
 
@@ -323,18 +316,6 @@ public class SaleDetails extends JFrame {
         deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(10, 370, 240, deleteBtn.getPreferredSize().height);
-
-        //---- allBtn ----
-        allBtn.setText("DISPLAY REPORT");
-        allBtn.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
-        contentPane.add(allBtn);
-        allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
@@ -395,7 +376,7 @@ public class SaleDetails extends JFrame {
         totalLabel.setBounds(670, 250, 115, totalLabel.getPreferredSize().height);
 
         //---- totalFigLabel ----
-        totalFigLabel.setText("0.00");
+        totalFigLabel.setText("$0");
         contentPane.add(totalFigLabel);
         totalFigLabel.setBounds(795, 250, 115, totalFigLabel.getPreferredSize().height);
 
