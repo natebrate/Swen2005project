@@ -159,7 +159,9 @@ public class DAO {
     }
 
 
-    /** SALES DETAILS DAO BELOWE HERE **/
+    /**
+     * SALES DETAILS DAO BELOWE HERE
+     **/
 
     public void deleteSaleRecord(int id) {
         //the mysql insert statement
@@ -222,11 +224,10 @@ public class DAO {
         //the mysql insert statement
         String query = "insert into sales_details (invoice, P_ID, quantity_sold, sub_total) values (?,?,?,?)";
         //create the mysql insert prepared statement
-        try
-        {
+        try {
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             myPreStmt.setInt(1, theSale.getInvoice());
-            myPreStmt.setInt(2,theSale.getP_ID());
+            myPreStmt.setInt(2, theSale.getP_ID());
             myPreStmt.setInt(3, theSale.getQuantity_sold());
             myPreStmt.setInt(4, (int) theSale.getSub_total());
 
@@ -238,28 +239,30 @@ public class DAO {
         }
     }
 
-    public void updateSaleRecord(Sale theSale)
-    {
-    //the mysql insert statement
+    public void updateSaleRecord(Sale theSale) {
+        //the mysql insert statement
         String query = "update sales_details set P_ID=?, quantity_sold=? where invoice=?";
         //create the mysql insert prepared statement
-        try{
+        try {
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
-            myPreStmt.setInt(1,theSale.getInvoice());
-            myPreStmt.setInt(2,theSale.getP_ID());
-            myPreStmt.setDouble(3,theSale.getQuantity_sold());
+            myPreStmt.setInt(1, theSale.getInvoice());
+            myPreStmt.setInt(2, theSale.getP_ID());
+            myPreStmt.setDouble(3, theSale.getQuantity_sold());
 
             //execute the prepared statement
             myPreStmt.execute();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Got an exception! Error in insert");
             System.out.println(e.getMessage());
         }
     }
 
-    public void loadSalesDetailsTable(JTable table) throws SQLException {
+    public void loadSalesReport(JTable table) throws SQLException {
         try {
-            String query = "SELECT * from sales_details order by Invoice";
+            String query = "SELECT sales_summary.DOS, sales_summary.invoice, products.name, sales_summary.items_sold, " +
+                    "sales_summary.total_revenue FROM sales_details INNER JOIN sales_summary ON " +
+                    "sales_details.invoice=sales_summary.invoice INNER JOIN products ON " +
+                    "sales_details.P_ID=products.prod_id order by DOS;";
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
@@ -280,12 +283,12 @@ public class DAO {
     }
 
 
-    public void queryProductsSearch(JTable table, String keyword)
-    {
-        String query = "SELECT * from products where name like '%" + keyword + "%' order by name";
+    public void queryProductsSearch(JTable table, String keyword) {
+        String query = "SELECT * from products where name like ? order by name";
         try {
             //create the mysql insert preparedstatement
             PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setString(1, '%' + keyword + '%');
             ResultSet rs = myPreStmt.executeQuery();
             //To remove previously added rows
             while (table.getRowCount() > 0) {
@@ -304,4 +307,96 @@ public class DAO {
         }
     }
 
+    public void productTransaction(int invoiceNum, Product theProd) {
+
+        //the mysql insert statement
+        String query = "call sell(?,?,?)";
+        //create the mysql insert prepared statement
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, invoiceNum);
+            myPreStmt.setInt(2, theProd.getProd_id());
+            myPreStmt.setInt(3, theProd.getQuantity());
+
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void querySalesSearch(JTable table, int invoiceNum) {
+        String query = "SELECT sales_summary.DOS, sales_summary.invoice, sales_summary.items_sold, sales_summary.total_revenue FROM sales_summary where invoice = ?";
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, invoiceNum);
+            ResultSet rs = myPreStmt.executeQuery();
+            //To remove previously added rows
+            while (table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadSearchDetails(JTable table) {
+        try {
+            String query = "SELECT sales_summary.DOS, sales_summary.invoice, sales_summary.items_sold, sales_summary.total_revenue FROM sales_summary";
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            ResultSet rs = myPreStmt.executeQuery();
+            //To remove previously added rows
+            while (table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadInvoiceTable(JTable table, int invoiceNum) {
+        {
+            String query = "SELECT sales_details.P_ID, products.name, products.price, " +
+                    "sales_details.quantity_sold, sales_details.sub_total FROM products INNER JOIN sales_details ON " +
+                    "products.prod_id = sales_details.P_ID where invoice = ?;";
+            try {
+                PreparedStatement myPreStmt = myConn.prepareStatement(query);
+                myPreStmt.setInt(1, invoiceNum);
+                ResultSet rs = myPreStmt.executeQuery();
+                //To remove previously added rows
+                while (table.getRowCount() > 0) {
+                    ((DefaultTableModel) table.getModel()).removeRow(0);
+                }
+                int columns = rs.getMetaData().getColumnCount();
+                while (rs.next()) {
+                    Object[] row = new Object[columns];
+                    for (int i = 1; i <= columns; i++) {
+                        row[i - 1] = rs.getObject(i);
+                    }
+                    ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }

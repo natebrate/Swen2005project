@@ -13,22 +13,7 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "invoiceTable"
 					"autoCreateRowSorter": true
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "PRODUCT ID" )
 						add( "NAME" )
 						add( "QUANTITY" )
@@ -57,7 +42,7 @@ new FormModel {
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 395
-				"y": 55
+				"y": 80
 				"height": 165
 				"width": 515
 			} )
@@ -65,20 +50,7 @@ new FormModel {
 				name: "searchPane"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "searchTable"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "DATE" )
 						add( "INVOICE" )
 						add( "TOTAL QUANTITY SOLD" )
@@ -101,10 +73,11 @@ new FormModel {
 					} )
 					"autoCreateRowSorter": true
 					"toolTipText": "to Search Records in Invoice"
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "searchTableMouseClicked", true ) )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 395
-				"y": 225
+				"y": 275
 				"width": 515
 				"height": 180
 			} )
@@ -112,22 +85,7 @@ new FormModel {
 				name: "reportPane"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "reportTable"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "DATE" )
 						add( "INVOICE" )
 						add( "NAME" )
@@ -157,31 +115,58 @@ new FormModel {
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 395
-				"y": 410
+				"y": 460
 				"width": 515
 				"height": 110
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "searchBtn"
-				"text": "Search"
+				"text": "Go"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "searchBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 272
-				"y": 70
-				"width": 120
+				"x": 645
+				"y": 45
+				"width": 70
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "saveBtn"
-				"text": "SAVE INVOICE"
+				name: "addBtn"
+				"text": "Add to Order"
+				"enabled": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 10
+				"y": 205
+				"width": 115
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "createBtn"
+				"text": "Create Invoice"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "saveBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
-				"y": 247
+				"y": 245
+				"width": 240
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "modifyBtn"
+				"text": "Modify Invoice"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addBtnActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 10
+				"y": 290
+				"width": 240
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "allBtn"
+				"text": "Display Report"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "displayButtonActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 10
+				"y": 330
 				"width": 240
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "deleteBtn"
-				"text": "DELETE INVOICE"
+				"text": "Delete Invoice"
 				"foreground": new java.awt.Color( 255, 0, 0, 255 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -190,46 +175,28 @@ new FormModel {
 				"width": 240
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "allBtn"
-				"text": "DISPLAY REPORT"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "displayButtonActionPerformed", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 10
-				"y": 330
-				"width": 240
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "returnBtn"
 				"text": "Return to Menu"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "returnBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 10
-				"y": 450
-				"width": 240
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "addBtn"
-				"text": "MODIFY INVOICE"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addBtnActionPerformed", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 10
-				"y": 290
+				"x": 7
+				"y": 538
 				"width": 240
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "reportBtn"
-				"text": "SALES REPORT"
+				"text": "Sales Report"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "reportBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 275
-				"y": 450
+				"x": 127
+				"y": 473
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "dateLabel"
 				"text": "DATE:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 395
+				"x": 5
 				"y": 5
 				"width": 115
 				"height": 15
@@ -239,32 +206,40 @@ new FormModel {
 				"text": "MM/DD/YYYY"
 				addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "dayLabelPropertyChange", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 515
-				"y": 5
-				"width": 115
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "nameLabel"
-				"text": "Name"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 515
-				"y": 35
+				"x": 130
+				"y": 4
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "userLabel"
 				"text": "USER:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 395
-				"y": 35
+				"x": 680
+				"y": 4
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "quantityLabel"
-				"text": "Quantity:"
+				name: "nameLabel"
+				"text": "Name"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 805
+				"y": 4
+				"width": 115
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "DesciptionLabel"
+				"text": "Search and Create Invoices Here"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
-				"y": 160
+				"y": 40
+				"width": 350
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "invoiceLabel"
+				"text": "Invoice Number:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 10
+				"y": 77
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -276,63 +251,100 @@ new FormModel {
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "invoiceLabel"
-				"text": "Invoice Number:"
+				name: "quantityLabel"
+				"text": "Quantity:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
-				"y": 77
+				"y": 160
 				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "DesciptionLabel"
-				"text": "Search and Create Invoices Here"
+				name: "totalLabel"
+				"text": "GRAND TOTAL: $"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 10
-				"y": 40
-				"width": 350
+				"x": 670
+				"y": 250
+				"width": 115
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "totalFigLabel"
+				"text": "0.00"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 795
+				"y": 250
+				"width": 115
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "prodName"
+				"text": "prodName "
+				"foreground": new java.awt.Color( 255, 0, 0, 255 )
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 2, 0, false )
+				"visible": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 280
+				"y": 115
+				"width": 100
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "priceField"
+				"text": "priceField"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 2, 0, false )
+				"foreground": new java.awt.Color( 255, 0, 0, 255 )
+				"visible": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 280
+				"y": 165
+				"width": 100
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "quantityField"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "quantityFieldActionPerformed", true ) )
+				name: "searchField"
+				"text": "Search"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 2, 0, false )
+				"foreground": sfield java.awt.Color lightGray
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "textField1ActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
-				"y": 155
+				"x": 395
+				"y": 45
+				"width": 245
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "invoiceField"
+				"enabled": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 70
 				"width": 140
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "prodField"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "prodFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
-				"y": 108
+				"x": 110
+				"y": 110
 				"width": 140
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "invoiceField"
+				name: "quantityField"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "quantityFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 120
-				"y": 70
+				"x": 110
+				"y": 155
 				"width": 140
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "totalLabel"
-				"text": "TOTAL:"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "deleteOrderBtn"
+				"text": "Delete From Order"
+				"enabled": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 275
-				"y": 165
-				"width": 115
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "totalFigLabel"
-				"text": "$0"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 275
-				"y": 190
+				"x": 135
+				"y": 205
 				"width": 115
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 930, 565 )
+			"location": new java.awt.Point( 0, 5 )
+			"size": new java.awt.Dimension( 940, 610 )
 		} )
 	}
 }
+
