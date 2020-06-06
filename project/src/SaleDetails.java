@@ -343,6 +343,10 @@ public class SaleDetails extends JFrame {
         // TODO add your code here
     }
 
+    private void searchFieldFocusLost(FocusEvent e) {
+        // TODO add your code here
+    }
+
 
 
 
@@ -640,6 +644,10 @@ public class SaleDetails extends JFrame {
             public void focusGained(FocusEvent e) {
                 searchFieldFocusGained(e);
             }
+            @Override
+            public void focusLost(FocusEvent e) {
+                searchFieldFocusLost(e);
+            }
         });
         contentPane.add(searchField);
         searchField.setBounds(395, 45, 245, searchField.getPreferredSize().height);
@@ -668,7 +676,7 @@ public class SaleDetails extends JFrame {
         contentPane.add(deleteOrderBtn);
         deleteOrderBtn.setBounds(135, 205, 115, deleteOrderBtn.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(940, 610));
+        contentPane.setPreferredSize(new Dimension(935, 610));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
