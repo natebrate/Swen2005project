@@ -226,6 +226,7 @@ public class SaleDetails extends JFrame {
                 dao.closeConnection();
                 unlockButtons();
                 invoiceField.setText(String.valueOf(invoiceToSearch));
+                deleteBtn.setText("Cancel");
             }
         }
     }
