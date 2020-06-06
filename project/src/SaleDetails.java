@@ -104,19 +104,40 @@ public class SaleDetails extends JFrame {
         addBtn.setEnabled(true);
     }
 
-    private void deleteBtnActionPerformed(ActionEvent e) {
-        if (deleteBtn.getText().equals("Cancel"))
+    private void deleteBtnActionPerformed(ActionEvent e) throws SQLException {
+        switch (deleteBtn.getText())
         {
-            addingNewInvoice = false;
-            DefaultTableModel table = (DefaultTableModel) invoiceTable.getModel();
-            table.setRowCount(0);
-            clearAll();
-            lockButtons();
-            lockFields();
-            deleteBtn.setText("Delete");
-            saveBtn.setText("Create Invoice");
-        }
+            case "Cancel":
+                addingNewInvoice = false;
+                DefaultTableModel table = (DefaultTableModel) invoiceTable.getModel();
+                table.setRowCount(0);
+                clearAll();
+                lockButtons();
+                lockFields();
+                deleteBtn.setText("Delete");
+                saveBtn.setText("Create Invoice");
+                break;
 
+            case "Delete Invoice":
+                if (userLogin.getIsAdmin()) {
+                    int returnValue;
+                    returnValue = JOptionPane.showConfirmDialog(null, "Are you certain you want to " +
+                                    "delete Invoice No: " + invoiceField.getText(),
+                            "Delete Invoice", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    if (returnValue == JOptionPane.YES_OPTION)
+                    {
+                        deleteInvoice();
+                        DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
+                        model.setRowCount(0);
+                        loadTables();
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "You must have admin credentials to delete" +
+                                        "an invoice!",
+                                "Need Admin Credentials!", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+        }
     }
 
 
@@ -227,6 +248,7 @@ public class SaleDetails extends JFrame {
     private void searchTableMouseClicked(MouseEvent e) {
         // ONLY CLEAR USERS INVOICE FIELD IF AND ONLY IF THEY ARE NOT CREATING SOMETHING NEW
         if (!addingNewInvoice) {
+            updatingExistingInvoice = true;
             if (e.getClickCount() == 1) {
                 final JTable jTable= (JTable)e.getSource();
                 final int row = jTable.getSelectedRow();
@@ -239,7 +261,6 @@ public class SaleDetails extends JFrame {
                 unlockButtons();
                 unlockFields();
                 invoiceField.setText(String.valueOf(invoiceToSearch));
-                deleteBtn.setText("Cancel");
                 saveBtn.setText("Update Invoice");
             }
         }
@@ -251,7 +272,6 @@ public class SaleDetails extends JFrame {
 
     private void invoiceTableMouseClicked(MouseEvent e) {
         if (e.getClickCount() == 1) {
-            updatingExistingInvoice = true;
             final JTable jTable = (JTable) e.getSource();
             lastClickedRow = jTable.getSelectedRow();
             lastClickedCol = jTable.getSelectedColumn();
@@ -268,8 +288,10 @@ public class SaleDetails extends JFrame {
             addBtn.setText("Update Order");
             unlockButtons();
             unlockFields();
-            saveBtn.setText("Update Invoice");
+            if (updatingExistingInvoice) saveBtn.setText("Update Invoice");
             invoiceField.setEnabled(false);
+            deleteBtn.setText("Cancel");
+
         }
     }
     private void updateCell()
@@ -500,7 +522,13 @@ public class SaleDetails extends JFrame {
         //---- deleteBtn ----
         deleteBtn.setText("Delete Invoice");
         deleteBtn.setForeground(Color.red);
-        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
+        deleteBtn.addActionListener(e -> {
+            try {
+                deleteBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(10, 370, 240, deleteBtn.getPreferredSize().height);
 
