@@ -495,13 +495,7 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Go");
-        searchBtn.addActionListener(e -> {
-            try {
-                searchBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
         contentPane.add(searchBtn);
         searchBtn.setBounds(645, 45, 70, searchBtn.getPreferredSize().height);
 
@@ -514,13 +508,7 @@ public class SaleDetails extends JFrame {
 
         //---- saveBtn ----
         saveBtn.setText("Create Invoice");
-        saveBtn.addActionListener(e -> {
-            try {
-                saveBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
         contentPane.add(saveBtn);
         saveBtn.setBounds(10, 245, 240, saveBtn.getPreferredSize().height);
 
@@ -532,26 +520,14 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display Report");
-        allBtn.addActionListener(e -> {
-            try {
-                displayButtonActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
         //---- deleteBtn ----
         deleteBtn.setText("Delete Invoice");
         deleteBtn.setForeground(Color.red);
-        deleteBtn.addActionListener(e -> {
-            try {
-                deleteBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(10, 370, 240, deleteBtn.getPreferredSize().height);
 
