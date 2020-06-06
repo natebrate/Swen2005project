@@ -1,27 +1,17 @@
 # Swen2005project
 For a 2nd year SWEN project
+Project files in project src
 
-1. Interface_design.form - 
-this is the login area
+You can only use a a localhost database via software like XAMPP to efficiently use the program
 
-2. Products.form 
-on left hand side you'll see some buttons with text fields.
-By using those, that is how you add, update and delete (delete goes based off the ID)
+# database: swen2005_finalproject
+1. Create a Database called: swen2005_finalproject	
+2. Go to import in swen2005_finalproject database and import the swen2005_project.sql
+3. Click go 
+4. Run Xampp and connect mySQL and Apache
+5. Proceed to the program file and in openconnection make sure the folloiwng are in
+    String url = "jdbc:mysql://localhost:3306/swen2005_finalproject?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    String user = "root";
+    String password = "";
+6. You can final run the program and enjoy
 
-- to Add you must fill in all 4 text fields
-- to update must have ID field filled and another text field of choice
-- to delete, just have the ID field fill
-- Search allows you to do variety of things. Search partial names, IDs, Quantity, and Prices
-- display all - basically shows everything in the table
-- cancel - empties all text boxes
-- Prompt at every update, delete, save and cancel action 
-- ONLY DISPLAY CONTENTS OF PRODUCT TABLE
-
-3. Sales.form 
-- search allows you to search name or ID for daily report on particular item
-- table displays a search or a check all records report
-- amount solds adjust based on what's on dispaly
-- Quantity sold performs the same as amount sold
-- date label displays current date
-- report button - prints/saves a report based on table
-a little prompt appears ask to print/save, print or save or cancel
