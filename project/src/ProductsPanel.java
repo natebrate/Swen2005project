@@ -248,7 +248,13 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
-        allBtn.addActionListener(e -> allBtnActionPerformed(e));
+        allBtn.addActionListener(e -> {
+            try {
+                allBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(allBtn);
         allBtn.setBounds(65, 335, 200, allBtn.getPreferredSize().height);
 
@@ -289,7 +295,13 @@ public class ProductsPanel extends JFrame {
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
         addUpdateBtn.setEnabled(false);
-        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
+        addUpdateBtn.addActionListener(e -> {
+            try {
+                addBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
@@ -303,7 +315,13 @@ public class ProductsPanel extends JFrame {
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
         deleteBtn.setEnabled(false);
-        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
+        deleteBtn.addActionListener(e -> {
+            try {
+                deleteBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(65, 300, 100, deleteBtn.getPreferredSize().height);
 
@@ -329,7 +347,13 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
-        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
+        returnBtn.addActionListener(e -> {
+            try {
+                returnBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
@@ -361,7 +385,11 @@ public class ProductsPanel extends JFrame {
             }
             @Override
             public void focusLost(FocusEvent e) {
-                searchFieldFocusLost(e);
+                try {
+                    searchFieldFocusLost(e);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         contentPane.add(searchField);
