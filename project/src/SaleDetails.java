@@ -196,35 +196,43 @@ public class SaleDetails extends JFrame {
         }
         Product order = new Product(Integer.parseInt(prodField.getText()), prodName.getText(),
                 Integer.parseInt(quantityField.getText()), Double.parseDouble(priceField.getText()));
-        Vector <Product> vec = new Vector<Product>();
-        vec.addElement(order);
-        DefaultTableModel model =(DefaultTableModel) invoiceTable.getModel();
-        Object[] rowData = new Object[5];
-        if (addBtn.getText().equals("Add to Order")) {
-            for (int i=0; i < vec.size(); i++)
-            {
-                rowData[0] = vec.elementAt(i).getProd_id();
-                rowData[1] = vec.elementAt(i).getName();
-                rowData[2] = vec.elementAt(i).getQuantity();
-                rowData[3] = vec.elementAt(i).getPrice();
-                rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
-                model.addRow(rowData);
+        int returnValue;
+        returnValue = JOptionPane.showConfirmDialog(null, "Are you sure you would like to "
+                        + "add this product:\n" + order.toString() + "\nDon't forget to hit enter after entering an ID!",
+                "Confirm Changes", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (returnValue == JOptionPane.YES_OPTION)
+        {
+            Vector <Product> vec = new Vector<Product>();
+            vec.addElement(order);
+            DefaultTableModel model =(DefaultTableModel) invoiceTable.getModel();
+            Object[] rowData = new Object[5];
+            if (addBtn.getText().equals("Add to Order")) {
+                for (int i=0; i < vec.size(); i++)
+                {
+                    rowData[0] = vec.elementAt(i).getProd_id();
+                    rowData[1] = vec.elementAt(i).getName();
+                    rowData[2] = vec.elementAt(i).getQuantity();
+                    rowData[3] = vec.elementAt(i).getPrice();
+                    rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
+                    model.addRow(rowData);
+                }
+            } else {
+                for (int i=0; i < vec.size(); i++)
+                {
+                    rowData[0] = vec.elementAt(i).getProd_id();
+                    rowData[1] = vec.elementAt(i).getName();
+                    rowData[2] = vec.elementAt(i).getQuantity();
+                    rowData[3] = vec.elementAt(i).getPrice();
+                    rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
+                    model.removeRow(lastClickedRow);
+                    model.insertRow(lastClickedRow, rowData);
+                }
+                addBtn.setText("Add to Order");
             }
-        } else {
-            for (int i=0; i < vec.size(); i++)
-            {
-                rowData[0] = vec.elementAt(i).getProd_id();
-                rowData[1] = vec.elementAt(i).getName();
-                rowData[2] = vec.elementAt(i).getQuantity();
-                rowData[3] = vec.elementAt(i).getPrice();
-                rowData[4] = vec.elementAt(i).getPrice() * vec.elementAt(i).getQuantity();
-                model.removeRow(lastClickedRow);
-                model.insertRow(lastClickedRow, rowData);
-            }
-            addBtn.setText("Add to Order");
+            Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
+            totalFigLabel.setText(String.valueOf(currentTotal));
         }
-        Double currentTotal = Double.parseDouble(totalFigLabel.getText()) + order.getPrice() * order.getQuantity();
-        totalFigLabel.setText(String.valueOf(currentTotal));
+
     }
 
 //    private void loadRowArray(Vector<Product> vec, Object[] rowData, int lastClickedRow) {
@@ -344,7 +352,7 @@ public class SaleDetails extends JFrame {
     }
 
     private void searchFieldFocusLost(FocusEvent e) {
-        // TODO add your code here
+        searchField.setText("Search");
     }
 
 
