@@ -1,10 +1,10 @@
 # Swen2005project
 For a 2nd year SWEN project
+Project files in project src
 
-You can only use a a localhost database via software like XAMPP to use the program
+You can only use a a localhost database via software like XAMPP to efficiently use the program
 
-database: swen2005_finalproject
-
+# database: swen2005_finalproject
 1. Create a Database called: swen2005_finalproject	
 2. Go to import in swen2005_finalproject database and import the swen2005_project.sql
 3. Click go 
