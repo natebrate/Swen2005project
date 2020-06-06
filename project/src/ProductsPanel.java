@@ -184,6 +184,7 @@ public class ProductsPanel extends JFrame {
         userNameLabel = new JLabel();
         userLabel = new JLabel();
         searchField = new JTextField();
+        viewBtn = new JButton();
 
         //======== this ========
         setTitle("Products Page");
@@ -247,15 +248,9 @@ public class ProductsPanel extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display All");
-        allBtn.addActionListener(e -> {
-            try {
-                allBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        allBtn.addActionListener(e -> allBtnActionPerformed(e));
         contentPane.add(allBtn);
-        allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
+        allBtn.setBounds(65, 335, 200, allBtn.getPreferredSize().height);
 
         //---- IDField ----
         IDField.addActionListener(e -> IDFieldActionPerformed(e));
@@ -294,13 +289,7 @@ public class ProductsPanel extends JFrame {
         //---- addUpdateBtn ----
         addUpdateBtn.setText("Add");
         addUpdateBtn.setEnabled(false);
-        addUpdateBtn.addActionListener(e -> {
-            try {
-                addBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        addUpdateBtn.addActionListener(e -> addBtnActionPerformed(e));
         contentPane.add(addUpdateBtn);
         addUpdateBtn.setBounds(65, 260, 200, addUpdateBtn.getPreferredSize().height);
 
@@ -308,21 +297,15 @@ public class ProductsPanel extends JFrame {
         clearBtn.setText("Clear");
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
-        clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
+        clearBtn.setBounds(165, 300, 100, clearBtn.getPreferredSize().height);
 
         //---- deleteBtn ----
         deleteBtn.setText("Delete");
         deleteBtn.setForeground(new Color(204, 0, 0));
         deleteBtn.setEnabled(false);
-        deleteBtn.addActionListener(e -> {
-            try {
-                deleteBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
         contentPane.add(deleteBtn);
-        deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
+        deleteBtn.setBounds(65, 300, 100, deleteBtn.getPreferredSize().height);
 
         //---- IDLabel ----
         IDLabel.setText("Product ID:");
@@ -346,13 +329,7 @@ public class ProductsPanel extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return to Menu");
-        returnBtn.addActionListener(e -> {
-            try {
-                returnBtnActionPerformed(e);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(65, 420, 200, returnBtn.getPreferredSize().height);
 
@@ -384,15 +361,16 @@ public class ProductsPanel extends JFrame {
             }
             @Override
             public void focusLost(FocusEvent e) {
-                try {
-                    searchFieldFocusLost(e);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                searchFieldFocusLost(e);
             }
         });
         contentPane.add(searchField);
         searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
+
+        //---- viewBtn ----
+        viewBtn.setText("View Report");
+        contentPane.add(viewBtn);
+        viewBtn.setBounds(65, 375, 200, viewBtn.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(835, 495));
         pack();
@@ -423,6 +401,7 @@ public class ProductsPanel extends JFrame {
     private JLabel userNameLabel;
     private JLabel userLabel;
     private JTextField searchField;
+    private JButton viewBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void beginSearch() {
