@@ -244,7 +244,7 @@ public class SaleDetails extends JFrame {
 //    }
 
     private void reportBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        new RevenueReportt();
     }
 
     private void textField1ActionPerformed(ActionEvent e) {
@@ -503,7 +503,13 @@ public class SaleDetails extends JFrame {
 
         //---- searchBtn ----
         searchBtn.setText("Go");
-        searchBtn.addActionListener(e -> searchBtnActionPerformed(e));
+        searchBtn.addActionListener(e -> {
+            try {
+                searchBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(searchBtn);
         searchBtn.setBounds(645, 45, 70, searchBtn.getPreferredSize().height);
 
@@ -516,7 +522,13 @@ public class SaleDetails extends JFrame {
 
         //---- saveBtn ----
         saveBtn.setText("Create Invoice");
-        saveBtn.addActionListener(e -> saveBtnActionPerformed(e));
+        saveBtn.addActionListener(e -> {
+            try {
+                saveBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(saveBtn);
         saveBtn.setBounds(10, 245, 240, saveBtn.getPreferredSize().height);
 
@@ -528,14 +540,26 @@ public class SaleDetails extends JFrame {
 
         //---- allBtn ----
         allBtn.setText("Display Report");
-        allBtn.addActionListener(e -> displayButtonActionPerformed(e));
+        allBtn.addActionListener(e -> {
+            try {
+                displayButtonActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(allBtn);
         allBtn.setBounds(10, 330, 240, allBtn.getPreferredSize().height);
 
         //---- deleteBtn ----
         deleteBtn.setText("Delete Invoice");
         deleteBtn.setForeground(Color.red);
-        deleteBtn.addActionListener(e -> deleteBtnActionPerformed(e));
+        deleteBtn.addActionListener(e -> {
+            try {
+                deleteBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(deleteBtn);
         deleteBtn.setBounds(10, 370, 240, deleteBtn.getPreferredSize().height);
 

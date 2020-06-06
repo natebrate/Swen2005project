@@ -12,8 +12,18 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class RevenueReportt extends JFrame {
+
     public RevenueReportt() {
         initComponents();
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.loadRevenueReport(table1);
+        }
+        dao.closeConnection();
     }
 
     private void initComponents() {

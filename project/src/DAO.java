@@ -413,4 +413,27 @@ public class DAO {
             System.out.println(e.getMessage());
         }
     }
+    public void loadRevenueReport(JTable table)
+    {
+        String query = "SELECT sales_summary.DOS, sales_summary.total_revenue FROM sales_summary INNER JOIN " +
+                "sales_details ON sales_details.invoice=sales_summary.invoice GROUP BY DOS, total_revenue DESC";
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            ResultSet rs = myPreStmt.executeQuery();
+            //To remove previously added rows
+            while (table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
