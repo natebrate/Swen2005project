@@ -5,39 +5,48 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "this"
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane1"
-				add( new FormComponent( "javax.swing.JTable" ) {
-					name: "table1"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
-						add( "Date of Sales" )
-						add( "Total Revenue" )
-					}, new java.util.Vector {
-						add( class java.util.Date )
-						add( class java.lang.Double )
-					}, new java.util.Vector {
-						add( null )
-						add( null )
-					}, new java.util.Vector {
-						add( null )
-						add( null )
-					} )
-				} )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 20
-				"y": 5
-			} )
+			"title": "Product Report"
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "returnBtn"
 				"text": "Return"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "returnBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 195
-				"y": 450
+				"x": 215
+				"y": 465
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "reportTable"
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
+						add( "P_ID" )
+						add( "Name" )
+						add( "Price" )
+						add( "Quantity" )
+					}, new java.util.Vector {
+						add( class java.lang.Integer )
+						add( class java.lang.String )
+						add( class java.lang.Double )
+						add( class java.lang.Integer )
+					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+					} )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 20
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 500, 520 )
+			"size": new java.awt.Dimension( 510, 535 )
 		} )
 	}
 }

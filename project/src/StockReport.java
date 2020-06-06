@@ -1,10 +1,10 @@
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.table.*;
 /*
- * Created by JFormDesigner on Fri Jun 05 23:32:51 BOT 2020
+ * Created by JFormDesigner on Fri Jun 05 23:37:06 BOT 2020
  */
 
 
@@ -12,65 +12,66 @@ import javax.swing.table.*;
 /**
  * @author unknown
  */
-public class RevenueReportt extends JFrame {
+public class StockReport extends JFrame {
 
-    public RevenueReportt() {
+    public StockReport(User userLogin) throws SQLException {
         initComponents();
+        // Load blank Product for purposes later
+
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Populate JTable from Database
         DAO dao = new DAO();
         if (dao.openConnection()) {
-            dao.loadRevenueReport(table1);
+            dao.loadProductsTable(reportTable);
         }
-        dao.closeConnection();
-    }
 
-    private void returnBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
 
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
-        scrollPane1 = new JScrollPane();
-        table1 = new JTable();
         returnBtn = new JButton();
+        scrollPane1 = new JScrollPane();
+        reportTable = new JTable();
 
         //======== this ========
+        setTitle("Product Report");
         var contentPane = getContentPane();
         contentPane.setLayout(null);
+
+        //---- returnBtn ----
+        returnBtn.setText("Return");
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
+        contentPane.add(returnBtn);
+        returnBtn.setBounds(new Rectangle(new Point(215, 465), returnBtn.getPreferredSize()));
 
         //======== scrollPane1 ========
         {
 
-            //---- table1 ----
-            table1.setModel(new DefaultTableModel(
+            //---- reportTable ----
+            reportTable.setModel(new DefaultTableModel(
                 new Object[][] {
                 },
                 new String[] {
-                    "Date of Sales", "Total Revenue"
+                    "P_ID", "Name", "Price", "Quantity"
                 }
             ) {
                 Class<?>[] columnTypes = new Class<?>[] {
-                    Date.class, Double.class
+                    Integer.class, String.class, Double.class, Integer.class
                 };
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
                 }
             });
-            scrollPane1.setViewportView(table1);
+            scrollPane1.setViewportView(reportTable);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(new Rectangle(new Point(20, 5), scrollPane1.getPreferredSize()));
-
-        //---- returnBtn ----
-        returnBtn.setText("Return");
-        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
-        contentPane.add(returnBtn);
-        returnBtn.setBounds(new Rectangle(new Point(195, 450), returnBtn.getPreferredSize()));
+        scrollPane1.setBounds(new Rectangle(new Point(30, 20), scrollPane1.getPreferredSize()));
 
         {
             // compute preferred size
@@ -91,10 +92,15 @@ public class RevenueReportt extends JFrame {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
+    private void returnBtnActionPerformed(ActionEvent e) {
+        setVisible(false);
+        dispose();
+    }
+
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JScrollPane scrollPane1;
-    private JTable table1;
     private JButton returnBtn;
+    private JScrollPane scrollPane1;
+    private JTable reportTable;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

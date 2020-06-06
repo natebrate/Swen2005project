@@ -184,6 +184,7 @@ public class ProductsPanel extends JFrame {
         userNameLabel = new JLabel();
         userLabel = new JLabel();
         searchField = new JTextField();
+        viewBtn = new JButton();
 
         //======== this ========
         setTitle("Products Page");
@@ -255,7 +256,7 @@ public class ProductsPanel extends JFrame {
             }
         });
         contentPane.add(allBtn);
-        allBtn.setBounds(65, 360, 200, allBtn.getPreferredSize().height);
+        allBtn.setBounds(65, 335, 200, allBtn.getPreferredSize().height);
 
         //---- IDField ----
         IDField.addActionListener(e -> IDFieldActionPerformed(e));
@@ -308,7 +309,7 @@ public class ProductsPanel extends JFrame {
         clearBtn.setText("Clear");
         clearBtn.addActionListener(e -> clearBtnActionPerformed(e));
         contentPane.add(clearBtn);
-        clearBtn.setBounds(165, 310, 100, clearBtn.getPreferredSize().height);
+        clearBtn.setBounds(165, 300, 100, clearBtn.getPreferredSize().height);
 
         //---- deleteBtn ----
         deleteBtn.setText("Delete");
@@ -322,7 +323,7 @@ public class ProductsPanel extends JFrame {
             }
         });
         contentPane.add(deleteBtn);
-        deleteBtn.setBounds(65, 310, 100, deleteBtn.getPreferredSize().height);
+        deleteBtn.setBounds(65, 300, 100, deleteBtn.getPreferredSize().height);
 
         //---- IDLabel ----
         IDLabel.setText("Product ID:");
@@ -394,6 +395,11 @@ public class ProductsPanel extends JFrame {
         contentPane.add(searchField);
         searchField.setBounds(315, 10, 295, searchField.getPreferredSize().height);
 
+        //---- viewBtn ----
+        viewBtn.setText("View Report");
+        contentPane.add(viewBtn);
+        viewBtn.setBounds(65, 375, 200, viewBtn.getPreferredSize().height);
+
         contentPane.setPreferredSize(new Dimension(835, 495));
         pack();
         setLocationRelativeTo(getOwner());
@@ -423,6 +429,7 @@ public class ProductsPanel extends JFrame {
     private JLabel userNameLabel;
     private JLabel userLabel;
     private JTextField searchField;
+    private JButton viewBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void beginSearch() {
