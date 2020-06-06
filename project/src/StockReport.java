@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.table.*;
 /*
@@ -11,10 +13,24 @@ import javax.swing.table.*;
  * @author unknown
  */
 public class StockReport extends JFrame {
-    public StockReport() {
-        initComponents();
-    }
 
+    public StockReport(User userLogin) throws SQLException {
+        initComponents();
+        // Load blank Product for purposes later
+
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Populate JTable from Database
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.loadProductsTable(reportTable);
+        }
+
+
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -29,6 +45,7 @@ public class StockReport extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return");
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(new Rectangle(new Point(215, 465), returnBtn.getPreferredSize()));
 
@@ -73,6 +90,11 @@ public class StockReport extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+    private void returnBtnActionPerformed(ActionEvent e) {
+        setVisible(false);
+        dispose();
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables

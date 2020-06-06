@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -14,6 +15,10 @@ import javax.swing.table.*;
 public class RevenueReportt extends JFrame {
     public RevenueReportt() {
         initComponents();
+    }
+
+    private void returnBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
     }
 
     private void initComponents() {
@@ -53,6 +58,7 @@ public class RevenueReportt extends JFrame {
 
         //---- returnBtn ----
         returnBtn.setText("Return");
+        returnBtn.addActionListener(e -> returnBtnActionPerformed(e));
         contentPane.add(returnBtn);
         returnBtn.setBounds(new Rectangle(new Point(195, 450), returnBtn.getPreferredSize()));
 
