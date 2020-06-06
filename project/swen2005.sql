@@ -125,11 +125,13 @@ END;;
 -- PROCEDURE FOR UPDATING A RECORD IN SALES DETAILS
 --
 
-CREATE  PROCEDURE `updateSDetails`(IN invoice_num INT, IN product_id INT, IN quan INT )
+CREATE  PROCEDURE `updateSDetails`(IN invoice_num INT)
 BEGIN
 
-    delete from sales_details where invoice=invoice_num and P_ID=product_id;
-    call sell(invoice_num,product_id,quan);
+
+    delete from sales_details where invoice=invoice_num;
+    delete from sales_summary where invoice=invoice_num;
+
 
 END;;
 
