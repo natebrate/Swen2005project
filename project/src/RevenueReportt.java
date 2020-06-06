@@ -28,7 +28,8 @@ public class RevenueReportt extends JFrame {
     }
 
     private void returnBtnActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        setVisible(false);
+        dispose();
     }
 
     private void initComponents() {

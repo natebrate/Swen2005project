@@ -26,7 +26,7 @@ public class StockReport extends JFrame {
         // Populate JTable from Database
         DAO dao = new DAO();
         if (dao.openConnection()) {
-            dao.loadProductsTable(reportTable);
+            dao.loadStockReport(reportTable);
         }
 
 
