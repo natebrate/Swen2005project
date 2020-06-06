@@ -169,6 +169,20 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
+insert into sales_summary (invoice, items_sold,total_revenue,DOS) values (75906,0,0,'2020-04-11');
+insert into sales_summary (invoice, items_sold,total_revenue,DOS) values (75907,0,0,'2020-04-21');
+insert into sales_summary (invoice, items_sold,total_revenue,DOS) values (75908,0,0,'2020-04-17');
+
+
+call sell (75906,2,1);
+call sell (75906,13,1);
+call sell (75907,11,1);
+call sell (75907,2,1);
+call sell (75908,14,1);
+call sell (75908,6,1);
+
+
+
 INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `first_name`, `last_name`, `admin`) VALUES
 (1, 'smith1', 'pass', 'John', 'Smith', 1),
 (1001, 'smith2', 'pass', 'Jane', 'Smith', 1),
