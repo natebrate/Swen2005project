@@ -1,3 +1,4 @@
 products screen:
 // TODO table doesn't refresh after update
 // TODO prevent negative numbers from being entered
+// TODO on product table the product ID field locks so can do another add or search via ID

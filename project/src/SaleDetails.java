@@ -335,6 +335,14 @@ public class SaleDetails extends JFrame {
         }
     }
 
+    private void invoiceTableFocusLost(FocusEvent e) {
+        // TODO add your code here
+    }
+
+    private void searchFieldFocusGained(FocusEvent e) {
+        // TODO add your code here
+    }
+
 
 
 
@@ -410,6 +418,12 @@ public class SaleDetails extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     invoiceTableMouseClicked(e);
+                }
+            });
+            invoiceTable.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    invoiceTableFocusLost(e);
                 }
             });
             invoicePane.setViewportView(invoiceTable);
@@ -621,6 +635,12 @@ public class SaleDetails extends JFrame {
         searchField.setFont(searchField.getFont().deriveFont(searchField.getFont().getStyle() | Font.ITALIC));
         searchField.setForeground(Color.lightGray);
         searchField.addActionListener(e -> textField1ActionPerformed(e));
+        searchField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchFieldFocusGained(e);
+            }
+        });
         contentPane.add(searchField);
         searchField.setBounds(395, 45, 245, searchField.getPreferredSize().height);
 
