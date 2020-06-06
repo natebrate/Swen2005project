@@ -125,7 +125,7 @@ END;;
 -- PROCEDURE FOR UPDATING A RECORD IN SALES DETAILS
 --
 
-CREATE  PROCEDURE `updateSDetails`(IN invoice_num INT)
+CREATE  PROCEDURE `deleteInvoice`(IN invoice_num INT)
 BEGIN
 
 
