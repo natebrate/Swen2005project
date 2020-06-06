@@ -121,7 +121,9 @@ public class SaleDetails extends JFrame {
 
 
     private void saveBtnActionPerformed(ActionEvent e) throws SQLException {
-        if (saveBtn.getText().equals("Create Invoice")) {
+        switch (saveBtn.getText())
+        {
+            case "Create Invoice":
             unlockFields();
             invoiceField.setText(String.valueOf(genInvoiceID()));
             invoiceField.setEnabled(false);
@@ -129,8 +131,9 @@ public class SaleDetails extends JFrame {
             saveBtn.setText("Save Invoice");
             addBtn.setEnabled(true);
             addingNewInvoice = true;
-        }
-        else {
+            break;
+
+            case "Save Invoice":
             uploadInvoice();
             loadTables();
             clearAll();
@@ -138,8 +141,17 @@ public class SaleDetails extends JFrame {
             lockButtons();
             saveBtn.setText("Create Invoice");
             addingNewInvoice = false;
+            break;
 
-
+            case "Update Invoice":
+            updateInvoice();
+            loadTables();
+            clearAll();
+            lockFields();
+            lockButtons();
+            saveBtn.setText("Create Invoice");
+            addingNewInvoice = false;
+            break;
         }
         deleteBtn.setText("Cancel");
     }
@@ -225,8 +237,10 @@ public class SaleDetails extends JFrame {
                 }
                 dao.closeConnection();
                 unlockButtons();
+                unlockFields();
                 invoiceField.setText(String.valueOf(invoiceToSearch));
                 deleteBtn.setText("Cancel");
+                saveBtn.setText("Update Invoice");
             }
         }
     }
@@ -237,6 +251,7 @@ public class SaleDetails extends JFrame {
 
     private void invoiceTableMouseClicked(MouseEvent e) {
         if (e.getClickCount() == 1) {
+            updatingExistingInvoice = true;
             final JTable jTable = (JTable) e.getSource();
             lastClickedRow = jTable.getSelectedRow();
             lastClickedCol = jTable.getSelectedColumn();
@@ -253,6 +268,7 @@ public class SaleDetails extends JFrame {
             addBtn.setText("Update Order");
             unlockButtons();
             unlockFields();
+            saveBtn.setText("Update Invoice");
             invoiceField.setEnabled(false);
         }
     }
@@ -633,13 +649,12 @@ public class SaleDetails extends JFrame {
     }
     private void unlockFields()
     {
-        invoiceField.setEnabled(true);
         prodField.setEnabled(true);
         quantityField.setEnabled(true);
+        invoiceField.setEnabled(true);
     }
     private void lockFields()
     {
-        invoiceField.setEnabled(false);
         prodField.setEnabled(false);
         quantityField.setEnabled(false);
     }
@@ -779,6 +794,17 @@ public class SaleDetails extends JFrame {
         }
         //Reset Invoice Number and Table
         model.setRowCount(0);
+    }
+    private void updateInvoice() throws SQLException {
+        deleteInvoice();
+        uploadInvoice();
+    }
+    private void deleteInvoice() throws SQLException {
+        DAO dao = new DAO();
+        if (dao.openConnection()) {
+            dao.deleteInvoice(Integer.parseInt(invoiceField.getText()));
+        }
+        dao.closeConnection();
     }
     private void clearAll()
     {

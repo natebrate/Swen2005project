@@ -399,4 +399,18 @@ public class DAO {
         }
 
     }
+    public void deleteInvoice(int invoiceID)
+    {
+        String query = "call deleteInvoice(?)";
+        //create the mysql insert prepared statement
+        try {
+            PreparedStatement myPreStmt = myConn.prepareStatement(query);
+            myPreStmt.setInt(1, invoiceID);
+            //execute the prepared statement
+            myPreStmt.execute();
+        } catch (Exception e) {
+            System.out.println("Got an exception!");
+            System.out.println(e.getMessage());
+        }
+    }
 }
