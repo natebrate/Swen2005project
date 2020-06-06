@@ -109,8 +109,6 @@ public class SaleDetails extends JFrame {
         {
             case "Cancel":
                 addingNewInvoice = false;
-                DefaultTableModel table = (DefaultTableModel) invoiceTable.getModel();
-                table.setRowCount(0);
                 clearAll();
                 lockButtons();
                 lockFields();
@@ -242,7 +240,7 @@ public class SaleDetails extends JFrame {
     }
 
     private void textField1ActionPerformed(ActionEvent e) {
-        searchInvoiceOrDate();
+        searchInvoice();
     }
 
     private void searchTableMouseClicked(MouseEvent e) {
@@ -262,12 +260,19 @@ public class SaleDetails extends JFrame {
                 unlockFields();
                 invoiceField.setText(String.valueOf(invoiceToSearch));
                 saveBtn.setText("Update Invoice");
+                addBtn.setText("Add to Order");
+                totalFigLabel.setText(jTable.getValueAt(lastClickedRow, 3).toString());
             }
         }
     }
 
     private void button1ActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
+        int returnValue;
+        returnValue = JOptionPane.showConfirmDialog(null, "Are you certain you want to " +
+                        "delete " + model.getValueAt(lastClickedRow, 1).toString() + " from the order?",
+                "Delete Invoice", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        model.removeRow(lastClickedRow);
     }
 
     private void invoiceTableMouseClicked(MouseEvent e) {
@@ -708,7 +713,7 @@ public class SaleDetails extends JFrame {
                 }
         }
     }
-    private void searchInvoiceOrDate()
+    private void searchInvoice()
     {
         DAO dao = new DAO();
         if (dao.openConnection()) {
