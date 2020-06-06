@@ -27,10 +27,10 @@ new FormModel {
 						add( class java.lang.Double )
 					}, new java.util.Vector {
 						add( null )
+						add( false )
 						add( null )
-						add( null )
-						add( null )
-						add( null )
+						add( false )
+						add( false )
 					}, new java.util.Vector {
 						add( null )
 						add( null )
@@ -39,6 +39,8 @@ new FormModel {
 						add( null )
 					} )
 					"toolTipText": "For modification to invoices"
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "invoiceTableMouseClicked", true ) )
+					addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "invoiceTableFocusLost", true ) )
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 395
@@ -132,13 +134,14 @@ new FormModel {
 				name: "addBtn"
 				"text": "Add to Order"
 				"enabled": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
 				"y": 205
 				"width": 115
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "createBtn"
+				name: "saveBtn"
 				"text": "Create Invoice"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "saveBtnActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -244,7 +247,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "prodLabel"
-				"text": "Poduct ID:"
+				"text": "Product ID:"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
 				"y": 115
@@ -317,6 +320,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "prodField"
+				"enabled": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "prodFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 110
@@ -325,6 +329,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "quantityField"
+				"enabled": false
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "quantityFieldActionPerformed", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 110
@@ -347,4 +352,3 @@ new FormModel {
 		} )
 	}
 }
-

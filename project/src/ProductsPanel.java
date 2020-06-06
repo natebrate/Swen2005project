@@ -426,7 +426,7 @@ public class ProductsPanel extends JFrame {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     private void beginSearch() {
-        if (IDField.getText().isEmpty() || Integer.parseInt(IDField.getText()) < 0) {
+        if (IDField.getText().isBlank() || Integer.parseInt(IDField.getText()) < 0) {
             JOptionPane.showMessageDialog(null, "Please enter a valid ID!",
                     "Enter an ID", JOptionPane.WARNING_MESSAGE);
         } else {

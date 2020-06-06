@@ -374,8 +374,8 @@ public class DAO {
 
     public void loadInvoiceTable(JTable table, int invoiceNum) {
         {
-            String query = "SELECT sales_details.P_ID, products.name, products.price, " +
-                    "sales_details.quantity_sold, sales_details.sub_total FROM products INNER JOIN sales_details ON " +
+            String query = "SELECT sales_details.P_ID, products.name, sales_details.quantity_sold, products.price, " +
+                    " sales_details.sub_total FROM products INNER JOIN sales_details ON " +
                     "products.prod_id = sales_details.P_ID where invoice = ?;";
             try {
                 PreparedStatement myPreStmt = myConn.prepareStatement(query);
