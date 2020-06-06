@@ -340,7 +340,7 @@ public class SaleDetails extends JFrame {
     }
 
     private void searchFieldFocusGained(FocusEvent e) {
-        // TODO add your code here
+        searchField.setText("");
     }
 
     private void searchFieldFocusLost(FocusEvent e) {
