@@ -243,8 +243,8 @@ public class SaleDetails extends JFrame {
 //        rowData[4] = vec.elementAt(lastClickedRow).getPrice() * vec.elementAt(lastClickedRow).getQuantity();
 //    }
 
-    private void reportBtnActionPerformed(ActionEvent e) {
-        new RevenueReportt();
+    private void reportBtnActionPerformed(ActionEvent e) throws SQLException {
+        new StockReport();
     }
 
     private void textField1ActionPerformed(ActionEvent e) {
@@ -571,7 +571,13 @@ public class SaleDetails extends JFrame {
 
         //---- reportBtn ----
         reportBtn.setText("Sales Report");
-        reportBtn.addActionListener(e -> reportBtnActionPerformed(e));
+        reportBtn.addActionListener(e -> {
+            try {
+                reportBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(reportBtn);
         reportBtn.setBounds(127, 473, 115, reportBtn.getPreferredSize().height);
 

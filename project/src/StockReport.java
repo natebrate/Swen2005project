@@ -31,6 +31,11 @@ public class StockReport extends JFrame {
 
 
     }
+
+    public StockReport() {
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown

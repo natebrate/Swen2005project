@@ -161,6 +161,11 @@ public class ProductsPanel extends JFrame {
         }
     }
 
+    private void viewBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        new RevenueReportt();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -397,6 +402,7 @@ public class ProductsPanel extends JFrame {
 
         //---- viewBtn ----
         viewBtn.setText("View Report");
+        viewBtn.addActionListener(e -> viewBtnActionPerformed(e));
         contentPane.add(viewBtn);
         viewBtn.setBounds(65, 375, 200, viewBtn.getPreferredSize().height);
 
