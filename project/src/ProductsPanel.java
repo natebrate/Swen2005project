@@ -161,9 +161,9 @@ public class ProductsPanel extends JFrame {
         }
     }
 
-    private void viewBtnActionPerformed(ActionEvent e) {
+    private void viewBtnActionPerformed(ActionEvent e) throws SQLException {
         // TODO add your code here
-        new RevenueReportt();
+        new StockReport(userLogin);
     }
 
     private void initComponents() {
@@ -402,7 +402,13 @@ public class ProductsPanel extends JFrame {
 
         //---- viewBtn ----
         viewBtn.setText("View Report");
-        viewBtn.addActionListener(e -> viewBtnActionPerformed(e));
+        viewBtn.addActionListener(e -> {
+            try {
+                viewBtnActionPerformed(e);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
         contentPane.add(viewBtn);
         viewBtn.setBounds(65, 375, 200, viewBtn.getPreferredSize().height);
 

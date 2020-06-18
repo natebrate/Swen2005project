@@ -244,7 +244,7 @@ public class SaleDetails extends JFrame {
 //    }
 
     private void reportBtnActionPerformed(ActionEvent e) throws SQLException {
-        new StockReport();
+        new RevenueReportt();
     }
 
     private void textField1ActionPerformed(ActionEvent e) {
@@ -569,7 +569,7 @@ public class SaleDetails extends JFrame {
         contentPane.add(returnBtn);
         returnBtn.setBounds(7, 538, 240, returnBtn.getPreferredSize().height);
 
-        //---- reportBtn ----
+        //---- reportBtn ----a
         reportBtn.setText("Sales Report");
         reportBtn.addActionListener(e -> {
             try {
